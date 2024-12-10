@@ -1,10 +1,12 @@
 #include "GrafoAbstract.h"
-#include "Linked_list.h"
+#include "Linked_Vertex.h"
 class Grafo_lista : public GrafoAbstract
 {
     private:
-        Linked_list* Vertice;
-        Linked_list* Aresta;
+        Linked_Vertex* Vertice;
+        int* ordem;
+        int* grau;
+        int* nCompConexo;
     public:
         Grafo_lista();
         ~Grafo_lista();

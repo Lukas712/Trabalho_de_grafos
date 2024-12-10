@@ -4,9 +4,10 @@ using namespace std;
 
 Linked_list::Linked_list()
 {
-    primeiro = NULL;
-    ultimo = NULL;
-    n = 0;
+    this->primeiro = NULL;
+    this->ultimo = NULL;
+    this->n = 0;
+    this->ponderado = false;
 }
 
 Linked_list::~Linked_list()
@@ -43,5 +44,15 @@ void Linked_list::insereFinal(int val)
     }
     ultimo = p;
     n+=1;
+}
+
+bool Linked_list::getPonderado()
+{
+    return this->ponderado;
+}
+
+void Linked_list::setPonderado(bool val)
+{
+    this->ponderado = val;
 }
 

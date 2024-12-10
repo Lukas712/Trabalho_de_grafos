@@ -8,11 +8,13 @@ private:
     Node* primeiro, *ultimo;
     int n;
     void limpaNodes(Node* prox);
+    bool ponderado; 
 public:
     Linked_list();
     ~Linked_list();
     void insereFinal(int val);
-
+    bool getPonderado();
+    void setPonderado(bool val);
 };
 
 #endif
