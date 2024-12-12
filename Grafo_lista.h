@@ -1,3 +1,6 @@
+#ifndef GRAFO_LISTA_H
+#define GRAFO_LISTA_H
+
 #include "GrafoAbstract.h"
 #include "Linked_Vertex.h"
 class Grafo_lista : public GrafoAbstract
@@ -7,10 +10,16 @@ class Grafo_lista : public GrafoAbstract
         int* ordem;
         int* grau;
         int* nCompConexo;
+        bool temArticulacao;
+        bool temPonte;
+        bool grafoBipartido;
+        bool grafoCompleto;
+        bool grafoDirecionado;
+        bool grafoArvore;
     public:
         Grafo_lista();
         ~Grafo_lista();
-        int n_conexo();
+        int nConexo();
         int getGrau();
         int getOrdem();
 
@@ -26,3 +35,4 @@ class Grafo_lista : public GrafoAbstract
         bool possuiArticulacao();
         bool possuiPonte();
 };
+#endif

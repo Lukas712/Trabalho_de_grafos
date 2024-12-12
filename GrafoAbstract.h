@@ -1,3 +1,5 @@
+#ifndef GRAFOABSTRACT_H
+#define GRAFOABSTRACT_H
 class GrafoAbstract
 {   
     public:    
@@ -18,3 +20,5 @@ class GrafoAbstract
         virtual bool possuiPonte() = 0;
 
 };
+
+#endif
