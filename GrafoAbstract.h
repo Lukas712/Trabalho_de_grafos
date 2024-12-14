@@ -2,23 +2,45 @@
 #define GRAFOABSTRACT_H
 class GrafoAbstract
 {   
+    private:
+        int ordem;
+        int grau;
+        int nCompConexo;
+        bool temArticulacao;
+        bool temPonte;
+        bool grafoBipartido;
+        bool grafoCompleto;
+        bool grafoDirecionado;
+        bool grafoArvore;
     public:    
-        virtual int nConexo() = 0;
-        virtual int getGrau() = 0;
-        virtual int getOrdem() = 0;
+        int getNConexo(){return nCompConexo;};
+        int getGrau(){return grau;};
+        int getOrdem(){return ordem;};
 
-        virtual void carregaGrafo() = 0;
-        virtual void novoGrafo() = 0;
 
         virtual bool verticePonderado() = 0;
         virtual bool arestaPonderada() = 0;
-        virtual bool eh_bipartido() = 0;
-        virtual bool eh_direcionado() = 0;
-        virtual bool eh_completo() = 0;
-        virtual bool eh_arvore() = 0;
-        virtual bool possuiArticulacao() = 0;
-        virtual bool possuiPonte() = 0;
+        bool eh_bipartido(){return grafoBipartido;};
+        bool eh_direcionado(){return grafoDirecionado;};
+        bool eh_completo(){return grafoCompleto;};
+        bool eh_arvore(){return grafoArvore;};
+        bool possuiArticulacao(){return temArticulacao;};
+        bool possuiPonte(){return temPonte;};
+        virtual void imprimeGrafo() = 0;
+
+        void setNConexo(int val){
+            this->nCompConexo = val;
+        };
+        void setGrau(int val){grau = val;};
+        void setOrdem(int val){ordem = val;};
+        virtual void setVerticePonderado(bool val) = 0;
+        virtual void setArestaPonderada(bool val) = 0;
+        void setBipartido(bool val){grafoBipartido = val;};
+        void setDirecionado(bool val){grafoDirecionado = val;};
+        void setCompleto(bool val){grafoCompleto = val;};
+        void setArvore(bool val){grafoArvore = val;};
+        void setArticulacao(bool val){temArticulacao = val;};
+        void setPonte(bool val){temPonte = val;};
 
 };
-
 #endif

@@ -7,32 +7,18 @@ class Grafo_lista : public GrafoAbstract
 {
     private:
         Linked_Vertex* Vertice;
-        int* ordem;
-        int* grau;
-        int* nCompConexo;
-        bool temArticulacao;
-        bool temPonte;
-        bool grafoBipartido;
-        bool grafoCompleto;
-        bool grafoDirecionado;
-        bool grafoArvore;
     public:
         Grafo_lista();
         ~Grafo_lista();
-        int nConexo();
-        int getGrau();
-        int getOrdem();
 
         void carregaGrafo();
         void novoGrafo();
 
         bool verticePonderado();
         bool arestaPonderada();
-        bool eh_bipartido();
-        bool eh_direcionado();
-        bool eh_completo();
-        bool eh_arvore();
-        bool possuiArticulacao();
-        bool possuiPonte();
+        void setVerticePonderado(bool val);
+        void setArestaPonderada(bool val);
+
+        void imprimeGrafo();
 };
 #endif

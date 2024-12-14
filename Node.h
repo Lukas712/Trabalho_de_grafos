@@ -8,8 +8,8 @@ private:
     Node* prox;
 
 public:
-    Node();
-    ~Node();
+    Node(){Node* prox = NULL;};
+    ~Node(){};
     Node* getProx(){return prox;};
     void setProx(Node* prox){this->prox = prox;};
     
