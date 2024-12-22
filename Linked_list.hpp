@@ -24,9 +24,17 @@ private:
 
 public:
     int getTam(){return this->n;};
-    NodeType* getPrimeiro(){return this->primeiro;};
-    NodeType* getProx(NodeType* node){
-        return node->getProx();
+    NodeType* getNodeById(int val){
+            NodeType* value = primeiro;
+            while((value->getId() != val) && (value!= nullptr))
+            {
+                value = (NodeType*)value->getProx();
+            }
+            return value;
+    };
+    NodeType* getUltimo()
+    {
+        return this->ultimo;
     }
     
     Linked_list(){

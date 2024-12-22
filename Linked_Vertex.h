@@ -19,13 +19,5 @@ class Linked_Vertex : public Linked_list<NodeVertex>
         void setArestaPonderada(bool val){this->arestaPonderada = val;};
         bool getVerticePonderado(){return this->verticePonderado;};
         void setVerticePonderado(bool val){this->verticePonderado = val;};
-        NodeVertex* getNodeById(int val){
-            NodeVertex* value = primeiro;
-            while((value->getId() != val) && (value!= nullptr))
-            {
-                value = (NodeVertex*)value->getProx();
-            }
-            return value;
-        };
 };
 #endif

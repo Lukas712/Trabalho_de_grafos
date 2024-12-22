@@ -20,5 +20,7 @@ class Grafo_lista : public GrafoAbstract
         void setArestaPonderada(bool val);
 
         void imprimeGrafo();
+
+        
 };
 #endif
