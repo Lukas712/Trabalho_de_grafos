@@ -11,9 +11,6 @@ class Grafo_lista : public GrafoAbstract
         Grafo_lista();
         ~Grafo_lista();
 
-        void carregaGrafo();
-        void novoGrafo();
-
         bool verticePonderado();
         bool arestaPonderada();
         void setVerticePonderado(bool val);

@@ -84,40 +84,54 @@ class GrafoAbstract
             }
         }
 
-        void criaArvore(ofstream& outFile, int ordem, bool arestaPonderada, bool direcionado) {
+        void criaArvore(ofstream& outFile, int ordem, bool arestaPonderada, bool direcionado, int grau) {
             int vet[ordem-1] = {0};
             if (!direcionado) {
                 for (int i = 0; i < ordem-1; i+=1) {
                     vet[i] = rand() % 100 + 1;
                 }
             }
-
-            for (int i = 1; i < ordem;) {
-                int origem = rand() % (i);
-                int destino = i;
-                if(origem != destino)
-                {
-                    outFile << origem + 1 << " " << destino + 1<< " ";
-                    if (arestaPonderada) {
-                        if (direcionado) {
-                            outFile <<(rand() % 100 + 1);
-                        } else {
-                            outFile << vet[i-1];
-                            outFile << endl;
-                            outFile << destino + 1 << " " << origem + 1<< " " << vet[i-1];
-                        }
+            int j;
+            int contador = 0;
+            for (int i = 1; i < ordem;i+=1) {;
+                if (contador == 0) {
+                    if(i<= grau)
+                    {
+                        j = 1;
+                        contador = grau;
                     }
                     else
                     {
-                        outFile << destino + 1 << " " << origem + 1<< " ";
+                        j +=1;
+                        contador = grau-1;
                     }
-                    outFile << endl;
-                    i+=1;
                 }
+
+                contador-=1;
+                outFile <<  j << " " << i + 1<< " ";
+                if (arestaPonderada) {
+                    if (direcionado) {
+                        outFile <<(rand() % 100 + 1);
+                    } else {
+                        outFile << vet[i-1];
+                        outFile << endl;
+                        outFile << i + 1 << " " <<  j<< " " << vet[i-1];
+                    }
+                }
+                else
+                {
+                    outFile << j << " " << i+1;
+                    if(!direcionado)
+                    {
+                        outFile << endl;
+                        outFile << i + 1 << " " <<  j;
+                    }
+                }
+                outFile << endl; 
             }
         }
 
-        void criaBipartido(ofstream& outFile, int ordem, bool arestaPonderada, bool direcionado) {
+        void criaBipartido(ofstream& outFile, int ordem, bool arestaPonderada, bool direcionado, int grau) {
             
             int tamanhoU = ordem / 2;
             int tamanhoV = ordem - tamanhoU;
@@ -154,6 +168,121 @@ class GrafoAbstract
                 }
             }
         }
+    void carregaGrafo() {
+        ifstream inFile("/home/lukas-freitas/VsCode/Trabalho_de_grafos/output/grafo.txt");
+        if (!inFile.is_open()) {
+            cerr << "Erro ao abrir o arquivo grafo.txt" << endl;
+            return;
+        }
 
+        int numVertices, direcionado, verticePonderado, arestaPonderada;
+        inFile >> numVertices >> direcionado >> verticePonderado >> arestaPonderada;
+
+        this->setOrdem(numVertices);
+        this->setDirecionado(direcionado);
+        this->setVerticePonderado(verticePonderado);
+        this->setArestaPonderada(arestaPonderada);
+
+        if (verticePonderado) {
+            for (int i = 0; i < numVertices; i+=1) {
+                int peso;
+                inFile >> peso;
+            }
+        } else {
+            for (int i = 0; i < numVertices; i+=1) {
+            }
+        }
+
+        int origem, destino, peso;
+        while (inFile >> origem >> destino) {
+            if (arestaPonderada) {
+                inFile >> peso;
+            } else {
+                peso = 1;
+            }
+            // NodeVertex* noOrigem = this->Vertice->getNodeById(origem-1);
+            // NodeVertex* noDestino = this->Vertice->getNodeById(destino-1);
+
+            // if (noOrigem && noDestino) {
+            //     noOrigem->getArestas()->insereFinal(noDestino->getValue());
+            //     if (!direcionado) {
+            //         noDestino->getArestas()->insereFinal(noOrigem->getValue());
+            //     }
+            // }
+        }
+
+        inFile.close();
+        imprimeGrafo();
+    }
+
+    void novoGrafo() {
+        srand(time(0));
+        ifstream descFile("Descricao.txt");
+        if (!descFile.is_open()) {
+            cerr << "Erro ao abrir o arquivo Descricao.txt" << endl;
+            return;
+        }
+        
+        bool direcionado,verticePonderado, arestaPonderada, completo, bipartido, arvore, ponte,  articulacao;
+        int grau = 0, ordem, componentesConexas;
+
+        descFile >> grau >> ordem >> direcionado >> componentesConexas >> verticePonderado >> arestaPonderada;
+        descFile >> completo >> bipartido >> arvore >> ponte >> articulacao;
+
+        descFile.close();
+        ofstream outFile("grafo.txt");
+        if (!outFile.is_open()) {
+            cerr << "Erro ao criar o arquivo grafo.txt" << endl;
+            return;
+        }
+
+        outFile << ordem << " " << direcionado << " " << verticePonderado << " " << arestaPonderada << endl;
+        
+        if(verticePonderado)
+        {
+            for (int i = 0; i < ordem; ++i) {
+                int peso = (rand() % 100 + 1);
+                if (verticePonderado) {
+                    outFile << peso << " ";
+                }
+            }
+            outFile << endl;
+        }
+        
+        if (completo) {
+            if((grau != ordem-1) || componentesConexas != 1 || ponte || articulacao || ordem <=0)
+            {
+                cout<<"Grafo completo não pode ser feito com a descrição dada!"<<endl;
+                return;
+            }
+            criaCompleto(outFile, ordem, arestaPonderada, direcionado);
+        }
+        else if (bipartido) {
+            if(grau < 0 || grau > (max(ordem/componentesConexas, ordem%componentesConexas)) || componentesConexas > ordem || componentesConexas < 1 || ordem <=0)
+            {
+                cout<<"Grafo bipartido não pode ser feito com a descrição dada!"<<endl;
+                return;
+            }
+            criaBipartido(outFile, ordem, arestaPonderada, direcionado, grau);
+        } 
+        else if (arvore)
+        {
+            if(componentesConexas != 1 || grau >= ordem || grau <0 || ordem <=0  || (ordem == 1 && ponte) || ((ordem == 1 || ordem == 2) && articulacao) || (ordem >2 && grau == 1))
+            {
+                    cout<<"Grafo arvore não pode ser feito com a descrição dada!"<<endl;
+                    return;
+            }
+            criaArvore(outFile, ordem, arestaPonderada, direcionado, grau);
+        }
+
+        // if (ponte) {
+        //     adicionaPonte(outFile);
+        // }
+        // if (articulacao) {
+        //     adicionaArticulacao(outFile);
+        // }
+
+        outFile.close();
+    }
 };
 #endif
