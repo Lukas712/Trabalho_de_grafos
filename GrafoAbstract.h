@@ -107,7 +107,7 @@ class GrafoAbstract
                     }
                 }
 
-                contador-=1;
+                contador-=1 ;
                 outFile <<  j << " " << i + 1<< " ";
                 if (arestaPonderada) {
                     if (direcionado) {
@@ -131,43 +131,91 @@ class GrafoAbstract
             }
         }
 
-        void criaBipartido(ofstream& outFile, int ordem, bool arestaPonderada, bool direcionado, int grau) {
-            
-            int tamanhoU = ordem / 2;
-            int tamanhoV = ordem - tamanhoU;
+        void criaBipartido(ofstream& outFile, int ordem, bool arestaPonderada, bool direcionado, int grau, int componentesConexas)
+        {
+            int tamanho[componentesConexas] = {0};
+            int base = ordem / componentesConexas;
+            int sobra = ordem % componentesConexas;
 
-            int vet[tamanhoU * tamanhoV] = {0};
-            if (!direcionado) {
-                for (int i = 0; i < tamanhoU * tamanhoV; i++) {
-                    vet[i] = (rand() % 100 + 1);
+            for (int i = 0; i < componentesConexas; i+=1)
+            {
+                tamanho[i] = base;
+            }
+            for (int i = 0; i < sobra; i+=1)
+            {
+                tamanho[i]++;
+            }
+
+            for (int i = 0; i < componentesConexas; i+=1)
+            {
+                while (tamanho[i] < grau + 1 && tamanho[i] > 1)
+                {
+                    bool ajustado = false;
+                    for (int j = 0; j < componentesConexas; j+=1)
+                    {
+                        if (i != j && tamanho[j] > 1)
+                        {
+                            tamanho[j]--;
+                            tamanho[i]++;
+                            ajustado = true;
+                            break;
+                        }
+                    }
+                    if (!ajustado)
+                    {
+                        break;
+                    }
                 }
             }
 
-            for (int i = 0; i < tamanhoU; i+=1) {
-                for (int j = 0; j < tamanhoV; j+=1) {
-                    int u = i;                
-                    int v = tamanhoU + j;    
+            int verticeUsado = 0;
+            for (int i = 0; i < componentesConexas; i+=1) {
+                int numVertices = tamanho[i];
 
-                    outFile << u+1 << " " << v+1 << " ";
-                    if (arestaPonderada) {
-                        if (direcionado) {
-                            outFile << (rand() % 100 + 1);
-                        } else {
-                            outFile << vet[i * tamanhoV + j];
-                        }
+
+                if (numVertices <= 1) {
+                    verticeUsado += numVertices;
+                    continue;
+                }
+                
+                int vertices[numVertices];
+                for (int j = 0; j < numVertices; j+=1) {
+                    vertices[j] = verticeUsado + j;
+                }
+                verticeUsado += numVertices;
+                int contador = 0;
+
+                for (int u = 0; u < numVertices; u+=1) {
+                    if(contador >grau-1)
+                    {
+                        break;
                     }
-                    outFile << endl;
+                    for (int v = u + 1; v < numVertices && contador < grau; v+=1)
+                    {
+                            outFile << vertices[u] + 1 << " " << vertices[v] + 1 << " ";
+                            if (arestaPonderada) {
+                                if (direcionado) {
+                                    outFile << (rand() % 100 + 1);
+                                } else {
+                                    outFile << (rand() % 100 + 1);
+                                }
+                            }
+                            outFile << endl;
 
-                    if (!direcionado) {
-                        outFile << v+1 << " " << u+1 << " ";
-                        if (arestaPonderada) {
-                            outFile << vet[i * tamanhoV + j];
-                        }
-                        outFile << endl;
+                            if (!direcionado) {
+                                outFile << vertices[v] + 1 << " " << vertices[u] + 1 << " ";
+                                if (arestaPonderada) {
+                                    outFile << (rand() % 100 + 1);
+                                }
+                                outFile << endl;
+                            }
+                            contador+=1;
+                        
                     }
                 }
             }
         }
+
     void carregaGrafo() {
         ifstream inFile("/home/lukas-freitas/VsCode/Trabalho_de_grafos/output/grafo.txt");
         if (!inFile.is_open()) {
@@ -258,12 +306,12 @@ class GrafoAbstract
             criaCompleto(outFile, ordem, arestaPonderada, direcionado);
         }
         else if (bipartido) {
-            if(grau < 0 || grau > (max(ordem/componentesConexas, ordem%componentesConexas)) || componentesConexas > ordem || componentesConexas < 1 || ordem <=0)
+            if(grau < 0 || componentesConexas < 1 || componentesConexas > ordem|| ordem <=0 || grau > ((ordem+componentesConexas-1)/componentesConexas)|| (grau == 0 && componentesConexas != ordem) || grau < (2* (ordem-componentesConexas+1))/ordem || grau < max(ordem/(componentesConexas+1), ordem%(componentesConexas+1)))
             {
                 cout<<"Grafo bipartido não pode ser feito com a descrição dada!"<<endl;
                 return;
             }
-            criaBipartido(outFile, ordem, arestaPonderada, direcionado, grau);
+            criaBipartido(outFile, ordem, arestaPonderada, direcionado, grau, componentesConexas);
         } 
         else if (arvore)
         {
