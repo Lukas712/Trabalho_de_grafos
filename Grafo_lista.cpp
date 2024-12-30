@@ -40,6 +40,16 @@ void Grafo_lista::setVerticePonderado(bool val)
     this->Vertice->setVerticePonderado(val);
 }
 
+void Grafo_lista::insereVertice(int val)
+{
+    this->Vertice->insereFinal(val);
+}
+
+void Grafo_lista::insereAresta(int origem, int destino, int val)
+{
+    this->Vertice->insereAresta(origem, destino, val);
+}
+
 void Grafo_lista::imprimeGrafo()
 {
     cout<<"grafo.txt"<<endl;
@@ -55,4 +65,24 @@ void Grafo_lista::imprimeGrafo()
     cout<<"Arvore: "<<eh_arvore()<<endl;
     cout<<"Aresta Ponte: "<<possuiPonte()<<endl;
     cout<<"Vertice Articulação: "<<possuiArticulacao()<<endl;
+    cout<<this->getOrdem()<<" "<<this->eh_direcionado()<<" "<< this->verticePonderado()<<" "<<this->arestaPonderada()<<endl;
+    for(int i= 0; i<this->getOrdem(); i+=1)
+    {
+        cout<<this->Vertice->getNodeById(i)->getValue()<<" ";
+    }
+    cout<<endl;
+    for(int i = 0; i<this->Vertice->getTam();i+=1)
+    {
+        NodeVertex* noBase = this->Vertice->getNodeById(i);
+        NodeEdge* ultimo = noBase->getArestas()->getUltimo();
+        // if(ultimo != nullptr)
+        // {
+        // cout<<noBase->getArestas()-><<endl;
+
+        // }
+        for(int j = 0; j<this->Vertice->getNodeById(i)->getArestas()->getTam();j+=1)
+        {
+            // cout<<noBase->getId() << " "<<noBase->getArestas()->getNodeById(j)->getValue()<<" "<<noBase->getArestas()->getNodeById(j)->getPeso()<<endl;
+        }
+    }
 }

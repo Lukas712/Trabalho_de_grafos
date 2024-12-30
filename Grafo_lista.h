@@ -15,6 +15,8 @@ class Grafo_lista : public GrafoAbstract
         bool arestaPonderada();
         void setVerticePonderado(bool val);
         void setArestaPonderada(bool val);
+        void insereVertice(int val);
+        void insereAresta(int origem, int destino, int val);
 
         void imprimeGrafo();
 

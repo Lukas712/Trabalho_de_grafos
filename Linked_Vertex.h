@@ -19,5 +19,13 @@ class Linked_Vertex : public Linked_list<NodeVertex>
         void setArestaPonderada(bool val){this->arestaPonderada = val;};
         bool getVerticePonderado(){return this->verticePonderado;};
         void setVerticePonderado(bool val){this->verticePonderado = val;};
+        void insereAresta(int origem, int destino, int val)
+        {
+            // cout<<origem<<" "<<destino<<" "<<val<<endl;
+            NodeVertex* noOrigem = getNodeById(origem-1);
+            noOrigem->getArestas()->insereFinal(destino-1);
+            noOrigem->getArestas()->getUltimo()->setPeso(val);
+            cout<<noOrigem->getArestas()<<endl;
+        };
 };
 #endif

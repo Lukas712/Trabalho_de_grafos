@@ -16,28 +16,28 @@ class GrafoAbstract
         bool grafoDirecionado;
         bool grafoArvore;
     public:    
+        virtual void setVerticePonderado(bool val) = 0;
+        virtual void setArestaPonderada(bool val) = 0;
+        virtual bool verticePonderado() = 0;
+        virtual bool arestaPonderada() = 0;
+        virtual void imprimeGrafo() = 0;
+        virtual void insereVertice(int val) = 0;
+        virtual void insereAresta(int origem, int destino, int val) = 0;
+        
         int getNConexo(){return nCompConexo;};
         int getGrau(){return grau;};
         int getOrdem(){return ordem;};
 
-
-        virtual bool verticePonderado() = 0;
-        virtual bool arestaPonderada() = 0;
         bool eh_bipartido(){return grafoBipartido;};
         bool eh_direcionado(){return grafoDirecionado;};
         bool eh_completo(){return grafoCompleto;};
         bool eh_arvore(){return grafoArvore;};
         bool possuiArticulacao(){return temArticulacao;};
         bool possuiPonte(){return temPonte;};
-        virtual void imprimeGrafo() = 0;
-
-        void setNConexo(int val){
-            this->nCompConexo = val;
-        };
+        
         void setGrau(int val){grau = val;};
         void setOrdem(int val){ordem = val;};
-        virtual void setVerticePonderado(bool val) = 0;
-        virtual void setArestaPonderada(bool val) = 0;
+        
         void setBipartido(bool val){grafoBipartido = val;};
         void setDirecionado(bool val){grafoDirecionado = val;};
         void setCompleto(bool val){grafoCompleto = val;};
@@ -45,6 +45,12 @@ class GrafoAbstract
         void setArticulacao(bool val){temArticulacao = val;};
         void setPonte(bool val){temPonte = val;};
 
+
+
+        void setNConexo(int val){
+            this->nCompConexo = val;
+        };
+        
         void criaCompleto(ofstream& outFile, int ordem, bool arestaPonderada, bool direcionado) {
     
             int vet[ordem*(ordem-1)/2] = {0};
@@ -131,223 +137,249 @@ class GrafoAbstract
             }
         }
 
-        // void criaBipartido(ofstream& outFile, int ordem, bool arestaPonderada, bool direcionado, int grau, int componentesConexas, int ponte, int articulacao)
-        // {
-        // int tamanho[componentesConexas] = {0};
-        // int base = ordem / componentesConexas;
-        // int sobra = ordem % componentesConexas;
+        bool criaBipartido(ofstream& outFile, int ordem, bool arestaPonderada, bool direcionado, int grau, int componentesConexas, int ponte, int articulacao) {
+            int tamanho[componentesConexas] = {0};
+            int base = ordem / componentesConexas;
+            int sobra = ordem % componentesConexas;
 
-        // for (int i = 0; i < componentesConexas; i+=1)
-        // {
-        //     tamanho[i] = base;
-        // }
-        // for (int i = 0; i < sobra; i+=1)
-        // {
-        //     tamanho[i]++;
-        // }
-
-        //     for (int i = 0; i < componentesConexas; i+=1)
-        //     {
-        //         while (tamanho[i] < grau + 1 && tamanho[i] > 1)
-        //         {
-        //             bool ajustado = false;
-        //             for (int j = 0; j < componentesConexas; j+=1)
-        //             {
-        //                 if (i != j && tamanho[j] > 1)
-        //                 {
-        //                     tamanho[j]--;
-        //                     tamanho[i]++;
-        //                     ajustado = true;
-        //                     break;
-        //                 }
-        //             }
-        //             if (!ajustado)
-        //             {
-        //                 break;
-        //             }
-        //         }
-        //     }
-
-        //     int verticeUsado = 0;
-        //     for (int i = 0; i < componentesConexas; i+=1) {
-        //         int numVertices = tamanho[i];
-
-
-        //         if (numVertices <= 1) {
-        //             verticeUsado += numVertices;
-        //             continue;
-        //         }
-                
-        //         int vertices[numVertices];
-        //         for (int j = 0; j < numVertices; j+=1) {
-        //             vertices[j] = verticeUsado + j;
-        //         }
-        //         verticeUsado += numVertices;
-        //         int contador = 0;
-
-        //         for (int u = 0; u < numVertices; u+=1) {
-        //             if(contador >grau-1)
-        //             {
-        //                 break;
-        //             }
-        //             for (int v = u + 1; v < numVertices && contador < grau; v+=1)
-        //             {
-        //                     outFile << vertices[u] + 1 << " " << vertices[v] + 1 << " ";
-        //                     if (arestaPonderada) {
-        //                         if (direcionado) {
-        //                             outFile << (rand() % 100 + 1);
-        //                         } else {
-        //                             outFile << (rand() % 100 + 1);
-        //                         }
-        //                     }
-        //                     outFile << endl;
-
-        //                     if (!direcionado) {
-        //                         outFile << vertices[v] + 1 << " " << vertices[u] + 1 << " ";
-        //                         if (arestaPonderada) {
-        //                             outFile << (rand() % 100 + 1);
-        //                         }
-        //                         outFile << endl;
-        //                     }
-        //                     contador+=1;
-                        
-        //             }
-        //         }
-        //     }
-        // }
-
-void criaBipartido(ofstream& outFile, int ordem, bool arestaPonderada, bool direcionado, int grau, int componentesConexas, int ponte, int articulacao) {
-    int tamanho[componentesConexas] = {0};
-    int base = ordem / componentesConexas;
-    int sobra = ordem % componentesConexas;
-
-    int vet[ordem-componentesConexas] = {0};
-    if (!direcionado)
-    {
-        for(int i = 0; i < ordem-componentesConexas; i+=1)
-        {
-            vet[i] = rand() % 100 + 1;
-        }
-    }
-
-    for (int i = 0; i < componentesConexas; i+=1)
-    {
-        tamanho[i] = base;
-    }
-    for (int i = 0; i < sobra; i+=1)
-    {
-        tamanho[i]++;
-    }
-
-    for (int i = 0; i < componentesConexas; i+=1)
-    {
-        while (tamanho[i] < grau + 1 && tamanho[i] > 1)
-        {
-            bool ajustado = false;
-            for (int j = 0; j < componentesConexas; j+=1)
+            int vet[ordem] = {0};
+            if (!direcionado)
             {
-                if (i != j && tamanho[j] > 1)
+                for(int i = 0; i < ordem; i+=1)
                 {
-                    tamanho[j]--;
-                    tamanho[i]++;
-                    ajustado = true;
-                    break;
+                    vet[i] = rand() % 100 + 1;
                 }
             }
-            if (!ajustado)
+
+            for (int i = 0; i < componentesConexas; i+=1)
             {
-                break;
+                tamanho[i] = base;
             }
-        }
-    }
-    
-    for(int i = 0; i<componentesConexas; i+=1)
-    {
-        int ladoMaior = (tamanho[i]+1)/2;
-        int ladoMenor = tamanho[i]-ladoMaior;
-        while(ladoMaior < grau)
-        {
-            if(ladoMenor > 1)
+            for (int i = 0; i < sobra; i+=1)
             {
-                ladoMaior += 1;
-                ladoMenor -= 1;
+                tamanho[i]+=1;
             }
-            else
+            for (int i = 0; i < componentesConexas; i+=1)
             {
-                break;
-            }
-        }
-        int grauComponente;
-        if(grau >ladoMaior)
-        {
-            grauComponente = ladoMaior;
-        }
-        else
-        {
-            grauComponente = grau;
-        }
-        
-        int contador = 0;
-        int somaTamanhoComponentes = 0;
-        if(i>0)
-        {
-            somaTamanhoComponentes += tamanho[i-1];
-        }
-        
-        for(int j = 0; j<ladoMenor; j+=1)
-        {
-            for(int k= 0; k<grauComponente; k+=1)
-            {
-                int calculoVertice = j+ladoMenor+k+1 - contador;
-                int calculoIndice = j+somaTamanhoComponentes+calculoVertice-1-ladoMenor;
-                if(somaTamanhoComponentes>0)
+                while (tamanho[i] < grau + 1 && tamanho[i] > 1)
                 {
-                    calculoIndice-=1;
-                }
-                // cout<<calculoIndice<<endl;
-                if(calculoVertice <= tamanho[i])
-                {
-                    outFile<<j+1+somaTamanhoComponentes<<" "<<calculoVertice+ somaTamanhoComponentes<<" ";
-                    if(direcionado)
+                    bool ajustado = false;
+                    for (int j = 0; j < componentesConexas; j+=1)
                     {
-                        outFile<<(rand() % 100 + 1)<<endl;
+                        if (i != j && tamanho[j] > 1)
+                        {
+                            tamanho[j]-=1;
+                            tamanho[i]+=1;
+                            ajustado = true;
+                            break;
+                        }
+                    }
+                    if (!ajustado)
+                    {
+                        break;
+                    }
+                }
+            }
+            int contador=0;
+            for(int i = 0; i<componentesConexas; i+=1)
+            {
+                if(tamanho[i]>0)
+                {
+                    contador+=1;
+                }
+            }
+            
+            if(contador != componentesConexas)
+            {
+                return false;
+            }
+
+            bool temPonte= false;
+            bool temArticulacao = false;
+            bool componenteSatisfazGrau = false;
+            for(int i = 0; i<componentesConexas; i+=1)
+            {
+                int ladoMaior = (tamanho[i]+1)/2;
+                int ladoMenor = tamanho[i]-ladoMaior;
+                int calculoGrauUm = ((ladoMenor*grau)-ladoMaior*2);
+                
+                while(ladoMaior < grau)
+                {
+                    if(ladoMenor > 1)
+                    {
+                        ladoMaior += 1;
+                        ladoMenor -= 1;
                     }
                     else
                     {
-                        outFile<<vet[calculoIndice]<<endl;
-                        outFile<<calculoVertice+ somaTamanhoComponentes<<" "<<j+1+somaTamanhoComponentes<< " "<<vet[calculoIndice] <<endl;
+                        break;
                     }
+                }
+                if(ladoMenor>1 && grau <= 1)
+                {
+                    return false;
+                }
+                if(ladoMenor >= 1)
+                {
+                    
+                    if(ladoMenor == 1 && ladoMaior == 1)
+                    {
+                        
+                        temPonte = true;
+                        if(grau == 1)
+                        {
+                            componenteSatisfazGrau = true;
+                        }
+                        else
+                        {
+                            componenteSatisfazGrau = false;
+                        }
+                    }
+                    else if(ladoMenor == 1 && ladoMaior > 1)
+                    {
+                        
+                        temPonte = true;
+                        temArticulacao = true;
+                        if(grau<=ladoMaior)
+                        {
+                            componenteSatisfazGrau = true;
+                        }
+                        break;
+                    }
+                    else if(calculoGrauUm < 0)
+                    {
+                        componenteSatisfazGrau = true;
+                        temPonte = true;
+                        temArticulacao = true;
+                        break;
+                    }
+                    else if(calculoGrauUm >= 0)
+                    {
+                        componenteSatisfazGrau = true;
+                        temPonte = false;
+                        temArticulacao = false;
+                    }
+                }
+            }
+            if(temArticulacao != articulacao || temPonte != ponte || grau > ordem ||!componenteSatisfazGrau)
+            {
+                return false;
+            }
+            
+            for(int i = 0; i<componentesConexas; i+=1)
+            {
+                int ladoMaior = (tamanho[i]+1)/2;
+                int ladoMenor = tamanho[i]-ladoMaior;
+                while(ladoMaior < grau)
+                {
+                    if(ladoMenor > 1)
+                    {
+                        ladoMaior += 1;
+                        ladoMenor -= 1;
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+                
+                
+                int grauComponente;
+                if(grau >ladoMaior)
+                {
+                    grauComponente = ladoMaior;
                 }
                 else
                 {
-                    outFile<<j+1+somaTamanhoComponentes<<" "<<calculoVertice-ladoMenor+ somaTamanhoComponentes<<endl;
-                    if(direcionado)
-                    {
-                        outFile<<(rand() % 100 + 1)<<endl;
-                    }
-                    else
-                    {
-                        outFile<<vet[calculoIndice]<<endl;
-                        outFile<<calculoVertice+ somaTamanhoComponentes<<" "<<j+1+somaTamanhoComponentes<< " "<<vet[calculoIndice] <<endl;
-                    }
+                    grauComponente = grau;
                 }
                 
+                int contador = 0;
+                int somaTamanhoComponentes = 0;
+                if(i>0)
+                {
+                    somaTamanhoComponentes += tamanho[i-1];
+                }
+                
+                for(int j = 0; j<ladoMenor; j+=1)
+                {
+                    for(int k= 0; k<grauComponente; k+=1)
+                    {
+                        int calculoVertice = j+ladoMenor+k+1 - contador;
+                        int calculoIndice = j+somaTamanhoComponentes+calculoVertice-1-ladoMenor;
+                        
+                       
+                        if(calculoVertice <= tamanho[i])
+                        {
+                            outFile<<j+1+somaTamanhoComponentes<<" "<<calculoVertice+ somaTamanhoComponentes<<" ";
+                            if(arestaPonderada)
+                            {
+                                if(direcionado)
+                                {
+                                    outFile<<(rand() % 100 + 1)<<endl;
+                                }
+                                else
+                                {
+                                    outFile<<vet[calculoIndice]<<endl;
+                                    outFile<<calculoVertice+ somaTamanhoComponentes<<" "<<j+1+somaTamanhoComponentes<< " "<<vet[calculoIndice] <<endl;
+                                }
+                            }
+                            else
+                            {
+                                if(!direcionado)
+                                {
+                                    outFile<<endl;
+                                    outFile<<calculoVertice+ somaTamanhoComponentes<<" "<<j+1+somaTamanhoComponentes<<" "<<endl;
+                                }
+                                
+                            }
+                            
+                        }
+                        else
+                        {
+                            outFile<<j+1+somaTamanhoComponentes<<" "<<calculoVertice-ladoMenor+(ladoMenor-ladoMaior)+ somaTamanhoComponentes<<" ";
+                            if(arestaPonderada)
+                            {
+                                if(direcionado)
+                                {
+                                    outFile<<(rand() % 100 + 1)<<endl;
+                                }
+                                else
+                                {
+                                    outFile<<vet[calculoIndice]<<endl;
+                                    outFile<<calculoVertice-ladoMenor+(ladoMenor-ladoMaior) 
+                                    +somaTamanhoComponentes<<" "<<j+1+somaTamanhoComponentes<< " "<<vet[calculoIndice] <<endl;
+                                }
+                            }
+                            else
+                            {
+                                if(!direcionado)
+                                {
+                                    outFile<<endl;
+                                    outFile<<calculoVertice-ladoMenor+(ladoMenor-ladoMaior)+somaTamanhoComponentes<<" "<<j+1+somaTamanhoComponentes<< " "<<endl;
+                                }
+                            }
+                            
+                        }
+                        
+                    }
+                    if(grau>=ladoMaior)
+                    {
+                        contador+=1; 
+                    }
+                    
+                }
             }
-            if(grau>=ladoMaior)
-            {
-                contador+=1; 
-            }
-            
+            return true;
         }
-    }
-}
 
 
 
     void carregaGrafo() {
-        ifstream inFile("/home/lukas-freitas/VsCode/Trabalho_de_grafos/output/grafo.txt");
+        ifstream inFile("grafo.txt");
         if (!inFile.is_open()) {
             cerr << "Erro ao abrir o arquivo grafo.txt" << endl;
+            inFile.close();
             return;
         }
 
@@ -363,28 +395,25 @@ void criaBipartido(ofstream& outFile, int ordem, bool arestaPonderada, bool dire
             for (int i = 0; i < numVertices; i+=1) {
                 int peso;
                 inFile >> peso;
+                insereVertice(peso);
+
             }
         } else {
             for (int i = 0; i < numVertices; i+=1) {
+                insereVertice(0);
             }
         }
 
-        int origem, destino, peso;
+        int origem, destino;
         while (inFile >> origem >> destino) {
             if (arestaPonderada) {
+                int peso;
                 inFile >> peso;
-            } else {
-                peso = 1;
+                insereAresta(origem, destino, peso);
             }
-            // NodeVertex* noOrigem = this->Vertice->getNodeById(origem-1);
-            // NodeVertex* noDestino = this->Vertice->getNodeById(destino-1);
-
-            // if (noOrigem && noDestino) {
-            //     noOrigem->getArestas()->insereFinal(noDestino->getValue());
-            //     if (!direcionado) {
-            //         noDestino->getArestas()->insereFinal(noOrigem->getValue());
-            //     }
-            // }
+            else {
+                insereAresta(origem, destino, 0);
+            }
         }
 
         inFile.close();
@@ -396,6 +425,7 @@ void criaBipartido(ofstream& outFile, int ordem, bool arestaPonderada, bool dire
         ifstream descFile("Descricao.txt");
         if (!descFile.is_open()) {
             cerr << "Erro ao abrir o arquivo Descricao.txt" << endl;
+            descFile.close();
             return;
         }
         
@@ -406,9 +436,10 @@ void criaBipartido(ofstream& outFile, int ordem, bool arestaPonderada, bool dire
         descFile >> completo >> bipartido >> arvore >> ponte >> articulacao;
 
         descFile.close();
-        ofstream outFile("grafo.txt");
+        ofstream outFile("grafo.txt", ios::trunc);
         if (!outFile.is_open()) {
             cerr << "Erro ao criar o arquivo grafo.txt" << endl;
+            outFile.close();
             return;
         }
 
@@ -429,35 +460,35 @@ void criaBipartido(ofstream& outFile, int ordem, bool arestaPonderada, bool dire
             if((grau != ordem-1) || componentesConexas != 1 || ponte || articulacao || ordem <=0)
             {
                 cout<<"Grafo completo não pode ser feito com a descrição dada!"<<endl;
+                limpaArquivo(outFile);
                 return;
             }
             criaCompleto(outFile, ordem, arestaPonderada, direcionado);
         }
         else if (bipartido) {
-            // if(grau < 0 || componentesConexas < 1 || componentesConexas > ordem|| ordem <=0 || grau > ((ordem+componentesConexas-1)/componentesConexas)|| (grau == 0 && componentesConexas != ordem) || grau < (2* (ordem-componentesConexas+1))/ordem || grau < max(ordem/(componentesConexas+1), ordem%(componentesConexas+1)))
-            // {
-            //     cout<<"Grafo bipartido não pode ser feito com a descrição dada!"<<endl;
-            //     return;
-            // }
-            criaBipartido(outFile, ordem, arestaPonderada, direcionado, grau, componentesConexas, ponte, articulacao);
+            if(!criaBipartido(outFile, ordem, arestaPonderada, direcionado, grau, componentesConexas, ponte, articulacao))
+            {
+                cout<<"Grafo bipartido não pode ser feito com a descrição dada!"<<endl;
+                limpaArquivo(outFile);
+                return;
+            }
         } 
         else if (arvore)
         {
             if(componentesConexas != 1 || grau >= ordem || grau <0 || ordem <=0  || (ordem == 1 && ponte) || ((ordem == 1 || ordem == 2) && articulacao) || (ordem >2 && grau == 1))
             {
                     cout<<"Grafo arvore não pode ser feito com a descrição dada!"<<endl;
+                    limpaArquivo(outFile);
                     return;
             }
             criaArvore(outFile, ordem, arestaPonderada, direcionado, grau);
         }
+        outFile.close();
+    }
 
-        // if (ponte) {
-        //     adicionaPonte(outFile);
-        // }
-        // if (articulacao) {
-        //     adicionaArticulacao(outFile);
-        // }
-
+    void limpaArquivo(ofstream& outFile) {
+        outFile.close();
+        outFile.open("grafo.txt", ios::trunc);
         outFile.close();
     }
 };

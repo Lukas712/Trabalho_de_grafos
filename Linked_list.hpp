@@ -30,16 +30,24 @@ public:
             {
                 value = (NodeType*)value->getProx();
             }
+            if(value == nullptr)
+            {
+                return nullptr;
+            }
             return value;
     };
     NodeType* getUltimo()
     {
-        return this->ultimo;
+        if(ultimo!= nullptr)
+        {
+            return this->ultimo;
+        }
+        return nullptr;
     }
     
     Linked_list(){
-        this->primeiro = NULL;
-        this->ultimo = NULL;
+        this->primeiro = nullptr;
+        this->ultimo = nullptr;
         this->n = 0;
         this->ponderado = false;
     };

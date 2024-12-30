@@ -11,7 +11,7 @@ using namespace std;
 int main()
 {
     Grafo_lista grafo;
-    grafo.carregaGrafo();
     grafo.novoGrafo();
+    grafo.carregaGrafo();
     return 0;
 }
