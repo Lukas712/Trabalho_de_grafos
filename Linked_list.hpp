@@ -19,37 +19,38 @@ protected:
     };
 private:
     int n;
-    bool ponderado;
-
 
 public:
     int getTam(){return this->n;};
+    
     NodeType* getNodeById(int val){
-            NodeType* value = primeiro;
-            while((value->getId() != val) && (value!= nullptr))
-            {
-                value = (NodeType*)value->getProx();
-            }
-            if(value == nullptr)
-            {
-                return nullptr;
-            }
+        NodeType* value = primeiro;
+        if(val < 0 || val > n)
+        {
+            cout<<"Erro de acesso!"<<endl;
             return value;
+        }
+        while((value!= nullptr) && (value->getId() != val))
+        {
+            value = (NodeType*)value->getProx();
+        }
+        return value;
     };
+
     NodeType* getUltimo()
     {
-        if(ultimo!= nullptr)
-        {
-            return this->ultimo;
-        }
-        return nullptr;
+        return this->ultimo;
+    }
+
+    NodeType* getPrimeiro()
+    {
+        return this->primeiro;
     }
     
     Linked_list(){
         this->primeiro = nullptr;
         this->ultimo = nullptr;
         this->n = 0;
-        this->ponderado = false;
     };
 
     ~Linked_list(){
@@ -61,9 +62,10 @@ public:
     void insereFinal(int val){
         NodeType* p = new NodeType();
         p->setValue(val);
-        p->setProx(NULL);
+        p->setProx(nullptr);
+        p->setId(n);
 
-        if(ultimo!=NULL)
+        if(ultimo!=nullptr)
         {
             ultimo->setProx(p);
         }
@@ -82,7 +84,6 @@ public:
             cout<<p->getValue()<<" ";
             p = (NodeType*)p->getProx();
         }
-        delete p;
         cout<<endl;
     }
 };

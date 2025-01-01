@@ -6,11 +6,10 @@ class Node
 private:
     int value;
     Node* prox;
-    static int nextID;
     int id;
-
+    
 public:
-    Node() : id(nextID++){Node* prox = NULL;};
+    Node() : id(-1){Node* prox = NULL;};
     ~Node(){};
     Node* getProx(){return prox;};
     void setProx(Node* prox){this->prox = prox;};
@@ -18,9 +17,9 @@ public:
     void setValue(int value){this->value = value;}
     int getValue(){return this->value;};
 
+    void setId(int val){this->id = val;};
     int getId(){return this->id;};
 };
-int Node::nextID = 0;
 
 
 #endif

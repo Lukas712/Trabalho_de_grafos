@@ -9,12 +9,13 @@ class NodeEdge : public Node
     int peso;
 
     public:
-    NodeEdge() : Node(){};
+    NodeEdge() : Node(){
+        
+    };
     ~NodeEdge(){};
     int getPeso(){return this->peso;};
     void setPeso(int val){this->peso = val;};
 
 };
-
 
 #endif

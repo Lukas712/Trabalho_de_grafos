@@ -7,16 +7,26 @@ class Grafo_lista : public GrafoAbstract
 {
     private:
         Linked_Vertex* Vertice;
+        void dfsAux(int vertice, bool* visitados);
     public:
         Grafo_lista();
         ~Grafo_lista();
 
         bool verticePonderado();
         bool arestaPonderada();
-        void setVerticePonderado(bool val);
-        void setArestaPonderada(bool val);
         void insereVertice(int val);
         void insereAresta(int origem, int destino, int val);
+
+        int getNConexo();
+        int getGrau();
+        int getOrdem();
+
+        bool eh_bipartido(){return false;};
+        bool eh_direcionado(){return false;};
+        bool eh_completo();
+        bool eh_arvore(){return false;};
+        bool possuiArticulacao(){return false;};
+        bool possuiPonte(){return false;};
 
         void imprimeGrafo();
 

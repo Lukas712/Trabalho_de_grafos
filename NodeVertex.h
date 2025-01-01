@@ -11,11 +11,12 @@ class NodeVertex : public Node
     Linked_list<NodeEdge>* Arestas;
 
     public:
-    NodeVertex() : Node(){Arestas = new Linked_list<NodeEdge>();};
+    NodeVertex() : Node(){
+        Arestas = new Linked_list<NodeEdge>();
+        };
     ~NodeVertex(){delete Arestas;};
     Linked_list<NodeEdge>* getArestas(){return this->Arestas;};
 
 };
-
 
 #endif

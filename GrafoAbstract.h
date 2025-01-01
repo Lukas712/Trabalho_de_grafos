@@ -15,42 +15,44 @@ class GrafoAbstract
         bool grafoCompleto;
         bool grafoDirecionado;
         bool grafoArvore;
+        bool verticeP;
+        bool arestaP;
+        const string grafoText = "grafo.txt";
+        const string descText = "Descricao.txt";
+
+        bool arquivoVazio(string nomeArquivo) {
+            ifstream outFile(nomeArquivo, ios::in); // Abre o arquivo em modo leitura
+            if (!outFile.is_open()) {
+                cout << "Erro ao abrir o arquivo." << endl;
+                return true; // Considera "vazio" caso o arquivo não exista ou não seja acessível
+            }
+
+            outFile.seekg(0, ios::end); // Move o ponteiro para o final
+            bool vazio = (outFile.tellg() == 0); // Se a posição do ponteiro for 0, está vazio
+            outFile.close(); // Fecha o arquivo
+            return vazio;
+        }
     public:    
-        virtual void setVerticePonderado(bool val) = 0;
-        virtual void setArestaPonderada(bool val) = 0;
         virtual bool verticePonderado() = 0;
         virtual bool arestaPonderada() = 0;
         virtual void imprimeGrafo() = 0;
         virtual void insereVertice(int val) = 0;
         virtual void insereAresta(int origem, int destino, int val) = 0;
         
-        int getNConexo(){return nCompConexo;};
-        int getGrau(){return grau;};
-        int getOrdem(){return ordem;};
+        virtual int getNConexo() = 0;
+        virtual int getGrau() = 0;
+        virtual int getOrdem() = 0;
 
-        bool eh_bipartido(){return grafoBipartido;};
-        bool eh_direcionado(){return grafoDirecionado;};
-        bool eh_completo(){return grafoCompleto;};
-        bool eh_arvore(){return grafoArvore;};
-        bool possuiArticulacao(){return temArticulacao;};
-        bool possuiPonte(){return temPonte;};
+        virtual bool eh_bipartido() = 0;
+        virtual bool eh_direcionado() = 0;
+        virtual bool eh_completo() = 0;
+        virtual bool eh_arvore() = 0;
+        virtual bool possuiArticulacao() = 0;
+        virtual bool possuiPonte() = 0;
         
-        void setGrau(int val){grau = val;};
-        void setOrdem(int val){ordem = val;};
-        
-        void setBipartido(bool val){grafoBipartido = val;};
-        void setDirecionado(bool val){grafoDirecionado = val;};
-        void setCompleto(bool val){grafoCompleto = val;};
-        void setArvore(bool val){grafoArvore = val;};
-        void setArticulacao(bool val){temArticulacao = val;};
-        void setPonte(bool val){temPonte = val;};
+       
 
 
-
-        void setNConexo(int val){
-            this->nCompConexo = val;
-        };
-        
         void criaCompleto(ofstream& outFile, int ordem, bool arestaPonderada, bool direcionado) {
     
             int vet[ordem*(ordem-1)/2] = {0};
@@ -126,7 +128,6 @@ class GrafoAbstract
                 }
                 else
                 {
-                    outFile << j << " " << i+1;
                     if(!direcionado)
                     {
                         outFile << endl;
@@ -141,6 +142,7 @@ class GrafoAbstract
             int tamanho[componentesConexas] = {0};
             int base = ordem / componentesConexas;
             int sobra = ordem % componentesConexas;
+            int somaTamanhoComponentes = 0;
 
             int vet[ordem] = {0};
             if (!direcionado)
@@ -295,7 +297,7 @@ class GrafoAbstract
                 }
                 
                 int contador = 0;
-                int somaTamanhoComponentes = 0;
+                
                 if(i>0)
                 {
                     somaTamanhoComponentes += tamanho[i-1];
@@ -329,9 +331,9 @@ class GrafoAbstract
                                 if(!direcionado)
                                 {
                                     outFile<<endl;
-                                    outFile<<calculoVertice+ somaTamanhoComponentes<<" "<<j+1+somaTamanhoComponentes<<" "<<endl;
+                                    outFile<<calculoVertice+ somaTamanhoComponentes<<" "<<j+1+somaTamanhoComponentes<<" ";
                                 }
-                                
+                                outFile<<endl;
                             }
                             
                         }
@@ -356,8 +358,9 @@ class GrafoAbstract
                                 if(!direcionado)
                                 {
                                     outFile<<endl;
-                                    outFile<<calculoVertice-ladoMenor+(ladoMenor-ladoMaior)+somaTamanhoComponentes<<" "<<j+1+somaTamanhoComponentes<< " "<<endl;
+                                    outFile<<calculoVertice-ladoMenor+(ladoMenor-ladoMaior)+somaTamanhoComponentes<<" "<<j+1+somaTamanhoComponentes<< " ";
                                 }
+                                outFile<<endl;
                             }
                             
                         }
@@ -376,20 +379,14 @@ class GrafoAbstract
 
 
     void carregaGrafo() {
-        ifstream inFile("grafo.txt");
-        if (!inFile.is_open()) {
-            cerr << "Erro ao abrir o arquivo grafo.txt" << endl;
-            inFile.close();
+        ifstream inFile(grafoText);
+        if(arquivoVazio(grafoText))
+        {
             return;
         }
 
         int numVertices, direcionado, verticePonderado, arestaPonderada;
         inFile >> numVertices >> direcionado >> verticePonderado >> arestaPonderada;
-
-        this->setOrdem(numVertices);
-        this->setDirecionado(direcionado);
-        this->setVerticePonderado(verticePonderado);
-        this->setArestaPonderada(arestaPonderada);
 
         if (verticePonderado) {
             for (int i = 0; i < numVertices; i+=1) {
@@ -415,17 +412,16 @@ class GrafoAbstract
                 insereAresta(origem, destino, 0);
             }
         }
-
+        
         inFile.close();
         imprimeGrafo();
     }
 
     void novoGrafo() {
         srand(time(0));
-        ifstream descFile("Descricao.txt");
-        if (!descFile.is_open()) {
-            cerr << "Erro ao abrir o arquivo Descricao.txt" << endl;
-            descFile.close();
+        ifstream descFile(descText);
+        if(arquivoVazio(descText))
+        {
             return;
         }
         
@@ -436,10 +432,10 @@ class GrafoAbstract
         descFile >> completo >> bipartido >> arvore >> ponte >> articulacao;
 
         descFile.close();
-        ofstream outFile("grafo.txt", ios::trunc);
-        if (!outFile.is_open()) {
-            cerr << "Erro ao criar o arquivo grafo.txt" << endl;
-            outFile.close();
+        ofstream outFile(grafoText, ios::trunc);
+        if(!outFile.is_open())
+        {
+            cout<<"Erro ao abrir o arquivo."<<endl;
             return;
         }
 
@@ -460,7 +456,7 @@ class GrafoAbstract
             if((grau != ordem-1) || componentesConexas != 1 || ponte || articulacao || ordem <=0)
             {
                 cout<<"Grafo completo não pode ser feito com a descrição dada!"<<endl;
-                limpaArquivo(outFile);
+                limpaArquivo(outFile, grafoText);
                 return;
             }
             criaCompleto(outFile, ordem, arestaPonderada, direcionado);
@@ -469,7 +465,7 @@ class GrafoAbstract
             if(!criaBipartido(outFile, ordem, arestaPonderada, direcionado, grau, componentesConexas, ponte, articulacao))
             {
                 cout<<"Grafo bipartido não pode ser feito com a descrição dada!"<<endl;
-                limpaArquivo(outFile);
+                limpaArquivo(outFile, grafoText);
                 return;
             }
         } 
@@ -478,7 +474,7 @@ class GrafoAbstract
             if(componentesConexas != 1 || grau >= ordem || grau <0 || ordem <=0  || (ordem == 1 && ponte) || ((ordem == 1 || ordem == 2) && articulacao) || (ordem >2 && grau == 1))
             {
                     cout<<"Grafo arvore não pode ser feito com a descrição dada!"<<endl;
-                    limpaArquivo(outFile);
+                    limpaArquivo(outFile, grafoText);
                     return;
             }
             criaArvore(outFile, ordem, arestaPonderada, direcionado, grau);
@@ -486,9 +482,9 @@ class GrafoAbstract
         outFile.close();
     }
 
-    void limpaArquivo(ofstream& outFile) {
+    void limpaArquivo(ofstream& outFile, string nomeArquivo) {
         outFile.close();
-        outFile.open("grafo.txt", ios::trunc);
+        outFile.open(nomeArquivo, ios::trunc);
         outFile.close();
     }
 };
