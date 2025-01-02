@@ -8,28 +8,24 @@ class Grafo_lista : public GrafoAbstract
     private:
         Linked_Vertex* Vertice;
         void dfsAux(int vertice, bool* visitados);
+        bool temCiclo(bool direcionado);
+        bool dfsTemCiclo(int atual, int pai, bool* visitado, bool* pilha, bool direcionado);
+        bool bfsBipartido(int inicio, int* cor);
     public:
         Grafo_lista();
         ~Grafo_lista();
 
-        bool verticePonderado();
-        bool arestaPonderada();
         void insereVertice(int val);
         void insereAresta(int origem, int destino, int val);
 
         int getNConexo();
         int getGrau();
-        int getOrdem();
 
-        bool eh_bipartido(){return false;};
-        bool eh_direcionado(){return false;};
+        bool eh_bipartido();
         bool eh_completo();
-        bool eh_arvore(){return false;};
+        bool eh_arvore();
         bool possuiArticulacao(){return false;};
         bool possuiPonte(){return false;};
 
-        void imprimeGrafo();
-
-        
 };
 #endif

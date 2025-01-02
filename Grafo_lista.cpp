@@ -12,13 +12,6 @@ Grafo_lista::~Grafo_lista(){
     delete Vertice;
 }
 
-bool Grafo_lista::verticePonderado(){
-    return this->Vertice->getVerticePonderado();
-}
-bool Grafo_lista::arestaPonderada(){
-    return this->Vertice->getArestaPonderada();
-}
-
 void Grafo_lista::insereVertice(int val)
 {
     this->Vertice->insereFinal(val);
@@ -32,7 +25,7 @@ void Grafo_lista::insereAresta(int origem, int destino, int val)
 int Grafo_lista::getGrau()
 {
     int maior = this->Vertice->getNodeById(0)->getArestas()->getTam();
-    for(int i= 0; i<this->Vertice->getTam(); i+=1)
+    for(int i= 0; i<getOrdem(); i+=1)
     {
         NodeVertex* no = this->Vertice->getNodeById(i);
         if(maior < no->getArestas()->getTam())
@@ -41,11 +34,6 @@ int Grafo_lista::getGrau()
         } 
     }
     return maior;
-}
-
-int Grafo_lista::getOrdem()
-{
-    return this->Vertice->getTam();
 }
 
 void Grafo_lista::dfsAux(int vertice, bool* visitados) {
@@ -63,7 +51,7 @@ void Grafo_lista::dfsAux(int vertice, bool* visitados) {
         aresta = (NodeEdge*)aresta->getProx();
     }
 
-    for (int i = 0; i < this->Vertice->getTam(); i++) {
+    for (int i = 0; i < getOrdem(); i++) {
         NodeVertex* outroNo = this->Vertice->getNodeById(i);
         Linked_list<NodeEdge>* outrasArestas = outroNo->getArestas();
         NodeEdge* outraAresta = outrasArestas->getPrimeiro();
@@ -78,7 +66,7 @@ void Grafo_lista::dfsAux(int vertice, bool* visitados) {
 
 
 int Grafo_lista::getNConexo() {
-    int numVertices = this->Vertice->getTam();
+    int numVertices = getOrdem();
     if (numVertices == 0) {
         return 0;
     }
@@ -103,10 +91,10 @@ int Grafo_lista::getNConexo() {
 
 bool Grafo_lista::eh_completo()
 {
-    for(int i = 0; i < this->Vertice->getTam(); i+=1)
+    for(int i = 0; i < getOrdem(); i+=1)
     {
         NodeVertex* no = this->Vertice->getNodeById(i);
-        if(no->getArestas()->getTam() != this->Vertice->getTam()-1)
+        if(no->getArestas()->getTam() != getOrdem()-1)
         {
             return false;
         }
@@ -114,20 +102,110 @@ bool Grafo_lista::eh_completo()
     return true;
 }
 
-
-void Grafo_lista::imprimeGrafo()
+//tem que corrigir essa função depois
+bool Grafo_lista::eh_arvore()
 {
-    cout<<"grafo.txt"<<endl;
-    cout<<endl;
-    cout<<"Grau: "<<getGrau()<<endl;
-    cout<<"Ordem: "<<getOrdem()<<endl;
-    cout<<"Direcionado: "<<eh_direcionado()<<endl;
-    cout<<"Componentes conexas: "<<getNConexo()<<endl;
-    cout<<"Vertices ponderados: "<<verticePonderado()<<endl;
-    cout<<"Arestas ponderadas: "<<arestaPonderada()<<endl;
-    cout<<"Completo: "<<eh_completo()<<endl;
-    cout<<"Bipartido: "<<eh_bipartido()<<endl;
-    cout<<"Arvore: "<<eh_arvore()<<endl;
-    cout<<"Aresta Ponte: "<<possuiPonte()<<endl;
-    cout<<"Vertice Articulação: "<<possuiArticulacao()<<endl;
+    if(getNConexo() != 1)
+    {
+        return false;
+    }
+    return !temCiclo(eh_direcionado());
+
+}
+//tem que corrigir essa função depois
+bool Grafo_lista::temCiclo(bool direcionado) {
+    int n = getOrdem(); 
+    bool* visitado = new bool[n]; 
+    bool* pilhaRecursao = new bool[n];
+
+    visitado[0] = false;
+    pilhaRecursao[0] = false;
+
+    for (int i = 0; i < n; i+=1) {
+        if (!visitado[i]) {
+            if (dfsTemCiclo(i, -1, visitado, pilhaRecursao, direcionado)) {
+                delete[] visitado;
+                delete[] pilhaRecursao;
+                return true; 
+            }
+        }
+    }
+
+    delete[] visitado;
+    delete[] pilhaRecursao;
+    return false; 
+}
+
+//Tem que corrigir essa função depois
+bool Grafo_lista::dfsTemCiclo(int atual, int pai, bool* visitado, bool* pilhaRecursao, bool direcionado) {
+    visitado[atual] = true;
+
+    NodeVertex* noAtual = Vertice->getNodeById(atual);
+    NodeEdge* arestaAtual = noAtual->getArestas()->getPrimeiro();
+
+    while (arestaAtual != nullptr) {
+        int vizinho = arestaAtual->getValue();
+
+        
+        if (!visitado[vizinho]) {
+            if (dfsTemCiclo(vizinho, atual, visitado, pilhaRecursao, direcionado)) {
+                return true;
+            }
+        } 
+        
+        else if (!direcionado && vizinho != pai) {
+            return true; 
+        }
+
+       
+        arestaAtual = (NodeEdge*) arestaAtual->getProx();
+    }
+
+    return false;
+}
+
+bool Grafo_lista::eh_bipartido() {
+    int n = getOrdem();
+
+    int totalCombinacoes = 1 << n;
+
+    for (int mask = 0; mask < totalCombinacoes; ++mask) {
+        int componenteUm[n] = {0}, componenteDois[n] = {0};
+        int tamanho1 = 0, tamanho2 = 0;
+
+        for (int i = 0; i < n; ++i) {
+            if (mask & (1 << i)) {
+                componenteUm[tamanho1++] = i;
+            } else {
+                componenteDois[tamanho2++] = i;
+            }
+        }
+
+        bool eValida = true;
+        for (int i = 0; i < n && eValida; ++i) {
+            NodeVertex* noAtual = this->Vertice->getNodeById(i);
+            NodeEdge* arestaAtual = noAtual->getArestas()->getPrimeiro();
+
+            while (arestaAtual != nullptr) {
+                int vizinho = arestaAtual->getValue();
+
+                bool noMesmoConjunto = 
+                    ((mask & (1 << i)) && (mask & (1 << vizinho))) ||
+                    (!(mask & (1 << i)) && !(mask & (1 << vizinho)));
+
+                if (noMesmoConjunto) {
+                    eValida = false;
+                    break;
+                }
+
+                arestaAtual = (NodeEdge*)arestaAtual->getProx();
+            }
+        }
+
+        if (eValida) {
+            return true;
+        }
+    }
+
+    return false;
 }

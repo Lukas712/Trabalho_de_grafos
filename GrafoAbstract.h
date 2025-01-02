@@ -1,4 +1,5 @@
 #include <iostream>
+#include <fstream>
 using namespace std;
 
 #ifndef GRAFOABSTRACT_H
@@ -6,51 +7,62 @@ using namespace std;
 class GrafoAbstract
 {   
     private:
-        int ordem;
-        int grau;
-        int nCompConexo;
-        bool temArticulacao;
-        bool temPonte;
-        bool grafoBipartido;
-        bool grafoCompleto;
-        bool grafoDirecionado;
-        bool grafoArvore;
-        bool verticeP;
-        bool arestaP;
         const string grafoText = "grafo.txt";
         const string descText = "Descricao.txt";
+        int ordem;
+        bool direcionado, verticePeso, arestaPeso;
 
         bool arquivoVazio(string nomeArquivo) {
-            ifstream outFile(nomeArquivo, ios::in); // Abre o arquivo em modo leitura
+            ifstream outFile(nomeArquivo, ios::in);
             if (!outFile.is_open()) {
                 cout << "Erro ao abrir o arquivo." << endl;
-                return true; // Considera "vazio" caso o arquivo não exista ou não seja acessível
+                return true;
             }
 
-            outFile.seekg(0, ios::end); // Move o ponteiro para o final
-            bool vazio = (outFile.tellg() == 0); // Se a posição do ponteiro for 0, está vazio
-            outFile.close(); // Fecha o arquivo
+            outFile.seekg(0, ios::end);
+            bool vazio = (outFile.tellg() == 0);
+            outFile.close();
             return vazio;
         }
+
+        void setOrdem(int val) {
+            this->ordem = val;
+        }
+
+        void setDirecionado(bool val) {
+            this->direcionado = val;
+        }
+
+       void setVerticePonderado(bool val) {
+            this->verticePeso = val;
+        }
+
+        void setArestaPonderada(bool val) {
+            this->arestaPeso = val;
+        }
     public:    
-        virtual bool verticePonderado() = 0;
-        virtual bool arestaPonderada() = 0;
-        virtual void imprimeGrafo() = 0;
+        
         virtual void insereVertice(int val) = 0;
         virtual void insereAresta(int origem, int destino, int val) = 0;
         
         virtual int getNConexo() = 0;
         virtual int getGrau() = 0;
-        virtual int getOrdem() = 0;
+        
 
         virtual bool eh_bipartido() = 0;
-        virtual bool eh_direcionado() = 0;
+        
         virtual bool eh_completo() = 0;
         virtual bool eh_arvore() = 0;
         virtual bool possuiArticulacao() = 0;
         virtual bool possuiPonte() = 0;
+
+        bool eh_direcionado() {return this->direcionado;};
+        bool verticePonderado() {return this->verticePeso;};
+        bool arestaPonderada() {return this->arestaPeso;};
+        int getOrdem(){return this->ordem;};
+
+
         
-       
 
 
         void criaCompleto(ofstream& outFile, int ordem, bool arestaPonderada, bool direcionado) {
@@ -388,6 +400,11 @@ class GrafoAbstract
         int numVertices, direcionado, verticePonderado, arestaPonderada;
         inFile >> numVertices >> direcionado >> verticePonderado >> arestaPonderada;
 
+        this->setOrdem(numVertices);
+        this->setDirecionado(direcionado);
+        this->setVerticePonderado(verticePonderado);
+        this->setArestaPonderada(arestaPonderada);
+
         if (verticePonderado) {
             for (int i = 0; i < numVertices; i+=1) {
                 int peso;
@@ -395,7 +412,9 @@ class GrafoAbstract
                 insereVertice(peso);
 
             }
-        } else {
+        } 
+        else
+        {
             for (int i = 0; i < numVertices; i+=1) {
                 insereVertice(0);
             }
@@ -487,5 +506,22 @@ class GrafoAbstract
         outFile.open(nomeArquivo, ios::trunc);
         outFile.close();
     }
+    void imprimeGrafo()
+    {
+        cout<<"grafo.txt"<<endl;
+        cout<<endl;
+        cout<<"Grau: "<<getGrau()<<endl;
+        cout<<"Ordem: "<<getOrdem()<<endl;
+        cout<<"Direcionado: "<<eh_direcionado()<<endl;
+        cout<<"Componentes conexas: "<<getNConexo()<<endl;
+        cout<<"Vertices ponderados: "<<verticePonderado()<<endl;
+        cout<<"Arestas ponderadas: "<<arestaPonderada()<<endl;
+        cout<<"Completo: "<<eh_completo()<<endl;
+        cout<<"Bipartido: "<<eh_bipartido()<<endl;
+        cout<<"Arvore: "<<eh_arvore()<<endl;
+        cout<<"Aresta Ponte: "<<possuiPonte()<<endl;
+        cout<<"Vertice Articulação: "<<possuiArticulacao()<<endl;
+    }
+
 };
 #endif
