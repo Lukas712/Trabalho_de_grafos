@@ -24,7 +24,7 @@ void Grafo_lista::insereAresta(int origem, int destino, int val)
 
 int Grafo_lista::getGrau()
 {
-    int maior = this->Vertice->getNodeById(0)->getArestas()->getTam();
+    int maior = this->Vertice->getPrimeiro()->getArestas()->getTam();
     for(int i= 0; i<getOrdem(); i+=1)
     {
         NodeVertex* no = this->Vertice->getNodeById(i);
@@ -36,58 +36,52 @@ int Grafo_lista::getGrau()
     return maior;
 }
 
-void Grafo_lista::dfsAux(int vertice, bool* visitados) {
-    visitados[vertice] = true;
-
-    NodeVertex* noAtual = this->Vertice->getNodeById(vertice);
-
-    Linked_list<NodeEdge>* arestas = noAtual->getArestas();
-    NodeEdge* aresta = arestas->getPrimeiro();
-    while (aresta != nullptr) {
-        int destino = aresta->getValue();
-        if (!visitados[destino]) {
-            dfsAux(destino, visitados);
-        }
-        aresta = (NodeEdge*)aresta->getProx();
-    }
-
-    for (int i = 0; i < getOrdem(); i++) {
-        NodeVertex* outroNo = this->Vertice->getNodeById(i);
-        Linked_list<NodeEdge>* outrasArestas = outroNo->getArestas();
-        NodeEdge* outraAresta = outrasArestas->getPrimeiro();
-        while (outraAresta != nullptr) {
-            if (outraAresta->getValue() == vertice && !visitados[i]) {
-                dfsAux(i, visitados);
-            }
-            outraAresta = (NodeEdge*)outraAresta->getProx();
-        }
-    }
-}
-
-
 int Grafo_lista::getNConexo() {
-    int numVertices = getOrdem();
-    if (numVertices == 0) {
-        return 0;
+    int ordem = getOrdem();
+    int* componentes = new int[ordem];
+
+    for (int i = 0; i < ordem; i++) {
+        componentes[i] = i + 1;
     }
+    for (int i = 0; i < ordem; i++) {
+        NodeVertex* node = this->Vertice->getNodeById(i);
+        if (!node) continue;
 
-    bool* visitados = new bool[numVertices];
-    for (int i = 0; i < numVertices; i+=1) {
-        visitados[i] = false;
-    }
+        NodeEdge* edge = node->getArestas()->getPrimeiro();
+        while (edge) {
+            if (edge->getAtivo()) {
+                int j = edge->getValue();
+                if (i != j) {
+                    int menor = min(componentes[i], componentes[j]);
+                    int maior = max(componentes[i], componentes[j]);
 
-    int numComponentes = 0;
-
-    for (int i = 0; i < numVertices; i+=1) {
-        if (!visitados[i]) {
-            numComponentes+=1;
-            dfsAux(i, visitados);
+                    for (int k = 0; k < ordem; k++) {
+                        if (componentes[k] == maior) {
+                            componentes[k] = menor;
+                        }
+                    }
+                }
+            }
+            edge = (NodeEdge*)edge->getProx();
         }
     }
 
-    delete[] visitados;
-    return numComponentes;
+    int contaDiferente = 0;
+    bool* visitado = new bool[ordem]();
+
+    for (int i = 0; i < ordem; i++) {
+        if (!visitado[componentes[i]]) {
+            contaDiferente++;
+            visitado[componentes[i]] = true;
+        }
+    }
+
+    delete[] componentes;
+    delete[] visitado;
+    return contaDiferente;
 }
+
+
 
 bool Grafo_lista::eh_completo()
 {
@@ -102,107 +96,154 @@ bool Grafo_lista::eh_completo()
     return true;
 }
 
-//tem que corrigir essa função depois
-bool Grafo_lista::eh_arvore()
-{
-    if(getNConexo() != 1)
-    {
-        return false;
-    }
-    return !temCiclo(eh_direcionado());
+bool Grafo_lista::temCiclo(int v, int visitado[], int pai) {
+    visitado[v] = 1;
 
-}
-//tem que corrigir essa função depois
-bool Grafo_lista::temCiclo(bool direcionado) {
-    int n = getOrdem(); 
-    bool* visitado = new bool[n]; 
-    bool* pilhaRecursao = new bool[n];
+    NodeVertex* node = this->Vertice->getNodeById(v);
+    NodeEdge* edge = node->getArestas()->getPrimeiro();
 
-    visitado[0] = false;
-    pilhaRecursao[0] = false;
-
-    for (int i = 0; i < n; i+=1) {
-        if (!visitado[i]) {
-            if (dfsTemCiclo(i, -1, visitado, pilhaRecursao, direcionado)) {
-                delete[] visitado;
-                delete[] pilhaRecursao;
-                return true; 
-            }
-        }
-    }
-
-    delete[] visitado;
-    delete[] pilhaRecursao;
-    return false; 
-}
-
-//Tem que corrigir essa função depois
-bool Grafo_lista::dfsTemCiclo(int atual, int pai, bool* visitado, bool* pilhaRecursao, bool direcionado) {
-    visitado[atual] = true;
-
-    NodeVertex* noAtual = Vertice->getNodeById(atual);
-    NodeEdge* arestaAtual = noAtual->getArestas()->getPrimeiro();
-
-    while (arestaAtual != nullptr) {
-        int vizinho = arestaAtual->getValue();
-
-        
-        if (!visitado[vizinho]) {
-            if (dfsTemCiclo(vizinho, atual, visitado, pilhaRecursao, direcionado)) {
+    while (edge != nullptr) {
+        int u = edge->getValue();
+        if (!visitado[u]) {
+            if (temCiclo(u, visitado, v)) {
                 return true;
             }
-        } 
-        
-        else if (!direcionado && vizinho != pai) {
-            return true; 
+        } else if (u != pai) {
+            return true;
         }
+        edge = (NodeEdge*)edge->getProx();
+    }
+    return false;
+}
 
-       
-        arestaAtual = (NodeEdge*) arestaAtual->getProx();
+bool Grafo_lista::eh_arvore() {
+    if (getNConexo() != 1) {
+        return false;
+    }
+
+    int numArestas = 0;
+    for (int i = 0; i < getOrdem(); i++) {
+        NodeVertex* node = this->Vertice->getNodeById(i);
+        NodeEdge* edge = node->getArestas()->getPrimeiro();
+
+        while (edge != nullptr) {
+            int j = edge->getValue();
+            if (i < j) {
+                numArestas++;
+            }
+            edge = (NodeEdge*)edge->getProx();
+        }
+    }
+
+    if (numArestas != getOrdem() - 1) {
+        return false;
+    }
+
+    int visitado[getOrdem()] = {0};
+    if (temCiclo(0, visitado, -1)) {
+        return false;
+    }
+
+    return true;
+}
+
+bool Grafo_lista::eh_bipartido() {
+    int cor[getOrdem()];
+    for (int i = 0; i < getOrdem(); i++) {
+        cor[i] = -1;
+    }
+
+    int pilha[getOrdem()]; 
+    int topo = -1;
+
+    for (int i = 0; i < getOrdem(); i++) {
+        if (cor[i] == -1) {
+            pilha[++topo] = i;
+            cor[i] = 0;
+
+            while (topo >= 0) {
+                int u = pilha[topo--];
+
+                NodeVertex* node = this->Vertice->getNodeById(u);
+                NodeEdge* edge = node->getArestas()->getPrimeiro();
+
+                while (edge != nullptr) {
+                    int v = edge->getValue();
+
+                    if (cor[v] == -1) {
+                        cor[v] = 1 - cor[u];
+                        pilha[++topo] = v;
+                    } else if (cor[v] == cor[u]) {
+                        return false;
+                    }
+                    edge = (NodeEdge*)edge->getProx();
+                }
+            }
+        }
+    }
+
+    return true;
+}
+
+bool Grafo_lista::possuiPonte() {
+    int nInicial = getNConexo();
+
+    for (int i = 0; i < getOrdem(); i++) {
+        NodeVertex* no = this->Vertice->getNodeById(i);
+        if (!no || !no->getAtivo()) continue;
+
+        NodeEdge* aresta = no->getArestas()->getPrimeiro();
+        while (aresta) {
+            int j = aresta->getValue();
+            NodeVertex* vizinho = this->Vertice->getNodeById(j);
+
+            if (vizinho && vizinho->getAtivo()) {
+                bool ativoOrig = aresta->getAtivo();
+                aresta->setAtivo(false);
+
+                int nFinal = getNConexo();
+
+                aresta->setAtivo(ativoOrig);
+
+                if (nFinal > nInicial) {
+                    return true;
+                }
+            }
+
+            aresta = (NodeEdge*)aresta->getProx();
+        }
     }
 
     return false;
 }
 
-bool Grafo_lista::eh_bipartido() {
-    int n = getOrdem();
+bool Grafo_lista::possuiArticulacao() {
+    int nInicial = getNConexo();
 
-    int totalCombinacoes = 1 << n;
+    for (int i = 0; i < getOrdem(); i++) {
+        NodeVertex* no = this->Vertice->getNodeById(i);
+        if (!no || !no->getAtivo()) continue;
 
-    for (int mask = 0; mask < totalCombinacoes; ++mask) {
-        int componenteUm[n] = {0}, componenteDois[n] = {0};
-        int tamanho1 = 0, tamanho2 = 0;
+        bool ativoOrig = no->getAtivo();
+        no->setAtivo(false);
 
-        for (int i = 0; i < n; ++i) {
-            if (mask & (1 << i)) {
-                componenteUm[tamanho1++] = i;
-            } else {
-                componenteDois[tamanho2++] = i;
-            }
+        NodeEdge* aresta = no->getArestas()->getPrimeiro();
+        while (aresta) {
+            aresta->setAtivo(false);
+            aresta = (NodeEdge*)aresta->getProx();
         }
 
-        bool eValida = true;
-        for (int i = 0; i < n && eValida; ++i) {
-            NodeVertex* noAtual = this->Vertice->getNodeById(i);
-            NodeEdge* arestaAtual = noAtual->getArestas()->getPrimeiro();
+        int nFinal = getNConexo();
 
-            while (arestaAtual != nullptr) {
-                int vizinho = arestaAtual->getValue();
+        no->setAtivo(ativoOrig);
 
-                bool noMesmoConjunto = 
-                    ((mask & (1 << i)) && (mask & (1 << vizinho))) ||
-                    (!(mask & (1 << i)) && !(mask & (1 << vizinho)));
-
-                if (noMesmoConjunto) {
-                    eValida = false;
-                    break;
-                }
-
-                arestaAtual = (NodeEdge*)arestaAtual->getProx();
-            }
+        aresta = no->getArestas()->getPrimeiro();
+        while (aresta) {
+            aresta->setAtivo(true);
+            aresta = (NodeEdge*)aresta->getProx();
         }
 
-        if (eValida) {
+        if (nFinal > nInicial) {
             return true;
         }
     }
