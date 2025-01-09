@@ -1,0 +1,167 @@
+\doxysection{Grafo\+Abstract Class Reference}
+\hypertarget{classGrafoAbstract}{}\label{classGrafoAbstract}\index{GrafoAbstract@{GrafoAbstract}}
+
+
+Inheritance diagram for Grafo\+Abstract\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=248pt]{classGrafoAbstract__inherit__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual void \mbox{\hyperlink{classGrafoAbstract_a206cb38c0e67611bd8bc15642553955c}{insere\+Vertice}} (int val)=0
+\item 
+virtual void \mbox{\hyperlink{classGrafoAbstract_a11b692abbe30d51a8f5ad5b54a3ea566}{insere\+Aresta}} (int origem, int destino, int val)=0
+\item 
+virtual int \mbox{\hyperlink{classGrafoAbstract_a0dd3ced9400676857ae69c7d15df76a7}{get\+NConexo}} ()=0
+\item 
+virtual int \mbox{\hyperlink{classGrafoAbstract_a4ebb01af19c89c0eadaa1a471d723e8a}{get\+Grau}} ()=0
+\item 
+virtual bool \mbox{\hyperlink{classGrafoAbstract_a820e55731f790319b463604b00d0ad03}{eh\+\_\+bipartido}} ()=0
+\item 
+virtual bool \mbox{\hyperlink{classGrafoAbstract_a62724e376fe99dac90ac78df92046e20}{eh\+\_\+completo}} ()=0
+\item 
+virtual bool \mbox{\hyperlink{classGrafoAbstract_a50090a454cf25348ec7dcf36e6710eb6}{eh\+\_\+arvore}} ()=0
+\item 
+virtual bool \mbox{\hyperlink{classGrafoAbstract_aa1c6782e505f9dc1ee945b881f1a8eb7}{possui\+Articulacao}} ()=0
+\item 
+virtual bool \mbox{\hyperlink{classGrafoAbstract_a211539f1bfae754789baf14886a35d38}{possui\+Ponte}} ()=0
+\item 
+\Hypertarget{classGrafoAbstract_a073cb120aea99edc8b0bb1a9a877fae5}\label{classGrafoAbstract_a073cb120aea99edc8b0bb1a9a877fae5} 
+bool {\bfseries eh\+\_\+direcionado} ()
+\item 
+\Hypertarget{classGrafoAbstract_a38508b5bb792acaa997c054e2b49ca73}\label{classGrafoAbstract_a38508b5bb792acaa997c054e2b49ca73} 
+bool {\bfseries vertice\+Ponderado} ()
+\item 
+\Hypertarget{classGrafoAbstract_ab0aacac05ec05a80a67d670abeea403c}\label{classGrafoAbstract_ab0aacac05ec05a80a67d670abeea403c} 
+bool {\bfseries aresta\+Ponderada} ()
+\item 
+\Hypertarget{classGrafoAbstract_af92411b464d644219d0a03e012052629}\label{classGrafoAbstract_af92411b464d644219d0a03e012052629} 
+int {\bfseries get\+Ordem} ()
+\item 
+\Hypertarget{classGrafoAbstract_acf69b6bd20ce5605e2c5ce11d2de0d8d}\label{classGrafoAbstract_acf69b6bd20ce5605e2c5ce11d2de0d8d} 
+void {\bfseries cria\+Completo} (ofstream \&out\+File, int ordem, bool aresta\+Ponderada, bool direcionado)
+\item 
+\Hypertarget{classGrafoAbstract_a2d54b5dec59f2592c680f68d2f6a1637}\label{classGrafoAbstract_a2d54b5dec59f2592c680f68d2f6a1637} 
+void {\bfseries cria\+Arvore} (ofstream \&out\+File, int ordem, bool aresta\+Ponderada, bool direcionado, int grau)
+\item 
+\Hypertarget{classGrafoAbstract_ad881bc388c72d9856474dbead2b4daf7}\label{classGrafoAbstract_ad881bc388c72d9856474dbead2b4daf7} 
+bool {\bfseries cria\+Bipartido} (ofstream \&out\+File, int ordem, bool aresta\+Ponderada, bool direcionado, int grau, int componentes\+Conexas, int ponte, int articulacao)
+\item 
+\Hypertarget{classGrafoAbstract_ab3f029c93ce7df4c11c3af4bf364d550}\label{classGrafoAbstract_ab3f029c93ce7df4c11c3af4bf364d550} 
+void {\bfseries carrega\+Grafo} (string grafo)
+\item 
+\Hypertarget{classGrafoAbstract_a091d5bc539a5d6997cca21162facb158}\label{classGrafoAbstract_a091d5bc539a5d6997cca21162facb158} 
+void {\bfseries novo\+Grafo} (string descricao, string grafo)
+\item 
+\Hypertarget{classGrafoAbstract_ae296293b82f0abf90c11235d2da8898c}\label{classGrafoAbstract_ae296293b82f0abf90c11235d2da8898c} 
+void {\bfseries limpa\+Arquivo} (ofstream \&out\+File, string nome\+Arquivo)
+\item 
+\Hypertarget{classGrafoAbstract_a51994848951282e4f28a9d67f8c1473a}\label{classGrafoAbstract_a51994848951282e4f28a9d67f8c1473a} 
+void {\bfseries imprime\+Grafo} ()
+\item 
+\Hypertarget{classGrafoAbstract_a6dae4c080b92011c992ed7f4c9c02024}\label{classGrafoAbstract_a6dae4c080b92011c992ed7f4c9c02024} 
+string {\bfseries imprme\+Sim\+Nao} (bool valor)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classGrafoAbstract_a50090a454cf25348ec7dcf36e6710eb6}\index{GrafoAbstract@{GrafoAbstract}!eh\_arvore@{eh\_arvore}}
+\index{eh\_arvore@{eh\_arvore}!GrafoAbstract@{GrafoAbstract}}
+\doxysubsubsection{\texorpdfstring{eh\_arvore()}{eh\_arvore()}}
+{\footnotesize\ttfamily \label{classGrafoAbstract_a50090a454cf25348ec7dcf36e6710eb6} 
+virtual bool Grafo\+Abstract\+::eh\+\_\+arvore (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Implemented in \mbox{\hyperlink{classGrafo__lista_a55f663b2ebddb096f2b6861e9e461257}{Grafo\+\_\+lista}}, and \mbox{\hyperlink{classGrafo__matriz_aeb5c91e372b9282898254b309fe2421e}{Grafo\+\_\+matriz}}.
+
+\Hypertarget{classGrafoAbstract_a820e55731f790319b463604b00d0ad03}\index{GrafoAbstract@{GrafoAbstract}!eh\_bipartido@{eh\_bipartido}}
+\index{eh\_bipartido@{eh\_bipartido}!GrafoAbstract@{GrafoAbstract}}
+\doxysubsubsection{\texorpdfstring{eh\_bipartido()}{eh\_bipartido()}}
+{\footnotesize\ttfamily \label{classGrafoAbstract_a820e55731f790319b463604b00d0ad03} 
+virtual bool Grafo\+Abstract\+::eh\+\_\+bipartido (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Implemented in \mbox{\hyperlink{classGrafo__lista_af08e48645dfb14e720836f6fe35d918e}{Grafo\+\_\+lista}}, and \mbox{\hyperlink{classGrafo__matriz_a88c1d7b608e2b25e8ef1ff579d6f0c77}{Grafo\+\_\+matriz}}.
+
+\Hypertarget{classGrafoAbstract_a62724e376fe99dac90ac78df92046e20}\index{GrafoAbstract@{GrafoAbstract}!eh\_completo@{eh\_completo}}
+\index{eh\_completo@{eh\_completo}!GrafoAbstract@{GrafoAbstract}}
+\doxysubsubsection{\texorpdfstring{eh\_completo()}{eh\_completo()}}
+{\footnotesize\ttfamily \label{classGrafoAbstract_a62724e376fe99dac90ac78df92046e20} 
+virtual bool Grafo\+Abstract\+::eh\+\_\+completo (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Implemented in \mbox{\hyperlink{classGrafo__lista_adb75edbf0baf2878ea2421407ed7fc14}{Grafo\+\_\+lista}}, and \mbox{\hyperlink{classGrafo__matriz_ab84f870e22960c0ffa6a88aef45d8b7e}{Grafo\+\_\+matriz}}.
+
+\Hypertarget{classGrafoAbstract_a4ebb01af19c89c0eadaa1a471d723e8a}\index{GrafoAbstract@{GrafoAbstract}!getGrau@{getGrau}}
+\index{getGrau@{getGrau}!GrafoAbstract@{GrafoAbstract}}
+\doxysubsubsection{\texorpdfstring{getGrau()}{getGrau()}}
+{\footnotesize\ttfamily \label{classGrafoAbstract_a4ebb01af19c89c0eadaa1a471d723e8a} 
+virtual int Grafo\+Abstract\+::get\+Grau (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Implemented in \mbox{\hyperlink{classGrafo__lista_a0e51985546b147482be914cb8ff23a7a}{Grafo\+\_\+lista}}, and \mbox{\hyperlink{classGrafo__matriz_a80d9a24bf21bb69978c1661c085cd334}{Grafo\+\_\+matriz}}.
+
+\Hypertarget{classGrafoAbstract_a0dd3ced9400676857ae69c7d15df76a7}\index{GrafoAbstract@{GrafoAbstract}!getNConexo@{getNConexo}}
+\index{getNConexo@{getNConexo}!GrafoAbstract@{GrafoAbstract}}
+\doxysubsubsection{\texorpdfstring{getNConexo()}{getNConexo()}}
+{\footnotesize\ttfamily \label{classGrafoAbstract_a0dd3ced9400676857ae69c7d15df76a7} 
+virtual int Grafo\+Abstract\+::get\+NConexo (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Implemented in \mbox{\hyperlink{classGrafo__lista_a1b28e04f39454e499c2e953f9ded7bcb}{Grafo\+\_\+lista}}, and \mbox{\hyperlink{classGrafo__matriz_aab50ebc9ff0d0f0d9952ad1b4de61fb5}{Grafo\+\_\+matriz}}.
+
+\Hypertarget{classGrafoAbstract_a11b692abbe30d51a8f5ad5b54a3ea566}\index{GrafoAbstract@{GrafoAbstract}!insereAresta@{insereAresta}}
+\index{insereAresta@{insereAresta}!GrafoAbstract@{GrafoAbstract}}
+\doxysubsubsection{\texorpdfstring{insereAresta()}{insereAresta()}}
+{\footnotesize\ttfamily \label{classGrafoAbstract_a11b692abbe30d51a8f5ad5b54a3ea566} 
+virtual void Grafo\+Abstract\+::insere\+Aresta (\begin{DoxyParamCaption}\item[{int}]{origem}{, }\item[{int}]{destino}{, }\item[{int}]{val}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Implemented in \mbox{\hyperlink{classGrafo__lista_aa2e24d98645256ce6adfec71e3375ea4}{Grafo\+\_\+lista}}, and \mbox{\hyperlink{classGrafo__matriz_a2002082f187ab033a08226c9d3e53f87}{Grafo\+\_\+matriz}}.
+
+\Hypertarget{classGrafoAbstract_a206cb38c0e67611bd8bc15642553955c}\index{GrafoAbstract@{GrafoAbstract}!insereVertice@{insereVertice}}
+\index{insereVertice@{insereVertice}!GrafoAbstract@{GrafoAbstract}}
+\doxysubsubsection{\texorpdfstring{insereVertice()}{insereVertice()}}
+{\footnotesize\ttfamily \label{classGrafoAbstract_a206cb38c0e67611bd8bc15642553955c} 
+virtual void Grafo\+Abstract\+::insere\+Vertice (\begin{DoxyParamCaption}\item[{int}]{val}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Implemented in \mbox{\hyperlink{classGrafo__lista_a9f1cc47af2a3ad817239af214cea4814}{Grafo\+\_\+lista}}, and \mbox{\hyperlink{classGrafo__matriz_af5d80405f0b2d077a83c3efb8c13e8ce}{Grafo\+\_\+matriz}}.
+
+\Hypertarget{classGrafoAbstract_aa1c6782e505f9dc1ee945b881f1a8eb7}\index{GrafoAbstract@{GrafoAbstract}!possuiArticulacao@{possuiArticulacao}}
+\index{possuiArticulacao@{possuiArticulacao}!GrafoAbstract@{GrafoAbstract}}
+\doxysubsubsection{\texorpdfstring{possuiArticulacao()}{possuiArticulacao()}}
+{\footnotesize\ttfamily \label{classGrafoAbstract_aa1c6782e505f9dc1ee945b881f1a8eb7} 
+virtual bool Grafo\+Abstract\+::possui\+Articulacao (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Implemented in \mbox{\hyperlink{classGrafo__lista_aadc2f2ab73280ab8f740fa3f3a58ee06}{Grafo\+\_\+lista}}, and \mbox{\hyperlink{classGrafo__matriz_ac75bf3f8a69380ee4ddd1cf391c43c14}{Grafo\+\_\+matriz}}.
+
+\Hypertarget{classGrafoAbstract_a211539f1bfae754789baf14886a35d38}\index{GrafoAbstract@{GrafoAbstract}!possuiPonte@{possuiPonte}}
+\index{possuiPonte@{possuiPonte}!GrafoAbstract@{GrafoAbstract}}
+\doxysubsubsection{\texorpdfstring{possuiPonte()}{possuiPonte()}}
+{\footnotesize\ttfamily \label{classGrafoAbstract_a211539f1bfae754789baf14886a35d38} 
+virtual bool Grafo\+Abstract\+::possui\+Ponte (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Implemented in \mbox{\hyperlink{classGrafo__lista_a92829014e6be32034cbb1fc2c37745e4}{Grafo\+\_\+lista}}, and \mbox{\hyperlink{classGrafo__matriz_a5f61a72b03ab63742e1f959ba9a951bd}{Grafo\+\_\+matriz}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Grafo\+Abstract.\+hpp\end{DoxyCompactItemize}

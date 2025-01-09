@@ -1,0 +1,9 @@
+<map id="Linked_Vertex" name="Linked_Vertex">
+<area shape="rect" id="Node000001" title=" " alt="" coords="47,257,161,283"/>
+<area shape="rect" id="Node000002" href="$classLinked__list.html" title=" " alt="" coords="5,183,203,208"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="107,222,107,257,101,257,101,222"/>
+<area shape="rect" id="Node000003" href="$classNodeVertex.html" title=" " alt="" coords="55,80,153,105"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="107,119,107,183,101,183,101,119"/>
+<area shape="rect" id="Node000004" href="$classNode.html" title=" " alt="" coords="76,5,132,31"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="107,45,107,80,101,80,101,45"/>
+</map>

@@ -1,0 +1,118 @@
+\doxysection{Linked\+\_\+list\texorpdfstring{$<$}{<} Node\+Type \texorpdfstring{$>$}{>} Class Template Reference}
+\hypertarget{classLinked__list}{}\label{classLinked__list}\index{Linked\_list$<$ NodeType $>$@{Linked\_list$<$ NodeType $>$}}
+
+
+{\ttfamily \#include $<$Linked\+\_\+list.\+hpp$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{classLinked__list_ad1c20c58f90e54eee52279878ba420b5}{get\+Tam}} ()
+\item 
+Node\+Type \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classLinked__list_af1d4f5ed4b06c8ba3898159a11c0762a}{get\+Node\+By\+Id}} (int val)
+\item 
+Node\+Type \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classLinked__list_a67853c0cb82aad5bfba932bae6eb8402}{get\+Ultimo}} ()
+\item 
+Node\+Type \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classLinked__list_a18591733d99a3ca6aeaf4357abf00f44}{get\+Primeiro}} ()
+\item 
+\mbox{\hyperlink{classLinked__list_a54be58d941e1da475472a5c5e5dc7786}{Linked\+\_\+list}} ()
+\item 
+\mbox{\hyperlink{classLinked__list_a8a866f60000c39425020b3f102baad92}{\texorpdfstring{$\sim$}{\string~}\+Linked\+\_\+list}} ()
+\item 
+void \mbox{\hyperlink{classLinked__list_ad68dcfd7efeba688a38415bef82bb184}{insere\+Final}} (int val)
+\item 
+void \mbox{\hyperlink{classLinked__list_a32d114d58039a83d38209dbfe86abcc1}{imprime\+Lista}} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{classLinked__list_a17e3103bf8064e6622004dec62b8ea0a}{limpa\+Nodes}} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classLinked__list_ab2273245078b15b1383764cf4c3cdc8f}\label{classLinked__list_ab2273245078b15b1383764cf4c3cdc8f} 
+Node\+Type \texorpdfstring{$\ast$}{*} {\bfseries primeiro}
+\item 
+\Hypertarget{classLinked__list_ad7b7592b17f680d3f758bea972a36cfe}\label{classLinked__list_ad7b7592b17f680d3f758bea972a36cfe} 
+Node\+Type \texorpdfstring{$\ast$}{*} {\bfseries ultimo}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\subsubsection*{template$<$typename Node\+Type$>$\newline
+class Linked\+\_\+list$<$ Node\+Type $>$}
+Classe template para criação do grafo por lista encadeada 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classLinked__list_a54be58d941e1da475472a5c5e5dc7786}\index{Linked\_list$<$ NodeType $>$@{Linked\_list$<$ NodeType $>$}!Linked\_list@{Linked\_list}}
+\index{Linked\_list@{Linked\_list}!Linked\_list$<$ NodeType $>$@{Linked\_list$<$ NodeType $>$}}
+\doxysubsubsection{\texorpdfstring{Linked\_list()}{Linked\_list()}}
+{\footnotesize\ttfamily \label{classLinked__list_a54be58d941e1da475472a5c5e5dc7786} 
+template$<$typename Node\+Type$>$ \\
+\mbox{\hyperlink{classLinked__list}{Linked\+\_\+list}}$<$ Node\+Type $>$\mbox{\hyperlink{classLinked__list}{\+::\+Linked\+\_\+list}} (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Construtor da Lista Encadeada \Hypertarget{classLinked__list_a8a866f60000c39425020b3f102baad92}\index{Linked\_list$<$ NodeType $>$@{Linked\_list$<$ NodeType $>$}!````~Linked\_list@{\texorpdfstring{$\sim$}{\string~}Linked\_list}}
+\index{````~Linked\_list@{\texorpdfstring{$\sim$}{\string~}Linked\_list}!Linked\_list$<$ NodeType $>$@{Linked\_list$<$ NodeType $>$}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}Linked\_list()}{\string~Linked\_list()}}
+{\footnotesize\ttfamily \label{classLinked__list_a8a866f60000c39425020b3f102baad92} 
+template$<$typename Node\+Type$>$ \\
+\mbox{\hyperlink{classLinked__list}{Linked\+\_\+list}}$<$ Node\+Type $>$\+::\texorpdfstring{$\sim$}{\string~}\mbox{\hyperlink{classLinked__list}{Linked\+\_\+list}} (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Destrutor da Lista encadeada 
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classLinked__list_af1d4f5ed4b06c8ba3898159a11c0762a}\index{Linked\_list$<$ NodeType $>$@{Linked\_list$<$ NodeType $>$}!getNodeById@{getNodeById}}
+\index{getNodeById@{getNodeById}!Linked\_list$<$ NodeType $>$@{Linked\_list$<$ NodeType $>$}}
+\doxysubsubsection{\texorpdfstring{getNodeById()}{getNodeById()}}
+{\footnotesize\ttfamily \label{classLinked__list_af1d4f5ed4b06c8ba3898159a11c0762a} 
+template$<$typename Node\+Type$>$ \\
+Node\+Type \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classLinked__list}{Linked\+\_\+list}}$<$ Node\+Type $>$\+::get\+Node\+By\+Id (\begin{DoxyParamCaption}\item[{int}]{val}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Retorna o nó correspondente ao id passado \Hypertarget{classLinked__list_a18591733d99a3ca6aeaf4357abf00f44}\index{Linked\_list$<$ NodeType $>$@{Linked\_list$<$ NodeType $>$}!getPrimeiro@{getPrimeiro}}
+\index{getPrimeiro@{getPrimeiro}!Linked\_list$<$ NodeType $>$@{Linked\_list$<$ NodeType $>$}}
+\doxysubsubsection{\texorpdfstring{getPrimeiro()}{getPrimeiro()}}
+{\footnotesize\ttfamily \label{classLinked__list_a18591733d99a3ca6aeaf4357abf00f44} 
+template$<$typename Node\+Type$>$ \\
+Node\+Type \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classLinked__list}{Linked\+\_\+list}}$<$ Node\+Type $>$\+::get\+Primeiro (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Retorna o primeiro nó \Hypertarget{classLinked__list_ad1c20c58f90e54eee52279878ba420b5}\index{Linked\_list$<$ NodeType $>$@{Linked\_list$<$ NodeType $>$}!getTam@{getTam}}
+\index{getTam@{getTam}!Linked\_list$<$ NodeType $>$@{Linked\_list$<$ NodeType $>$}}
+\doxysubsubsection{\texorpdfstring{getTam()}{getTam()}}
+{\footnotesize\ttfamily \label{classLinked__list_ad1c20c58f90e54eee52279878ba420b5} 
+template$<$typename Node\+Type$>$ \\
+int \mbox{\hyperlink{classLinked__list}{Linked\+\_\+list}}$<$ Node\+Type $>$\+::get\+Tam (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Retorna o tamanho da lista \Hypertarget{classLinked__list_a67853c0cb82aad5bfba932bae6eb8402}\index{Linked\_list$<$ NodeType $>$@{Linked\_list$<$ NodeType $>$}!getUltimo@{getUltimo}}
+\index{getUltimo@{getUltimo}!Linked\_list$<$ NodeType $>$@{Linked\_list$<$ NodeType $>$}}
+\doxysubsubsection{\texorpdfstring{getUltimo()}{getUltimo()}}
+{\footnotesize\ttfamily \label{classLinked__list_a67853c0cb82aad5bfba932bae6eb8402} 
+template$<$typename Node\+Type$>$ \\
+Node\+Type \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classLinked__list}{Linked\+\_\+list}}$<$ Node\+Type $>$\+::get\+Ultimo (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Retorna o ultimo nó \Hypertarget{classLinked__list_a32d114d58039a83d38209dbfe86abcc1}\index{Linked\_list$<$ NodeType $>$@{Linked\_list$<$ NodeType $>$}!imprimeLista@{imprimeLista}}
+\index{imprimeLista@{imprimeLista}!Linked\_list$<$ NodeType $>$@{Linked\_list$<$ NodeType $>$}}
+\doxysubsubsection{\texorpdfstring{imprimeLista()}{imprimeLista()}}
+{\footnotesize\ttfamily \label{classLinked__list_a32d114d58039a83d38209dbfe86abcc1} 
+template$<$typename Node\+Type$>$ \\
+void \mbox{\hyperlink{classLinked__list}{Linked\+\_\+list}}$<$ Node\+Type $>$\+::imprime\+Lista (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Imprime a Lista encadeada \Hypertarget{classLinked__list_ad68dcfd7efeba688a38415bef82bb184}\index{Linked\_list$<$ NodeType $>$@{Linked\_list$<$ NodeType $>$}!insereFinal@{insereFinal}}
+\index{insereFinal@{insereFinal}!Linked\_list$<$ NodeType $>$@{Linked\_list$<$ NodeType $>$}}
+\doxysubsubsection{\texorpdfstring{insereFinal()}{insereFinal()}}
+{\footnotesize\ttfamily \label{classLinked__list_ad68dcfd7efeba688a38415bef82bb184} 
+template$<$typename Node\+Type$>$ \\
+void \mbox{\hyperlink{classLinked__list}{Linked\+\_\+list}}$<$ Node\+Type $>$\+::insere\+Final (\begin{DoxyParamCaption}\item[{int}]{val}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Insere nó no final da lista com peso passado como parâmetro \Hypertarget{classLinked__list_a17e3103bf8064e6622004dec62b8ea0a}\index{Linked\_list$<$ NodeType $>$@{Linked\_list$<$ NodeType $>$}!limpaNodes@{limpaNodes}}
+\index{limpaNodes@{limpaNodes}!Linked\_list$<$ NodeType $>$@{Linked\_list$<$ NodeType $>$}}
+\doxysubsubsection{\texorpdfstring{limpaNodes()}{limpaNodes()}}
+{\footnotesize\ttfamily \label{classLinked__list_a17e3103bf8064e6622004dec62b8ea0a} 
+template$<$typename Node\+Type$>$ \\
+void \mbox{\hyperlink{classLinked__list}{Linked\+\_\+list}}$<$ Node\+Type $>$\+::limpa\+Nodes (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}}
+
+Função auxiliar que deleta todos os nós 
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Linked\+\_\+list.\+hpp\end{DoxyCompactItemize}

@@ -1,0 +1,38 @@
+\doxysection{Grafo\+\_\+matriz.\+h}
+\hypertarget{Grafo__matriz_8h_source}{}\label{Grafo__matriz_8h_source}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ GRAFO\_MATRIZ\_H}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ GRAFO\_MATRIZ\_H}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}GrafoAbstract.hpp"{}}}
+\DoxyCodeLine{00005\ }
+\DoxyCodeLine{00006\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classGrafo__matriz_a4be5a601e3b8f9c21d1d4c244425039f}{Grafo\_matriz}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{classGrafoAbstract}{GrafoAbstract}}}
+\DoxyCodeLine{00007\ \{}
+\DoxyCodeLine{00008\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00009\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}**\ matriz\_adjacencia;}
+\DoxyCodeLine{00010\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}*\ peso\_Vertice;}
+\DoxyCodeLine{00011\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ numVertices;}
+\DoxyCodeLine{00013\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ inicializaMatriz();}
+\DoxyCodeLine{00015\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ inicializaPesoVertices();}
+\DoxyCodeLine{00017\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}*\ retornaCelulaMatriz(\textcolor{keywordtype}{int}\ i,\ \textcolor{keywordtype}{int}\ j);}
+\DoxyCodeLine{00019\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ temCiclo(\textcolor{keywordtype}{int}\ v,\ \textcolor{keywordtype}{int}\ visitado[],\ \textcolor{keywordtype}{int}\ pai);}
+\DoxyCodeLine{00020\ }
+\DoxyCodeLine{00021\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00023\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classGrafo__matriz_a4be5a601e3b8f9c21d1d4c244425039f}{Grafo\_matriz}}();}
+\DoxyCodeLine{00025\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classGrafo__matriz_aa88d1e440153c4245de0fb7bbdface3f}{\string~Grafo\_matriz}}();}
+\DoxyCodeLine{00027\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classGrafo__matriz_af5d80405f0b2d077a83c3efb8c13e8ce}{insereVertice}}(\textcolor{keywordtype}{int}\ val);}
+\DoxyCodeLine{00029\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classGrafo__matriz_a2002082f187ab033a08226c9d3e53f87}{insereAresta}}(\textcolor{keywordtype}{int}\ origem,\ \textcolor{keywordtype}{int}\ destino,\ \textcolor{keywordtype}{int}\ val);}
+\DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classGrafo__matriz_aea624fd4cf4f78b6d97b7c578b22cafd}{removeAresta}}(\textcolor{keywordtype}{int}\ i,\ \textcolor{keywordtype}{int}\ j);}
+\DoxyCodeLine{00033\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classGrafo__matriz_aab50ebc9ff0d0f0d9952ad1b4de61fb5}{getNConexo}}();}
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classGrafo__matriz_a80d9a24bf21bb69978c1661c085cd334}{getGrau}}();}
+\DoxyCodeLine{00037\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classGrafo__matriz_a88c1d7b608e2b25e8ef1ff579d6f0c77}{eh\_bipartido}}();}
+\DoxyCodeLine{00039\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classGrafo__matriz_ab84f870e22960c0ffa6a88aef45d8b7e}{eh\_completo}}();}
+\DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classGrafo__matriz_aeb5c91e372b9282898254b309fe2421e}{eh\_arvore}}();}
+\DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classGrafo__matriz_ac75bf3f8a69380ee4ddd1cf391c43c14}{possuiArticulacao}}();}
+\DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classGrafo__matriz_a5f61a72b03ab63742e1f959ba9a951bd}{possuiPonte}}();}
+\DoxyCodeLine{00046\ \};}
+\DoxyCodeLine{00047\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00048\ }
+\DoxyCodeLine{00049\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

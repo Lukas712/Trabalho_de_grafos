@@ -1,0 +1,35 @@
+\doxysection{Node.\+h}
+\hypertarget{Node_8h_source}{}\label{Node_8h_source}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ NODE\_H}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ NODE\_H}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classNode_ad7a34779cad45d997bfd6d3d8043c75f}{Node}}}
+\DoxyCodeLine{00005\ \{}
+\DoxyCodeLine{00006\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00007\ \ \ \ \ \textcolor{keywordtype}{int}\ value;}
+\DoxyCodeLine{00008\ \ \ \ \ \mbox{\hyperlink{classNode_ad7a34779cad45d997bfd6d3d8043c75f}{Node}}*\ prox;}
+\DoxyCodeLine{00009\ \ \ \ \ \textcolor{keywordtype}{int}\ id;}
+\DoxyCodeLine{00010\ \ \ \ \ \textcolor{keywordtype}{bool}\ noAtivo;}
+\DoxyCodeLine{00011\ \ \ \ \ }
+\DoxyCodeLine{00012\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00014\ \ \ \ \ \mbox{\hyperlink{classNode_ad7a34779cad45d997bfd6d3d8043c75f}{Node}}()\ :\ id(-\/1)\{\mbox{\hyperlink{classNode_ad7a34779cad45d997bfd6d3d8043c75f}{Node}}*\ prox\ =\ NULL;\ noAtivo\ =\ \textcolor{keyword}{true};\};}
+\DoxyCodeLine{00016\ \ \ \ \ \mbox{\hyperlink{classNode_aa0840c3cb5c7159be6d992adecd2097c}{\string~Node}}()\{\};}
+\DoxyCodeLine{00017\ \ \ \ \ \mbox{\hyperlink{classNode}{Node}}*\ getProx()\{\textcolor{keywordflow}{return}\ prox;\};}
+\DoxyCodeLine{00018\ \ \ \ \ \textcolor{keywordtype}{void}\ setProx(\mbox{\hyperlink{classNode_ad7a34779cad45d997bfd6d3d8043c75f}{Node}}*\ prox)\{this-\/>prox\ =\ prox;\};}
+\DoxyCodeLine{00019\ \ \ \ \ }
+\DoxyCodeLine{00020\ \ \ \ \ \textcolor{keywordtype}{void}\ setValue(\textcolor{keywordtype}{int}\ value)\{this-\/>value\ =\ value;\}}
+\DoxyCodeLine{00021\ \ \ \ \ \textcolor{keywordtype}{int}\ getValue()\{\textcolor{keywordflow}{return}\ this-\/>value;\};}
+\DoxyCodeLine{00022\ \ \ \ \ }
+\DoxyCodeLine{00023\ }
+\DoxyCodeLine{00024\ \ \ \ \ \textcolor{keywordtype}{void}\ setId(\textcolor{keywordtype}{int}\ val)\{this-\/>\textcolor{keywordtype}{id}\ =\ val;\};}
+\DoxyCodeLine{00025\ \ \ \ \ \textcolor{keywordtype}{int}\ getId()\{\textcolor{keywordflow}{return}\ this-\/>id;\};}
+\DoxyCodeLine{00026\ \ \ \ \ }
+\DoxyCodeLine{00027\ \ \ \ \ \textcolor{keywordtype}{void}\ setAtivo(\textcolor{keywordtype}{bool}\ value)\{this-\/>noAtivo\ =\ value;\};}
+\DoxyCodeLine{00028\ \ \ \ \ \textcolor{keywordtype}{bool}\ getAtivo()\{\textcolor{keywordflow}{return}\ this-\/>noAtivo;\};}
+\DoxyCodeLine{00029\ \};}
+\DoxyCodeLine{00030\ }
+\DoxyCodeLine{00031\ }
+\DoxyCodeLine{00032\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

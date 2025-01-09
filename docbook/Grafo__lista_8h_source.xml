@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_Grafo__lista_8h_source" xml:lang="pt">
+<title>Grafo_lista.h</title>
+<programlisting linenumbering="unnumbered">1 <emphasis role="preprocessor">#ifndef&#32;GRAFO_LISTA_H</emphasis>
+2 <emphasis role="preprocessor">#define&#32;GRAFO_LISTA_H</emphasis>
+3 
+4 <emphasis role="preprocessor">#include&#32;&quot;<link linkend="_GrafoAbstract_8hpp">GrafoAbstract.hpp</link>&quot;</emphasis>
+5 <emphasis role="preprocessor">#include&#32;&quot;Linked_Vertex.h&quot;</emphasis>
+6 <emphasis role="keyword">class&#32;</emphasis><link linkend="_classGrafo__lista_1a4553b359b56bd157b904fc7ea1e53612">Grafo_lista</link>&#32;:&#32;<emphasis role="keyword">public</emphasis>&#32;<link linkend="_classGrafoAbstract">GrafoAbstract</link>
+7 {
+8 &#32;&#32;&#32;&#32;<emphasis role="keyword">private</emphasis>:
+9 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_classLinked__Vertex">Linked_Vertex</link>*&#32;Vertice;
+11 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">bool</emphasis>&#32;temCiclo(<emphasis role="keywordtype">int</emphasis>&#32;v,&#32;<emphasis role="keywordtype">int</emphasis>&#32;visitado[],&#32;<emphasis role="keywordtype">int</emphasis>&#32;pai);
+12 &#32;&#32;&#32;&#32;<emphasis role="keyword">public</emphasis>:
+14 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_classGrafo__lista_1a4553b359b56bd157b904fc7ea1e53612">Grafo_lista</link>();
+16 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_classGrafo__lista_1a4f99c7aac3bda88d192fe28985d93ae5">~Grafo_lista</link>();
+18 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">void</emphasis>&#32;<link linkend="_classGrafo__lista_1a9f1cc47af2a3ad817239af214cea4814">insereVertice</link>(<emphasis role="keywordtype">int</emphasis>&#32;val);
+20 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">void</emphasis>&#32;<link linkend="_classGrafo__lista_1aa2e24d98645256ce6adfec71e3375ea4">insereAresta</link>(<emphasis role="keywordtype">int</emphasis>&#32;origem,&#32;<emphasis role="keywordtype">int</emphasis>&#32;destino,&#32;<emphasis role="keywordtype">int</emphasis>&#32;val);
+22 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">void</emphasis>&#32;<link linkend="_classGrafo__lista_1a81196269ae03d761aa139eb38550ada6">removeAresta</link>(<emphasis role="keywordtype">int</emphasis>&#32;i,&#32;<emphasis role="keywordtype">int</emphasis>&#32;j);
+24 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;<link linkend="_classGrafo__lista_1a1b28e04f39454e499c2e953f9ded7bcb">getNConexo</link>();
+26 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;<link linkend="_classGrafo__lista_1a0e51985546b147482be914cb8ff23a7a">getGrau</link>();
+28 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">bool</emphasis>&#32;<link linkend="_classGrafo__lista_1af08e48645dfb14e720836f6fe35d918e">eh_bipartido</link>();
+30 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">bool</emphasis>&#32;<link linkend="_classGrafo__lista_1adb75edbf0baf2878ea2421407ed7fc14">eh_completo</link>();
+32 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">bool</emphasis>&#32;<link linkend="_classGrafo__lista_1a55f663b2ebddb096f2b6861e9e461257">eh_arvore</link>();
+34 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">bool</emphasis>&#32;<link linkend="_classGrafo__lista_1aadc2f2ab73280ab8f740fa3f3a58ee06">possuiArticulacao</link>();
+36 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">bool</emphasis>&#32;<link linkend="_classGrafo__lista_1a92829014e6be32034cbb1fc2c37745e4">possuiPonte</link>();
+37 
+38 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;
+39 };
+40 <emphasis role="preprocessor">#endif</emphasis>
+</programlisting></section>

@@ -45,7 +45,6 @@ void Grafo_matriz::inicializaMatriz()
         }
     }
 }
-
 void Grafo_matriz::inicializaPesoVertices()
 {
     peso_Vertice = new int[getOrdem()]();
@@ -236,6 +235,7 @@ bool Grafo_matriz::eh_arvore() {
                         }
                         
                     }
+                    
                 }
             }
             int contaDiferente = 1;

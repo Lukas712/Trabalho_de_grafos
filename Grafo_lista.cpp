@@ -8,14 +8,17 @@ using namespace std;
 Grafo_lista::Grafo_lista(){
     this->Vertice = new Linked_Vertex();
 }
+
 Grafo_lista::~Grafo_lista(){
     delete Vertice;
 }
+
 
 void Grafo_lista::insereVertice(int val)
 {
     this->Vertice->insereFinal(val);
 }
+
 
 void Grafo_lista::insereAresta(int origem, int destino, int val)
 {
@@ -41,17 +44,25 @@ int Grafo_lista::getNConexo() {
     int* componentes = new int[ordem];
 
     for (int i = 0; i < ordem; i++) {
-        componentes[i] = i + 1;
+        NodeVertex* no = this->Vertice->getNodeById(i);
+        if (!no || !no->getAtivo()) {
+            componentes[i] = -1;
+        } else {
+            componentes[i] = i + 1;
+        }
     }
+
     for (int i = 0; i < ordem; i++) {
         NodeVertex* node = this->Vertice->getNodeById(i);
-        if (!node) continue;
+        if (!node || !node->getAtivo()) continue;
 
         NodeEdge* edge = node->getArestas()->getPrimeiro();
         while (edge) {
             if (edge->getAtivo()) {
                 int j = edge->getValue();
-                if (i != j) {
+                NodeVertex* vizinho = this->Vertice->getNodeById(j);
+                
+                if (vizinho && vizinho->getAtivo()) {
                     int menor = min(componentes[i], componentes[j]);
                     int maior = max(componentes[i], componentes[j]);
 
@@ -70,7 +81,7 @@ int Grafo_lista::getNConexo() {
     bool* visitado = new bool[ordem]();
 
     for (int i = 0; i < ordem; i++) {
-        if (!visitado[componentes[i]]) {
+        if (componentes[i] != -1 && !visitado[componentes[i]]) {
             contaDiferente++;
             visitado[componentes[i]] = true;
         }
@@ -78,9 +89,15 @@ int Grafo_lista::getNConexo() {
 
     delete[] componentes;
     delete[] visitado;
-    return contaDiferente;
+    if(contaDiferente == 0)
+    {
+        return 1;
+    }
+    else
+    {
+        return contaDiferente;
+    }
 }
-
 
 
 bool Grafo_lista::eh_completo()
@@ -197,13 +214,26 @@ bool Grafo_lista::possuiPonte() {
             int j = aresta->getValue();
             NodeVertex* vizinho = this->Vertice->getNodeById(j);
 
-            if (vizinho && vizinho->getAtivo()) {
-                bool ativoOrig = aresta->getAtivo();
+            if (vizinho && vizinho->getAtivo() && i < j) {
+                NodeEdge* arestaVizinho = vizinho->getArestas()->getPrimeiro();
+                while (arestaVizinho) {
+                    if (arestaVizinho->getValue() == i) {
+                        break;
+                    }
+                    arestaVizinho = (NodeEdge*)arestaVizinho->getProx();
+                }
+
+                bool ativoOrigNo = aresta->getAtivo();
+                bool ativoOrigVizinho = arestaVizinho ? arestaVizinho->getAtivo() : false;
+
                 aresta->setAtivo(false);
+                if (arestaVizinho) arestaVizinho->setAtivo(false);
 
                 int nFinal = getNConexo();
 
-                aresta->setAtivo(ativoOrig);
+
+                aresta->setAtivo(ativoOrigNo);
+                if (arestaVizinho) arestaVizinho->setAtivo(ativoOrigVizinho);
 
                 if (nFinal > nInicial) {
                     return true;
@@ -216,6 +246,7 @@ bool Grafo_lista::possuiPonte() {
 
     return false;
 }
+
 
 bool Grafo_lista::possuiArticulacao() {
     int nInicial = getNConexo();

@@ -1,0 +1,34 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_Node_8h_source" xml:lang="pt">
+<title>Node.h</title>
+<programlisting linenumbering="unnumbered">1 <emphasis role="preprocessor">#ifndef&#32;NODE_H</emphasis>
+2 <emphasis role="preprocessor">#define&#32;NODE_H</emphasis>
+3 
+4 <emphasis role="keyword">class&#32;</emphasis><link linkend="_classNode_1ad7a34779cad45d997bfd6d3d8043c75f">Node</link>
+5 {
+6 <emphasis role="keyword">private</emphasis>:
+7 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;value;
+8 &#32;&#32;&#32;&#32;<link linkend="_classNode_1ad7a34779cad45d997bfd6d3d8043c75f">Node</link>*&#32;prox;
+9 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;id;
+10 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">bool</emphasis>&#32;noAtivo;
+11 &#32;&#32;&#32;&#32;
+12 <emphasis role="keyword">public</emphasis>:
+14 &#32;&#32;&#32;&#32;<link linkend="_classNode_1ad7a34779cad45d997bfd6d3d8043c75f">Node</link>()&#32;:&#32;id(-1){<link linkend="_classNode_1ad7a34779cad45d997bfd6d3d8043c75f">Node</link>*&#32;prox&#32;=&#32;NULL;&#32;noAtivo&#32;=&#32;<emphasis role="keyword">true</emphasis>;};
+16 &#32;&#32;&#32;&#32;<link linkend="_classNode_1aa0840c3cb5c7159be6d992adecd2097c">~Node</link>(){};
+17 &#32;&#32;&#32;&#32;<link linkend="_classNode">Node</link>*&#32;getProx(){<emphasis role="keywordflow">return</emphasis>&#32;prox;};
+18 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">void</emphasis>&#32;setProx(<link linkend="_classNode_1ad7a34779cad45d997bfd6d3d8043c75f">Node</link>*&#32;prox){this-&gt;prox&#32;=&#32;prox;};
+19 &#32;&#32;&#32;&#32;
+20 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">void</emphasis>&#32;setValue(<emphasis role="keywordtype">int</emphasis>&#32;value){this-&gt;value&#32;=&#32;value;}
+21 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;getValue(){<emphasis role="keywordflow">return</emphasis>&#32;this-&gt;value;};
+22 &#32;&#32;&#32;&#32;
+23 
+24 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">void</emphasis>&#32;setId(<emphasis role="keywordtype">int</emphasis>&#32;val){this-&gt;<emphasis role="keywordtype">id</emphasis>&#32;=&#32;val;};
+25 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;getId(){<emphasis role="keywordflow">return</emphasis>&#32;this-&gt;id;};
+26 &#32;&#32;&#32;&#32;
+27 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">void</emphasis>&#32;setAtivo(<emphasis role="keywordtype">bool</emphasis>&#32;value){this-&gt;noAtivo&#32;=&#32;value;};
+28 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">bool</emphasis>&#32;getAtivo(){<emphasis role="keywordflow">return</emphasis>&#32;this-&gt;noAtivo;};
+29 };
+30 
+31 
+32 <emphasis role="preprocessor">#endif</emphasis>
+</programlisting></section>

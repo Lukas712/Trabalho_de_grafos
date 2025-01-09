@@ -62,6 +62,9 @@
     "*.cs": "csharp",
     "iostream": "cpp",
     "new": "cpp",
-    "ostream": "cpp"
+    "ostream": "cpp",
+    "tuple": "cpp",
+    "*.tcc": "cpp",
+    "fstream": "cpp"
   }
 }

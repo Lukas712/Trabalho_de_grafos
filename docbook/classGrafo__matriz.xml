@@ -1,0 +1,192 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_classGrafo__matriz" xml:lang="pt">
+<title>Referência à classe Grafo_matriz</title>
+<indexterm><primary>Grafo_matriz</primary></indexterm>
+Diagrama de heranças da classe Grafo_matriz<para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject>
+                <imagedata width="50%" align="center" valign="middle" scalefit="0" fileref="classGrafo__matriz__inherit__graph.png"></imagedata>
+            </imageobject>
+        </mediaobject>
+    </informalfigure>
+</para>
+Diagrama de colaboração para Grafo_matriz:<para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject>
+                <imagedata width="50%" align="center" valign="middle" scalefit="0" fileref="classGrafo__matriz__coll__graph.png"></imagedata>
+            </imageobject>
+        </mediaobject>
+    </informalfigure>
+</para>
+<simplesect>
+    <title>Membros públicos    </title>
+        <itemizedlist>
+            <listitem><para><link linkend="_classGrafo__matriz_1a4be5a601e3b8f9c21d1d4c244425039f">Grafo_matriz</link> ()</para>
+</listitem>
+            <listitem><para><link linkend="_classGrafo__matriz_1aa88d1e440153c4245de0fb7bbdface3f">~Grafo_matriz</link> ()</para>
+</listitem>
+            <listitem><para>void <link linkend="_classGrafo__matriz_1af5d80405f0b2d077a83c3efb8c13e8ce">insereVertice</link> (int val)</para>
+</listitem>
+            <listitem><para>void <link linkend="_classGrafo__matriz_1a2002082f187ab033a08226c9d3e53f87">insereAresta</link> (int origem, int destino, int val)</para>
+</listitem>
+            <listitem><para>void <link linkend="_classGrafo__matriz_1aea624fd4cf4f78b6d97b7c578b22cafd">removeAresta</link> (int i, int j)</para>
+</listitem>
+            <listitem><para>int <link linkend="_classGrafo__matriz_1aab50ebc9ff0d0f0d9952ad1b4de61fb5">getNConexo</link> ()</para>
+</listitem>
+            <listitem><para>int <link linkend="_classGrafo__matriz_1a80d9a24bf21bb69978c1661c085cd334">getGrau</link> ()</para>
+</listitem>
+            <listitem><para>bool <link linkend="_classGrafo__matriz_1a88c1d7b608e2b25e8ef1ff579d6f0c77">eh_bipartido</link> ()</para>
+</listitem>
+            <listitem><para>bool <link linkend="_classGrafo__matriz_1ab84f870e22960c0ffa6a88aef45d8b7e">eh_completo</link> ()</para>
+</listitem>
+            <listitem><para>bool <link linkend="_classGrafo__matriz_1aeb5c91e372b9282898254b309fe2421e">eh_arvore</link> ()</para>
+</listitem>
+            <listitem><para>bool <link linkend="_classGrafo__matriz_1ac75bf3f8a69380ee4ddd1cf391c43c14">possuiArticulacao</link> ()</para>
+</listitem>
+            <listitem><para>bool <link linkend="_classGrafo__matriz_1a5f61a72b03ab63742e1f959ba9a951bd">possuiPonte</link> ()</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+Membros públicos herdados de <link linkend="_classGrafoAbstract">GrafoAbstract</link>        <itemizedlist>
+            <listitem><para>bool <emphasis role="strong">eh_direcionado</emphasis> ()</para>
+</listitem>
+            <listitem><para>bool <emphasis role="strong">verticePonderado</emphasis> ()</para>
+</listitem>
+            <listitem><para>bool <emphasis role="strong">arestaPonderada</emphasis> ()</para>
+</listitem>
+            <listitem><para>int <emphasis role="strong">getOrdem</emphasis> ()</para>
+</listitem>
+            <listitem><para>void <emphasis role="strong">criaCompleto</emphasis> (ofstream &amp;outFile, int ordem, bool arestaPonderada, bool direcionado)</para>
+</listitem>
+            <listitem><para>void <emphasis role="strong">criaArvore</emphasis> (ofstream &amp;outFile, int ordem, bool arestaPonderada, bool direcionado, int grau)</para>
+</listitem>
+            <listitem><para>bool <emphasis role="strong">criaBipartido</emphasis> (ofstream &amp;outFile, int ordem, bool arestaPonderada, bool direcionado, int grau, int componentesConexas, int ponte, int articulacao)</para>
+</listitem>
+            <listitem><para>void <link linkend="_classGrafoAbstract_1ab984ce94223715702b594fb3fd12bed4">carregaGrafo</link> ()</para>
+</listitem>
+            <listitem><para>void <link linkend="_classGrafoAbstract_1acda8a9c27b0ecbf193ae6687dc2d46c0">novoGrafo</link> ()</para>
+</listitem>
+            <listitem><para>void <emphasis role="strong">limpaArquivo</emphasis> (ofstream &amp;outFile, string nomeArquivo)</para>
+</listitem>
+            <listitem><para>void <emphasis role="strong">imprimeGrafo</emphasis> ()</para>
+</listitem>
+            <listitem><para>void <link linkend="_classGrafoAbstract_1ab660e47d44e19b375952706ee825b598">criaGrafo</link> (int ordem, int grau, bool direcionado, int componentesConexas, bool ponte, bool articulacao, bool completo, bool bipartido, bool arvore)</para>
+</listitem>
+            <listitem><para>bool <link linkend="_classGrafoAbstract_1a1a9eb117bcd88e0a355e64ea9b1e98d9">grafoPronto</link> (int ordem, int grau, bool direcionado, int cc, bool ponte, bool articulacao, bool completo, bool bipartido, bool arvore)</para>
+</listitem>
+        </itemizedlist>
+<section>
+<title>Documentação dos Construtores &amp; Destrutor</title>
+<anchor xml:id="_classGrafo__matriz_1a4be5a601e3b8f9c21d1d4c244425039f"/><section>
+    <title>Grafo_matriz()</title>
+<indexterm><primary>Grafo_matriz</primary><secondary>Grafo_matriz</secondary></indexterm>
+<indexterm><primary>Grafo_matriz</primary><secondary>Grafo_matriz</secondary></indexterm>
+<para><computeroutput>Grafo_matriz::Grafo_matriz ( )</computeroutput></para>
+<para>Construtor da classe Grafo matriz </para>
+</section>
+<anchor xml:id="_classGrafo__matriz_1aa88d1e440153c4245de0fb7bbdface3f"/><section>
+    <title>~Grafo_matriz()</title>
+<indexterm><primary>~Grafo_matriz</primary><secondary>Grafo_matriz</secondary></indexterm>
+<indexterm><primary>Grafo_matriz</primary><secondary>~Grafo_matriz</secondary></indexterm>
+<para><computeroutput>Grafo_matriz::~Grafo_matriz ( )</computeroutput></para>
+<para>Destrutor da classe Grafo lista </para>
+</section>
+</section>
+<section>
+<title>Documentação das funções</title>
+<anchor xml:id="_classGrafo__matriz_1aeb5c91e372b9282898254b309fe2421e"/><section>
+    <title>eh_arvore()</title>
+<indexterm><primary>eh_arvore</primary><secondary>Grafo_matriz</secondary></indexterm>
+<indexterm><primary>Grafo_matriz</primary><secondary>eh_arvore</secondary></indexterm>
+<para><computeroutput>bool Grafo_matriz::eh_arvore ( )<computeroutput>[virtual]</computeroutput></computeroutput></para>
+<para>Verifica e retorna se o grafo é uma árvore </para>
+<para>
+Implementa <link linkend="_classGrafoAbstract">GrafoAbstract</link>.</para>
+</section>
+<anchor xml:id="_classGrafo__matriz_1a88c1d7b608e2b25e8ef1ff579d6f0c77"/><section>
+    <title>eh_bipartido()</title>
+<indexterm><primary>eh_bipartido</primary><secondary>Grafo_matriz</secondary></indexterm>
+<indexterm><primary>Grafo_matriz</primary><secondary>eh_bipartido</secondary></indexterm>
+<para><computeroutput>bool Grafo_matriz::eh_bipartido ( )<computeroutput>[virtual]</computeroutput></computeroutput></para>
+<para>Verifica e retorna se o grafo é bipartido utilizando de coloração de vértices para determinar </para>
+<para>
+Implementa <link linkend="_classGrafoAbstract">GrafoAbstract</link>.</para>
+</section>
+<anchor xml:id="_classGrafo__matriz_1ab84f870e22960c0ffa6a88aef45d8b7e"/><section>
+    <title>eh_completo()</title>
+<indexterm><primary>eh_completo</primary><secondary>Grafo_matriz</secondary></indexterm>
+<indexterm><primary>Grafo_matriz</primary><secondary>eh_completo</secondary></indexterm>
+<para><computeroutput>bool Grafo_matriz::eh_completo ( )<computeroutput>[virtual]</computeroutput></computeroutput></para>
+<para>Verifica e retorna se o grafo é completo </para>
+<para>
+Implementa <link linkend="_classGrafoAbstract">GrafoAbstract</link>.</para>
+</section>
+<anchor xml:id="_classGrafo__matriz_1a80d9a24bf21bb69978c1661c085cd334"/><section>
+    <title>getGrau()</title>
+<indexterm><primary>getGrau</primary><secondary>Grafo_matriz</secondary></indexterm>
+<indexterm><primary>Grafo_matriz</primary><secondary>getGrau</secondary></indexterm>
+<para><computeroutput>int Grafo_matriz::getGrau ( )<computeroutput>[virtual]</computeroutput></computeroutput></para>
+<para>Calcula e retorna o grau do grafo </para>
+<para>
+Implementa <link linkend="_classGrafoAbstract">GrafoAbstract</link>.</para>
+</section>
+<anchor xml:id="_classGrafo__matriz_1aab50ebc9ff0d0f0d9952ad1b4de61fb5"/><section>
+    <title>getNConexo()</title>
+<indexterm><primary>getNConexo</primary><secondary>Grafo_matriz</secondary></indexterm>
+<indexterm><primary>Grafo_matriz</primary><secondary>getNConexo</secondary></indexterm>
+<para><computeroutput>int Grafo_matriz::getNConexo ( )<computeroutput>[virtual]</computeroutput></computeroutput></para>
+<para>Calcula e retorna o número de componentes conexas do grafo </para>
+<para>
+Implementa <link linkend="_classGrafoAbstract">GrafoAbstract</link>.</para>
+</section>
+<anchor xml:id="_classGrafo__matriz_1a2002082f187ab033a08226c9d3e53f87"/><section>
+    <title>insereAresta()</title>
+<indexterm><primary>insereAresta</primary><secondary>Grafo_matriz</secondary></indexterm>
+<indexterm><primary>Grafo_matriz</primary><secondary>insereAresta</secondary></indexterm>
+<para><computeroutput>void Grafo_matriz::insereAresta (int origem, int destino, int val)<computeroutput>[virtual]</computeroutput></computeroutput></para>
+<para>Insere aresta ao indicar o vértice de origem, o vértice de destino e o peso da aresta </para>
+<para>
+Implementa <link linkend="_classGrafoAbstract">GrafoAbstract</link>.</para>
+</section>
+<anchor xml:id="_classGrafo__matriz_1af5d80405f0b2d077a83c3efb8c13e8ce"/><section>
+    <title>insereVertice()</title>
+<indexterm><primary>insereVertice</primary><secondary>Grafo_matriz</secondary></indexterm>
+<indexterm><primary>Grafo_matriz</primary><secondary>insereVertice</secondary></indexterm>
+<para><computeroutput>void Grafo_matriz::insereVertice (int val)<computeroutput>[virtual]</computeroutput></computeroutput></para>
+<para>Insere vértice com peso &quot;val&quot; </para>
+<para>
+Implementa <link linkend="_classGrafoAbstract">GrafoAbstract</link>.</para>
+</section>
+<anchor xml:id="_classGrafo__matriz_1ac75bf3f8a69380ee4ddd1cf391c43c14"/><section>
+    <title>possuiArticulacao()</title>
+<indexterm><primary>possuiArticulacao</primary><secondary>Grafo_matriz</secondary></indexterm>
+<indexterm><primary>Grafo_matriz</primary><secondary>possuiArticulacao</secondary></indexterm>
+<para><computeroutput>bool Grafo_matriz::possuiArticulacao ( )<computeroutput>[virtual]</computeroutput></computeroutput></para>
+<para>Verifica e retorna se o grafo possui ao menos uma articulação ou não </para>
+<para>
+Implementa <link linkend="_classGrafoAbstract">GrafoAbstract</link>.</para>
+</section>
+<anchor xml:id="_classGrafo__matriz_1a5f61a72b03ab63742e1f959ba9a951bd"/><section>
+    <title>possuiPonte()</title>
+<indexterm><primary>possuiPonte</primary><secondary>Grafo_matriz</secondary></indexterm>
+<indexterm><primary>Grafo_matriz</primary><secondary>possuiPonte</secondary></indexterm>
+<para><computeroutput>bool Grafo_matriz::possuiPonte ( )<computeroutput>[virtual]</computeroutput></computeroutput></para>
+<para>Verifica e retorna se o grafo possui ao menos uma ponte ou não </para>
+<para>
+Implementa <link linkend="_classGrafoAbstract">GrafoAbstract</link>.</para>
+</section>
+<anchor xml:id="_classGrafo__matriz_1aea624fd4cf4f78b6d97b7c578b22cafd"/><section>
+    <title>removeAresta()</title>
+<indexterm><primary>removeAresta</primary><secondary>Grafo_matriz</secondary></indexterm>
+<indexterm><primary>Grafo_matriz</primary><secondary>removeAresta</secondary></indexterm>
+<para><computeroutput>void Grafo_matriz::removeAresta (int i, int j)<computeroutput>[virtual]</computeroutput></computeroutput></para>
+<para>Remove uma aresta ao passar o vértice de origem e qual o vértice que deve ser removido </para>
+<para>
+Implementa <link linkend="_classGrafoAbstract">GrafoAbstract</link>.</para>
+</section>
+<para>
+A documentação para esta classe foi gerada a partir dos seguintes ficheiros:</para>
+Grafo_matriz.hGrafo_matriz.cpp</section>
+</section>

@@ -1,0 +1,135 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_Linked__list_8hpp_source" xml:lang="pt">
+<title>Linked_list.hpp</title>
+<programlisting linenumbering="unnumbered">1 <emphasis role="preprocessor">#ifndef&#32;LINKED_LIST_HPP</emphasis>
+2 <emphasis role="preprocessor">#define&#32;LINKED_LIST_HPP</emphasis>
+3 <emphasis role="keyword">using&#32;namespace&#32;</emphasis>std;
+4 <emphasis role="preprocessor">#include&#32;&quot;Node.h&quot;</emphasis>
+5 
+6 <emphasis role="keyword">template</emphasis>&#32;&lt;<emphasis role="keyword">typename</emphasis>&#32;NodeType&gt;
+8 <emphasis role="keyword">class&#32;</emphasis><link linkend="_classLinked__list_1a54be58d941e1da475472a5c5e5dc7786">Linked_list</link>
+9 {
+10 <emphasis role="keyword">protected</emphasis>:
+11 &#32;&#32;&#32;&#32;NodeType*&#32;primeiro,&#32;*ultimo;
+12 
+14 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">void</emphasis>&#32;<link linkend="_classLinked__list_1a17e3103bf8064e6622004dec62b8ea0a">limpaNodes</link>(){
+15 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">while</emphasis>(primeiro&#32;!=&#32;NULL)
+16 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+17 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;NodeType*&#32;p&#32;=&#32;primeiro;
+18 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;primeiro&#32;=(&#32;<emphasis role="keyword">static_cast&lt;</emphasis>)NodeType*<emphasis role="keyword">&gt;</emphasis>(primeiro-&gt;getProx());
+19 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keyword">delete</emphasis>&#32;p;
+20 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+21 &#32;&#32;&#32;&#32;};
+22 <emphasis role="keyword">private</emphasis>:
+23 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;n;
+24 
+25 <emphasis role="keyword">public</emphasis>:
+27 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;<link linkend="_classLinked__list_1ad1c20c58f90e54eee52279878ba420b5">getTam</link>(){<emphasis role="keywordflow">return</emphasis>&#32;this-&gt;n;};
+28 &#32;&#32;&#32;&#32;
+30 &#32;&#32;&#32;&#32;NodeType*&#32;<link linkend="_classLinked__list_1af1d4f5ed4b06c8ba3898159a11c0762a">getNodeById</link>(<emphasis role="keywordtype">int</emphasis>&#32;val){
+31 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;NodeType*&#32;value&#32;=&#32;primeiro;
+32 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>(val&#32;&lt;&#32;0&#32;||&#32;val&#32;&gt;&#32;n)
+33 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+34 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;cout&lt;&lt;<emphasis role="stringliteral">&quot;Erro&#32;de&#32;acesso!&quot;</emphasis>&lt;&lt;endl;
+35 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;value;
+36 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+37 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">while</emphasis>((value!=&#32;<emphasis role="keyword">nullptr</emphasis>)&#32;&amp;&amp;&#32;(value-&gt;getId()&#32;!=&#32;val))
+38 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+39 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;value&#32;=&#32;(NodeType*)value-&gt;getProx();
+40 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+41 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;value;
+42 &#32;&#32;&#32;&#32;};
+44 &#32;&#32;&#32;&#32;NodeType*&#32;<link linkend="_classLinked__list_1a67853c0cb82aad5bfba932bae6eb8402">getUltimo</link>()
+45 &#32;&#32;&#32;&#32;{
+46 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;this-&gt;ultimo;
+47 &#32;&#32;&#32;&#32;}
+49 &#32;&#32;&#32;&#32;NodeType*&#32;<link linkend="_classLinked__list_1a18591733d99a3ca6aeaf4357abf00f44">getPrimeiro</link>()
+50 &#32;&#32;&#32;&#32;{
+51 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;this-&gt;primeiro;
+52 &#32;&#32;&#32;&#32;}
+54 &#32;&#32;&#32;&#32;<link linkend="_classLinked__list_1a54be58d941e1da475472a5c5e5dc7786">Linked_list</link>(){
+55 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;this-&gt;primeiro&#32;=&#32;<emphasis role="keyword">nullptr</emphasis>;
+56 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;this-&gt;ultimo&#32;=&#32;<emphasis role="keyword">nullptr</emphasis>;
+57 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;this-&gt;n&#32;=&#32;0;
+58 &#32;&#32;&#32;&#32;};
+60 &#32;&#32;&#32;&#32;<link linkend="_classLinked__list_1a8a866f60000c39425020b3f102baad92">~Linked_list</link>(){
+61 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_classLinked__list_1a17e3103bf8064e6622004dec62b8ea0a">limpaNodes</link>();
+62 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;ultimo&#32;=&#32;NULL;
+63 &#32;&#32;&#32;&#32;};
+64 &#32;&#32;&#32;&#32;
+66 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">void</emphasis>&#32;<link linkend="_classLinked__list_1ad68dcfd7efeba688a38415bef82bb184">insereFinal</link>(<emphasis role="keywordtype">int</emphasis>&#32;val){
+67 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;NodeType*&#32;p&#32;=&#32;<emphasis role="keyword">new</emphasis>&#32;NodeType();
+68 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;p-&gt;setValue(val);
+69 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;p-&gt;setProx(<emphasis role="keyword">nullptr</emphasis>);
+70 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;p-&gt;setId(n);
+71 
+72 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>(ultimo!=<emphasis role="keyword">nullptr</emphasis>)
+73 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+74 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;ultimo-&gt;setProx(p);
+75 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+76 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>
+77 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+78 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;primeiro&#32;=&#32;p;
+79 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+80 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;ultimo&#32;=&#32;p;
+81 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;n+=1;
+82 &#32;&#32;&#32;&#32;};
+84 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">void</emphasis>&#32;<link linkend="_classLinked__list_1a32d114d58039a83d38209dbfe86abcc1">imprimeLista</link>(){
+85 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;NodeType*&#32;p&#32;=&#32;primeiro;
+86 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">while</emphasis>(p!=<emphasis role="keyword">nullptr</emphasis>)
+87 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+88 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;cout&lt;&lt;p-&gt;getValue()&lt;&lt;<emphasis role="stringliteral">&quot;&#32;&quot;</emphasis>;
+89 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;p&#32;=&#32;(NodeType*)p-&gt;getProx();
+90 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+91 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;cout&lt;&lt;endl;
+92 &#32;&#32;&#32;&#32;}
+94 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">void</emphasis>&#32;<link linkend="_classLinked__list_1a42b8ab1db5a517935a7001af37fe130f">removeNode</link>(<emphasis role="keywordtype">int</emphasis>&#32;val)&#32;{
+95 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(primeiro&#32;==&#32;<emphasis role="keyword">nullptr</emphasis>)&#32;{
+96 
+97 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>;
+98 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+99 
+100 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(primeiro-&gt;getValue()&#32;==&#32;val)&#32;{
+101 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;NodeType*&#32;temp&#32;=&#32;primeiro;
+102 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;primeiro&#32;=&#32;(NodeType*)primeiro-&gt;getProx();
+103 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(primeiro&#32;==&#32;<emphasis role="keyword">nullptr</emphasis>)&#32;{
+104 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;ultimo&#32;=&#32;<emphasis role="keyword">nullptr</emphasis>;
+105 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+106 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keyword">delete</emphasis>&#32;temp;
+107 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;n--;
+108 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>;
+109 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+110 
+111 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;NodeType*&#32;p&#32;=&#32;primeiro;
+112 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">while</emphasis>&#32;(p&#32;!=&#32;<emphasis role="keyword">nullptr</emphasis>&#32;&amp;&amp;&#32;p-&gt;getValue()&#32;!=&#32;val)&#32;{
+113 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;p&#32;=&#32;(NodeType*)p-&gt;getProx();
+114 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+115 
+116 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(p&#32;==&#32;<emphasis role="keyword">nullptr</emphasis>)&#32;{
+117 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>;
+118 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+119 
+120 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(p&#32;==&#32;ultimo)&#32;{
+121 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;NodeType*&#32;temp&#32;=&#32;ultimo;
+122 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;ultimo&#32;=&#32;(NodeType*)<link linkend="_classLinked__list_1af1d4f5ed4b06c8ba3898159a11c0762a">getNodeById</link>(n&#32;-&#32;1);
+123 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;ultimo-&gt;setProx(<emphasis role="keyword">nullptr</emphasis>);
+124 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keyword">delete</emphasis>&#32;temp;
+125 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;n--;
+126 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>;
+127 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+128 
+129 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;NodeType*&#32;anterior&#32;=&#32;primeiro;
+130 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">while</emphasis>&#32;(anterior-&gt;getProx()&#32;!=&#32;p)&#32;{
+131 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;anterior&#32;=&#32;(NodeType*)anterior-&gt;getProx();
+132 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+133 
+134 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;anterior-&gt;setProx(p-&gt;getProx());
+135 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keyword">delete</emphasis>&#32;p;&#32;
+136 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;n--;
+137 &#32;&#32;&#32;&#32;}
+138 };
+139 
+140 
+141 
+142 <emphasis role="preprocessor">#endif</emphasis>
+</programlisting></section>

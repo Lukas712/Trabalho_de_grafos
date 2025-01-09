@@ -1,0 +1,33 @@
+\doxysection{Grafo\+\_\+lista.\+h}
+\hypertarget{Grafo__lista_8h_source}{}\label{Grafo__lista_8h_source}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ GRAFO\_LISTA\_H}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ GRAFO\_LISTA\_H}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}GrafoAbstract.hpp"{}}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}Linked\_Vertex.h"{}}}
+\DoxyCodeLine{00006\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classGrafo__lista_a4553b359b56bd157b904fc7ea1e53612}{Grafo\_lista}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{classGrafoAbstract}{GrafoAbstract}}}
+\DoxyCodeLine{00007\ \{}
+\DoxyCodeLine{00008\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00009\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classLinked__Vertex}{Linked\_Vertex}}*\ Vertice;}
+\DoxyCodeLine{00011\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ temCiclo(\textcolor{keywordtype}{int}\ v,\ \textcolor{keywordtype}{int}\ visitado[],\ \textcolor{keywordtype}{int}\ pai);}
+\DoxyCodeLine{00012\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00014\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classGrafo__lista_a4553b359b56bd157b904fc7ea1e53612}{Grafo\_lista}}();}
+\DoxyCodeLine{00016\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classGrafo__lista_a4f99c7aac3bda88d192fe28985d93ae5}{\string~Grafo\_lista}}();}
+\DoxyCodeLine{00018\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classGrafo__lista_a9f1cc47af2a3ad817239af214cea4814}{insereVertice}}(\textcolor{keywordtype}{int}\ val);}
+\DoxyCodeLine{00020\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classGrafo__lista_aa2e24d98645256ce6adfec71e3375ea4}{insereAresta}}(\textcolor{keywordtype}{int}\ origem,\ \textcolor{keywordtype}{int}\ destino,\ \textcolor{keywordtype}{int}\ val);}
+\DoxyCodeLine{00022\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classGrafo__lista_a81196269ae03d761aa139eb38550ada6}{removeAresta}}(\textcolor{keywordtype}{int}\ i,\ \textcolor{keywordtype}{int}\ j);}
+\DoxyCodeLine{00024\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classGrafo__lista_a1b28e04f39454e499c2e953f9ded7bcb}{getNConexo}}();}
+\DoxyCodeLine{00026\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classGrafo__lista_a0e51985546b147482be914cb8ff23a7a}{getGrau}}();}
+\DoxyCodeLine{00028\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classGrafo__lista_af08e48645dfb14e720836f6fe35d918e}{eh\_bipartido}}();}
+\DoxyCodeLine{00030\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classGrafo__lista_adb75edbf0baf2878ea2421407ed7fc14}{eh\_completo}}();}
+\DoxyCodeLine{00032\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classGrafo__lista_a55f663b2ebddb096f2b6861e9e461257}{eh\_arvore}}();}
+\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classGrafo__lista_aadc2f2ab73280ab8f740fa3f3a58ee06}{possuiArticulacao}}();}
+\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classGrafo__lista_a92829014e6be32034cbb1fc2c37745e4}{possuiPonte}}();}
+\DoxyCodeLine{00037\ }
+\DoxyCodeLine{00038\ }
+\DoxyCodeLine{00039\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00040\ \};}
+\DoxyCodeLine{00041\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

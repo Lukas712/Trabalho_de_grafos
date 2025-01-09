@@ -1,0 +1,168 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_classGrafoAbstract" xml:lang="pt">
+<title>Referência à classe GrafoAbstract</title>
+<indexterm><primary>GrafoAbstract</primary></indexterm>
+Diagrama de heranças da classe GrafoAbstract<para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject>
+                <imagedata width="50%" align="center" valign="middle" scalefit="0" fileref="classGrafoAbstract__inherit__graph.png"></imagedata>
+            </imageobject>
+        </mediaobject>
+    </informalfigure>
+</para>
+<simplesect>
+    <title>Membros públicos    </title>
+        <itemizedlist>
+            <listitem><para>virtual void <link linkend="_classGrafoAbstract_1a206cb38c0e67611bd8bc15642553955c">insereVertice</link> (int val)=0</para>
+</listitem>
+            <listitem><para>virtual void <link linkend="_classGrafoAbstract_1a11b692abbe30d51a8f5ad5b54a3ea566">insereAresta</link> (int origem, int destino, int val)=0</para>
+</listitem>
+            <listitem><para>virtual void <link linkend="_classGrafoAbstract_1aab84edcfdf58fcae82827647c7f429e3">removeAresta</link> (int i, int j)=0</para>
+</listitem>
+            <listitem><para>virtual int <link linkend="_classGrafoAbstract_1a0dd3ced9400676857ae69c7d15df76a7">getNConexo</link> ()=0</para>
+</listitem>
+            <listitem><para>virtual int <link linkend="_classGrafoAbstract_1a4ebb01af19c89c0eadaa1a471d723e8a">getGrau</link> ()=0</para>
+</listitem>
+            <listitem><para>virtual bool <link linkend="_classGrafoAbstract_1a820e55731f790319b463604b00d0ad03">eh_bipartido</link> ()=0</para>
+</listitem>
+            <listitem><para>virtual bool <link linkend="_classGrafoAbstract_1a62724e376fe99dac90ac78df92046e20">eh_completo</link> ()=0</para>
+</listitem>
+            <listitem><para>virtual bool <link linkend="_classGrafoAbstract_1a50090a454cf25348ec7dcf36e6710eb6">eh_arvore</link> ()=0</para>
+</listitem>
+            <listitem><para>virtual bool <link linkend="_classGrafoAbstract_1aa1c6782e505f9dc1ee945b881f1a8eb7">possuiArticulacao</link> ()=0</para>
+</listitem>
+            <listitem><para>virtual bool <link linkend="_classGrafoAbstract_1a211539f1bfae754789baf14886a35d38">possuiPonte</link> ()=0</para>
+</listitem>
+            <listitem><para><anchor xml:id="_classGrafoAbstract_1a073cb120aea99edc8b0bb1a9a877fae5"/>bool <emphasis role="strong">eh_direcionado</emphasis> ()</para>
+</listitem>
+            <listitem><para><anchor xml:id="_classGrafoAbstract_1a38508b5bb792acaa997c054e2b49ca73"/>bool <emphasis role="strong">verticePonderado</emphasis> ()</para>
+</listitem>
+            <listitem><para><anchor xml:id="_classGrafoAbstract_1ab0aacac05ec05a80a67d670abeea403c"/>bool <emphasis role="strong">arestaPonderada</emphasis> ()</para>
+</listitem>
+            <listitem><para><anchor xml:id="_classGrafoAbstract_1af92411b464d644219d0a03e012052629"/>int <emphasis role="strong">getOrdem</emphasis> ()</para>
+</listitem>
+            <listitem><para><anchor xml:id="_classGrafoAbstract_1acf69b6bd20ce5605e2c5ce11d2de0d8d"/>void <emphasis role="strong">criaCompleto</emphasis> (ofstream &amp;outFile, int ordem, bool arestaPonderada, bool direcionado)</para>
+</listitem>
+            <listitem><para><anchor xml:id="_classGrafoAbstract_1a2d54b5dec59f2592c680f68d2f6a1637"/>void <emphasis role="strong">criaArvore</emphasis> (ofstream &amp;outFile, int ordem, bool arestaPonderada, bool direcionado, int grau)</para>
+</listitem>
+            <listitem><para><anchor xml:id="_classGrafoAbstract_1ad881bc388c72d9856474dbead2b4daf7"/>bool <emphasis role="strong">criaBipartido</emphasis> (ofstream &amp;outFile, int ordem, bool arestaPonderada, bool direcionado, int grau, int componentesConexas, int ponte, int articulacao)</para>
+</listitem>
+            <listitem><para>void <link linkend="_classGrafoAbstract_1ab984ce94223715702b594fb3fd12bed4">carregaGrafo</link> ()</para>
+</listitem>
+            <listitem><para>void <link linkend="_classGrafoAbstract_1acda8a9c27b0ecbf193ae6687dc2d46c0">novoGrafo</link> ()</para>
+</listitem>
+            <listitem><para><anchor xml:id="_classGrafoAbstract_1ae296293b82f0abf90c11235d2da8898c"/>void <emphasis role="strong">limpaArquivo</emphasis> (ofstream &amp;outFile, string nomeArquivo)</para>
+</listitem>
+            <listitem><para><anchor xml:id="_classGrafoAbstract_1a51994848951282e4f28a9d67f8c1473a"/>void <emphasis role="strong">imprimeGrafo</emphasis> ()</para>
+</listitem>
+            <listitem><para>void <link linkend="_classGrafoAbstract_1ab660e47d44e19b375952706ee825b598">criaGrafo</link> (int ordem, int grau, bool direcionado, int componentesConexas, bool ponte, bool articulacao, bool completo, bool bipartido, bool arvore)</para>
+</listitem>
+            <listitem><para>bool <link linkend="_classGrafoAbstract_1a1a9eb117bcd88e0a355e64ea9b1e98d9">grafoPronto</link> (int ordem, int grau, bool direcionado, int cc, bool ponte, bool articulacao, bool completo, bool bipartido, bool arvore)</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Documentação das funções</title>
+<anchor xml:id="_classGrafoAbstract_1ab984ce94223715702b594fb3fd12bed4"/><section>
+    <title>carregaGrafo()</title>
+<indexterm><primary>carregaGrafo</primary><secondary>GrafoAbstract</secondary></indexterm>
+<indexterm><primary>GrafoAbstract</primary><secondary>carregaGrafo</secondary></indexterm>
+<para><computeroutput>void GrafoAbstract::carregaGrafo ( )<computeroutput>[inline]</computeroutput></computeroutput></para>
+<para>Carrega o grafo na estrutura </para>
+</section>
+<anchor xml:id="_classGrafoAbstract_1ab660e47d44e19b375952706ee825b598"/><section>
+    <title>criaGrafo()</title>
+<indexterm><primary>criaGrafo</primary><secondary>GrafoAbstract</secondary></indexterm>
+<indexterm><primary>GrafoAbstract</primary><secondary>criaGrafo</secondary></indexterm>
+<para><computeroutput>void GrafoAbstract::criaGrafo (int ordem, int grau, bool direcionado, int componentesConexas, bool ponte, bool articulacao, bool completo, bool bipartido, bool arvore)<computeroutput>[inline]</computeroutput></computeroutput></para>
+<para>Cria o grafo na estrutura para depois inserir no arquivo </para>
+</section>
+<anchor xml:id="_classGrafoAbstract_1a50090a454cf25348ec7dcf36e6710eb6"/><section>
+    <title>eh_arvore()</title>
+<indexterm><primary>eh_arvore</primary><secondary>GrafoAbstract</secondary></indexterm>
+<indexterm><primary>GrafoAbstract</primary><secondary>eh_arvore</secondary></indexterm>
+<para><computeroutput>virtual bool GrafoAbstract::eh_arvore ( )<computeroutput>[pure virtual]</computeroutput></computeroutput></para><para>
+Implementado em <link linkend="_classGrafo__lista_1a55f663b2ebddb096f2b6861e9e461257">Grafo_lista</link> e <link linkend="_classGrafo__matriz_1aeb5c91e372b9282898254b309fe2421e">Grafo_matriz</link>.</para>
+</section>
+<anchor xml:id="_classGrafoAbstract_1a820e55731f790319b463604b00d0ad03"/><section>
+    <title>eh_bipartido()</title>
+<indexterm><primary>eh_bipartido</primary><secondary>GrafoAbstract</secondary></indexterm>
+<indexterm><primary>GrafoAbstract</primary><secondary>eh_bipartido</secondary></indexterm>
+<para><computeroutput>virtual bool GrafoAbstract::eh_bipartido ( )<computeroutput>[pure virtual]</computeroutput></computeroutput></para><para>
+Implementado em <link linkend="_classGrafo__lista_1af08e48645dfb14e720836f6fe35d918e">Grafo_lista</link> e <link linkend="_classGrafo__matriz_1a88c1d7b608e2b25e8ef1ff579d6f0c77">Grafo_matriz</link>.</para>
+</section>
+<anchor xml:id="_classGrafoAbstract_1a62724e376fe99dac90ac78df92046e20"/><section>
+    <title>eh_completo()</title>
+<indexterm><primary>eh_completo</primary><secondary>GrafoAbstract</secondary></indexterm>
+<indexterm><primary>GrafoAbstract</primary><secondary>eh_completo</secondary></indexterm>
+<para><computeroutput>virtual bool GrafoAbstract::eh_completo ( )<computeroutput>[pure virtual]</computeroutput></computeroutput></para><para>
+Implementado em <link linkend="_classGrafo__lista_1adb75edbf0baf2878ea2421407ed7fc14">Grafo_lista</link> e <link linkend="_classGrafo__matriz_1ab84f870e22960c0ffa6a88aef45d8b7e">Grafo_matriz</link>.</para>
+</section>
+<anchor xml:id="_classGrafoAbstract_1a4ebb01af19c89c0eadaa1a471d723e8a"/><section>
+    <title>getGrau()</title>
+<indexterm><primary>getGrau</primary><secondary>GrafoAbstract</secondary></indexterm>
+<indexterm><primary>GrafoAbstract</primary><secondary>getGrau</secondary></indexterm>
+<para><computeroutput>virtual int GrafoAbstract::getGrau ( )<computeroutput>[pure virtual]</computeroutput></computeroutput></para><para>
+Implementado em <link linkend="_classGrafo__lista_1a0e51985546b147482be914cb8ff23a7a">Grafo_lista</link> e <link linkend="_classGrafo__matriz_1a80d9a24bf21bb69978c1661c085cd334">Grafo_matriz</link>.</para>
+</section>
+<anchor xml:id="_classGrafoAbstract_1a0dd3ced9400676857ae69c7d15df76a7"/><section>
+    <title>getNConexo()</title>
+<indexterm><primary>getNConexo</primary><secondary>GrafoAbstract</secondary></indexterm>
+<indexterm><primary>GrafoAbstract</primary><secondary>getNConexo</secondary></indexterm>
+<para><computeroutput>virtual int GrafoAbstract::getNConexo ( )<computeroutput>[pure virtual]</computeroutput></computeroutput></para><para>
+Implementado em <link linkend="_classGrafo__lista_1a1b28e04f39454e499c2e953f9ded7bcb">Grafo_lista</link> e <link linkend="_classGrafo__matriz_1aab50ebc9ff0d0f0d9952ad1b4de61fb5">Grafo_matriz</link>.</para>
+</section>
+<anchor xml:id="_classGrafoAbstract_1a1a9eb117bcd88e0a355e64ea9b1e98d9"/><section>
+    <title>grafoPronto()</title>
+<indexterm><primary>grafoPronto</primary><secondary>GrafoAbstract</secondary></indexterm>
+<indexterm><primary>GrafoAbstract</primary><secondary>grafoPronto</secondary></indexterm>
+<para><computeroutput>bool GrafoAbstract::grafoPronto (int ordem, int grau, bool direcionado, int cc, bool ponte, bool articulacao, bool completo, bool bipartido, bool arvore)<computeroutput>[inline]</computeroutput></computeroutput></para>
+<para>Verifica se o grafo está pronto ou não </para>
+</section>
+<anchor xml:id="_classGrafoAbstract_1a11b692abbe30d51a8f5ad5b54a3ea566"/><section>
+    <title>insereAresta()</title>
+<indexterm><primary>insereAresta</primary><secondary>GrafoAbstract</secondary></indexterm>
+<indexterm><primary>GrafoAbstract</primary><secondary>insereAresta</secondary></indexterm>
+<para><computeroutput>virtual void GrafoAbstract::insereAresta (int origem, int destino, int val)<computeroutput>[pure virtual]</computeroutput></computeroutput></para><para>
+Implementado em <link linkend="_classGrafo__lista_1aa2e24d98645256ce6adfec71e3375ea4">Grafo_lista</link> e <link linkend="_classGrafo__matriz_1a2002082f187ab033a08226c9d3e53f87">Grafo_matriz</link>.</para>
+</section>
+<anchor xml:id="_classGrafoAbstract_1a206cb38c0e67611bd8bc15642553955c"/><section>
+    <title>insereVertice()</title>
+<indexterm><primary>insereVertice</primary><secondary>GrafoAbstract</secondary></indexterm>
+<indexterm><primary>GrafoAbstract</primary><secondary>insereVertice</secondary></indexterm>
+<para><computeroutput>virtual void GrafoAbstract::insereVertice (int val)<computeroutput>[pure virtual]</computeroutput></computeroutput></para><para>
+Implementado em <link linkend="_classGrafo__lista_1a9f1cc47af2a3ad817239af214cea4814">Grafo_lista</link> e <link linkend="_classGrafo__matriz_1af5d80405f0b2d077a83c3efb8c13e8ce">Grafo_matriz</link>.</para>
+</section>
+<anchor xml:id="_classGrafoAbstract_1acda8a9c27b0ecbf193ae6687dc2d46c0"/><section>
+    <title>novoGrafo()</title>
+<indexterm><primary>novoGrafo</primary><secondary>GrafoAbstract</secondary></indexterm>
+<indexterm><primary>GrafoAbstract</primary><secondary>novoGrafo</secondary></indexterm>
+<para><computeroutput>void GrafoAbstract::novoGrafo ( )<computeroutput>[inline]</computeroutput></computeroutput></para>
+<para>Cria um novo grafo baseado na descrição e escreve no arquivo grafo.txt </para>
+</section>
+<anchor xml:id="_classGrafoAbstract_1aa1c6782e505f9dc1ee945b881f1a8eb7"/><section>
+    <title>possuiArticulacao()</title>
+<indexterm><primary>possuiArticulacao</primary><secondary>GrafoAbstract</secondary></indexterm>
+<indexterm><primary>GrafoAbstract</primary><secondary>possuiArticulacao</secondary></indexterm>
+<para><computeroutput>virtual bool GrafoAbstract::possuiArticulacao ( )<computeroutput>[pure virtual]</computeroutput></computeroutput></para><para>
+Implementado em <link linkend="_classGrafo__lista_1aadc2f2ab73280ab8f740fa3f3a58ee06">Grafo_lista</link> e <link linkend="_classGrafo__matriz_1ac75bf3f8a69380ee4ddd1cf391c43c14">Grafo_matriz</link>.</para>
+</section>
+<anchor xml:id="_classGrafoAbstract_1a211539f1bfae754789baf14886a35d38"/><section>
+    <title>possuiPonte()</title>
+<indexterm><primary>possuiPonte</primary><secondary>GrafoAbstract</secondary></indexterm>
+<indexterm><primary>GrafoAbstract</primary><secondary>possuiPonte</secondary></indexterm>
+<para><computeroutput>virtual bool GrafoAbstract::possuiPonte ( )<computeroutput>[pure virtual]</computeroutput></computeroutput></para><para>
+Implementado em <link linkend="_classGrafo__lista_1a92829014e6be32034cbb1fc2c37745e4">Grafo_lista</link> e <link linkend="_classGrafo__matriz_1a5f61a72b03ab63742e1f959ba9a951bd">Grafo_matriz</link>.</para>
+</section>
+<anchor xml:id="_classGrafoAbstract_1aab84edcfdf58fcae82827647c7f429e3"/><section>
+    <title>removeAresta()</title>
+<indexterm><primary>removeAresta</primary><secondary>GrafoAbstract</secondary></indexterm>
+<indexterm><primary>GrafoAbstract</primary><secondary>removeAresta</secondary></indexterm>
+<para><computeroutput>virtual void GrafoAbstract::removeAresta (int i, int j)<computeroutput>[pure virtual]</computeroutput></computeroutput></para><para>
+Implementado em <link linkend="_classGrafo__lista_1a81196269ae03d761aa139eb38550ada6">Grafo_lista</link> e <link linkend="_classGrafo__matriz_1aea624fd4cf4f78b6d97b7c578b22cafd">Grafo_matriz</link>.</para>
+</section>
+<para>
+A documentação para esta classe foi gerada a partir do seguinte ficheiro:</para>
+<link linkend="_GrafoAbstract_8hpp">GrafoAbstract.hpp</link></section>
+</section>

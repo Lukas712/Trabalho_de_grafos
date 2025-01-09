@@ -1,0 +1,287 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_Grafo__lista_8cpp_source" xml:lang="pt">
+<title>Grafo_lista.cpp</title>
+<programlisting linenumbering="unnumbered">1 <emphasis role="preprocessor">#include&#32;&lt;iostream&gt;</emphasis>
+2 <emphasis role="preprocessor">#include&#32;&lt;fstream&gt;</emphasis>
+3 <emphasis role="preprocessor">#include&#32;&quot;Grafo_lista.h&quot;</emphasis>
+4 <emphasis role="preprocessor">#include&#32;&lt;ctime&gt;</emphasis>
+5 <emphasis role="preprocessor">#include&#32;&lt;cstdlib&gt;</emphasis>
+6 <emphasis role="keyword">using&#32;namespace&#32;</emphasis>std;
+7 
+8 <link linkend="_classGrafo__lista_1a4553b359b56bd157b904fc7ea1e53612">Grafo_lista::Grafo_lista</link>(){
+9 &#32;&#32;&#32;&#32;this-&gt;Vertice&#32;=&#32;<emphasis role="keyword">new</emphasis>&#32;<link linkend="_classLinked__Vertex">Linked_Vertex</link>();
+10 }
+11 
+12 <link linkend="_classGrafo__lista_1a4f99c7aac3bda88d192fe28985d93ae5">Grafo_lista::~Grafo_lista</link>(){
+13 &#32;&#32;&#32;&#32;<emphasis role="keyword">delete</emphasis>&#32;Vertice;
+14 }
+15 
+16 
+17 <emphasis role="keywordtype">void</emphasis>&#32;<link linkend="_classGrafo__lista_1a9f1cc47af2a3ad817239af214cea4814">Grafo_lista::insereVertice</link>(<emphasis role="keywordtype">int</emphasis>&#32;val)
+18 {
+19 &#32;&#32;&#32;&#32;this-&gt;Vertice-&gt;insereFinal(val);
+20 }
+21 
+22 
+23 <emphasis role="keywordtype">void</emphasis>&#32;<link linkend="_classGrafo__lista_1aa2e24d98645256ce6adfec71e3375ea4">Grafo_lista::insereAresta</link>(<emphasis role="keywordtype">int</emphasis>&#32;origem,&#32;<emphasis role="keywordtype">int</emphasis>&#32;destino,&#32;<emphasis role="keywordtype">int</emphasis>&#32;val)
+24 {
+25 &#32;&#32;&#32;&#32;this-&gt;Vertice-&gt;insereAresta(origem,&#32;destino,&#32;val);
+26 }
+27 
+28 <emphasis role="keywordtype">int</emphasis>&#32;<link linkend="_classGrafo__lista_1a0e51985546b147482be914cb8ff23a7a">Grafo_lista::getGrau</link>()
+29 {
+30 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;maior&#32;=&#32;this-&gt;Vertice-&gt;getPrimeiro()-&gt;getArestas()-&gt;getTam();
+31 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>(<emphasis role="keywordtype">int</emphasis>&#32;i=&#32;0;&#32;i&lt;getOrdem();&#32;i+=1)
+32 &#32;&#32;&#32;&#32;{
+33 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_classNodeVertex">NodeVertex</link>*&#32;no&#32;=&#32;this-&gt;Vertice-&gt;getNodeById(i);
+34 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>(maior&#32;&lt;&#32;no-&gt;getArestas()-&gt;getTam())
+35 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+36 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;maior&#32;=&#32;no-&gt;<link linkend="_classNodeVertex_1a77d53e9ca5af405938df4178efaae8c5">getArestas</link>()-&gt;<link linkend="_classLinked__list_1ad1c20c58f90e54eee52279878ba420b5">getTam</link>();
+37 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}&#32;
+38 &#32;&#32;&#32;&#32;}
+39 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;maior;
+40 }
+41 
+42 <emphasis role="keywordtype">int</emphasis>&#32;<link linkend="_classGrafo__lista_1a1b28e04f39454e499c2e953f9ded7bcb">Grafo_lista::getNConexo</link>()&#32;{
+43 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;ordem&#32;=&#32;getOrdem();
+44 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>*&#32;componentes&#32;=&#32;<emphasis role="keyword">new</emphasis>&#32;<emphasis role="keywordtype">int</emphasis>[ordem];
+45 
+46 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(<emphasis role="keywordtype">int</emphasis>&#32;i&#32;=&#32;0;&#32;i&#32;&lt;&#32;ordem;&#32;i++)&#32;{
+47 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_classNodeVertex">NodeVertex</link>*&#32;no&#32;=&#32;this-&gt;Vertice-&gt;getNodeById(i);
+48 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!no&#32;||&#32;!no-&gt;getAtivo())&#32;{
+49 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;componentes[i]&#32;=&#32;-1;
+50 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}&#32;<emphasis role="keywordflow">else</emphasis>&#32;{
+51 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;componentes[i]&#32;=&#32;i&#32;+&#32;1;
+52 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+53 &#32;&#32;&#32;&#32;}
+54 
+55 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(<emphasis role="keywordtype">int</emphasis>&#32;i&#32;=&#32;0;&#32;i&#32;&lt;&#32;ordem;&#32;i++)&#32;{
+56 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_classNodeVertex">NodeVertex</link>*&#32;node&#32;=&#32;this-&gt;Vertice-&gt;getNodeById(i);
+57 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!node&#32;||&#32;!node-&gt;getAtivo())&#32;<emphasis role="keywordflow">continue</emphasis>;
+58 
+59 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_classNodeEdge">NodeEdge</link>*&#32;edge&#32;=&#32;node-&gt;<link linkend="_classNodeVertex_1a77d53e9ca5af405938df4178efaae8c5">getArestas</link>()-&gt;<link linkend="_classLinked__list_1a18591733d99a3ca6aeaf4357abf00f44">getPrimeiro</link>();
+60 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">while</emphasis>&#32;(edge)&#32;{
+61 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(edge-&gt;getAtivo())&#32;{
+62 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;j&#32;=&#32;edge-&gt;getValue();
+63 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_classNodeVertex">NodeVertex</link>*&#32;vizinho&#32;=&#32;this-&gt;Vertice-&gt;getNodeById(j);
+64 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;
+65 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(vizinho&#32;&amp;&amp;&#32;vizinho-&gt;getAtivo())&#32;{
+66 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;menor&#32;=&#32;min(componentes[i],&#32;componentes[j]);
+67 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;maior&#32;=&#32;max(componentes[i],&#32;componentes[j]);
+68 
+69 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(<emphasis role="keywordtype">int</emphasis>&#32;k&#32;=&#32;0;&#32;k&#32;&lt;&#32;ordem;&#32;k++)&#32;{
+70 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(componentes[k]&#32;==&#32;maior)&#32;{
+71 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;componentes[k]&#32;=&#32;menor;
+72 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+73 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+74 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+75 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+76 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;edge&#32;=&#32;(<link linkend="_classNodeEdge">NodeEdge</link>*)edge-&gt;getProx();
+77 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+78 &#32;&#32;&#32;&#32;}
+79 
+80 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;contaDiferente&#32;=&#32;0;
+81 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">bool</emphasis>*&#32;visitado&#32;=&#32;<emphasis role="keyword">new</emphasis>&#32;<emphasis role="keywordtype">bool</emphasis>[ordem]();
+82 
+83 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(<emphasis role="keywordtype">int</emphasis>&#32;i&#32;=&#32;0;&#32;i&#32;&lt;&#32;ordem;&#32;i++)&#32;{
+84 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(componentes[i]&#32;!=&#32;-1&#32;&amp;&amp;&#32;!visitado[componentes[i]])&#32;{
+85 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;contaDiferente++;
+86 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;visitado[componentes[i]]&#32;=&#32;<emphasis role="keyword">true</emphasis>;
+87 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+88 &#32;&#32;&#32;&#32;}
+89 
+90 &#32;&#32;&#32;&#32;<emphasis role="keyword">delete</emphasis>[]&#32;componentes;
+91 &#32;&#32;&#32;&#32;<emphasis role="keyword">delete</emphasis>[]&#32;visitado;
+92 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;contaDiferente&#32;==&#32;0&#32;?&#32;1&#32;:&#32;contaDiferente;
+93 }
+94 
+95 
+96 <emphasis role="keywordtype">bool</emphasis>&#32;<link linkend="_classGrafo__lista_1adb75edbf0baf2878ea2421407ed7fc14">Grafo_lista::eh_completo</link>()
+97 {
+98 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>(<emphasis role="keywordtype">int</emphasis>&#32;i&#32;=&#32;0;&#32;i&#32;&lt;&#32;getOrdem();&#32;i+=1)
+99 &#32;&#32;&#32;&#32;{
+100 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_classNodeVertex">NodeVertex</link>*&#32;no&#32;=&#32;this-&gt;Vertice-&gt;getNodeById(i);
+101 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>(no-&gt;<link linkend="_classNodeVertex_1a77d53e9ca5af405938df4178efaae8c5">getArestas</link>()-&gt;<link linkend="_classLinked__list_1ad1c20c58f90e54eee52279878ba420b5">getTam</link>()&#32;!=&#32;getOrdem()-1)
+102 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+103 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<emphasis role="keyword">false</emphasis>;
+104 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+105 &#32;&#32;&#32;&#32;}
+106 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<emphasis role="keyword">true</emphasis>;
+107 }
+108 
+109 <emphasis role="keywordtype">bool</emphasis>&#32;Grafo_lista::temCiclo(<emphasis role="keywordtype">int</emphasis>&#32;v,&#32;<emphasis role="keywordtype">int</emphasis>&#32;visitado[],&#32;<emphasis role="keywordtype">int</emphasis>&#32;pai)&#32;{
+110 &#32;&#32;&#32;&#32;visitado[v]&#32;=&#32;1;
+111 
+112 &#32;&#32;&#32;&#32;<link linkend="_classNodeVertex">NodeVertex</link>*&#32;node&#32;=&#32;this-&gt;Vertice-&gt;<link linkend="_classLinked__list_1af1d4f5ed4b06c8ba3898159a11c0762a">getNodeById</link>(v);
+113 &#32;&#32;&#32;&#32;<link linkend="_classNodeEdge">NodeEdge</link>*&#32;edge&#32;=&#32;node-&gt;<link linkend="_classNodeVertex_1a77d53e9ca5af405938df4178efaae8c5">getArestas</link>()-&gt;<link linkend="_classLinked__list_1a18591733d99a3ca6aeaf4357abf00f44">getPrimeiro</link>();
+114 
+115 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">while</emphasis>&#32;(edge&#32;!=&#32;<emphasis role="keyword">nullptr</emphasis>)&#32;{
+116 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;u&#32;=&#32;edge-&gt;getValue();
+117 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!visitado[u])&#32;{
+118 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(temCiclo(u,&#32;visitado,&#32;v))&#32;{
+119 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<emphasis role="keyword">true</emphasis>;
+120 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+121 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}&#32;<emphasis role="keywordflow">else</emphasis>&#32;<emphasis role="keywordflow">if</emphasis>&#32;(u&#32;!=&#32;pai)&#32;{
+122 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<emphasis role="keyword">true</emphasis>;
+123 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+124 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;edge&#32;=&#32;(NodeEdge*)edge-&gt;getProx();
+125 &#32;&#32;&#32;&#32;}
+126 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<emphasis role="keyword">false</emphasis>;
+127 }
+128 
+129 <emphasis role="keywordtype">bool</emphasis>&#32;<link linkend="_classGrafo__lista_1a55f663b2ebddb096f2b6861e9e461257">Grafo_lista::eh_arvore</link>()&#32;{
+130 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_classGrafo__lista_1a1b28e04f39454e499c2e953f9ded7bcb">getNConexo</link>()&#32;!=&#32;1)&#32;{
+131 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<emphasis role="keyword">false</emphasis>;
+132 &#32;&#32;&#32;&#32;}
+133 
+134 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;numArestas&#32;=&#32;0;
+135 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(<emphasis role="keywordtype">int</emphasis>&#32;i&#32;=&#32;0;&#32;i&#32;&lt;&#32;getOrdem();&#32;i++)&#32;{
+136 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_classNodeVertex">NodeVertex</link>*&#32;node&#32;=&#32;this-&gt;Vertice-&gt;getNodeById(i);
+137 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_classNodeEdge">NodeEdge</link>*&#32;edge&#32;=&#32;node-&gt;<link linkend="_classNodeVertex_1a77d53e9ca5af405938df4178efaae8c5">getArestas</link>()-&gt;<link linkend="_classLinked__list_1a18591733d99a3ca6aeaf4357abf00f44">getPrimeiro</link>();
+138 
+139 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">while</emphasis>&#32;(edge&#32;!=&#32;<emphasis role="keyword">nullptr</emphasis>)&#32;{
+140 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;j&#32;=&#32;edge-&gt;getValue();
+141 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(i&#32;&lt;&#32;j)&#32;{
+142 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;numArestas++;
+143 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+144 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;edge&#32;=&#32;(<link linkend="_classNodeEdge">NodeEdge</link>*)edge-&gt;getProx();
+145 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+146 &#32;&#32;&#32;&#32;}
+147 
+148 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(numArestas&#32;!=&#32;getOrdem()&#32;-&#32;1)&#32;{
+149 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<emphasis role="keyword">false</emphasis>;
+150 &#32;&#32;&#32;&#32;}
+151 
+152 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;visitado[getOrdem()]&#32;=&#32;{0};
+153 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(temCiclo(0,&#32;visitado,&#32;-1))&#32;{
+154 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<emphasis role="keyword">false</emphasis>;
+155 &#32;&#32;&#32;&#32;}
+156 
+157 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<emphasis role="keyword">true</emphasis>;
+158 }
+159 
+160 <emphasis role="keywordtype">bool</emphasis>&#32;<link linkend="_classGrafo__lista_1af08e48645dfb14e720836f6fe35d918e">Grafo_lista::eh_bipartido</link>()&#32;{
+161 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;cor[getOrdem()];
+162 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(<emphasis role="keywordtype">int</emphasis>&#32;i&#32;=&#32;0;&#32;i&#32;&lt;&#32;getOrdem();&#32;i++)&#32;{
+163 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;cor[i]&#32;=&#32;-1;
+164 &#32;&#32;&#32;&#32;}
+165 
+166 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;pilha[getOrdem()];&#32;
+167 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;topo&#32;=&#32;-1;
+168 
+169 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(<emphasis role="keywordtype">int</emphasis>&#32;i&#32;=&#32;0;&#32;i&#32;&lt;&#32;getOrdem();&#32;i++)&#32;{
+170 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(cor[i]&#32;==&#32;-1)&#32;{
+171 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;pilha[++topo]&#32;=&#32;i;
+172 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;cor[i]&#32;=&#32;0;
+173 
+174 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">while</emphasis>&#32;(topo&#32;&gt;=&#32;0)&#32;{
+175 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;u&#32;=&#32;pilha[topo--];
+176 
+177 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_classNodeVertex">NodeVertex</link>*&#32;node&#32;=&#32;this-&gt;Vertice-&gt;getNodeById(u);
+178 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_classNodeEdge">NodeEdge</link>*&#32;edge&#32;=&#32;node-&gt;<link linkend="_classNodeVertex_1a77d53e9ca5af405938df4178efaae8c5">getArestas</link>()-&gt;<link linkend="_classLinked__list_1a18591733d99a3ca6aeaf4357abf00f44">getPrimeiro</link>();
+179 
+180 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">while</emphasis>&#32;(edge&#32;!=&#32;<emphasis role="keyword">nullptr</emphasis>)&#32;{
+181 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;v&#32;=&#32;edge-&gt;getValue();
+182 
+183 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(cor[v]&#32;==&#32;-1)&#32;{
+184 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;cor[v]&#32;=&#32;1&#32;-&#32;cor[u];
+185 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;pilha[++topo]&#32;=&#32;v;
+186 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}&#32;<emphasis role="keywordflow">else</emphasis>&#32;<emphasis role="keywordflow">if</emphasis>&#32;(cor[v]&#32;==&#32;cor[u])&#32;{
+187 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<emphasis role="keyword">false</emphasis>;
+188 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+189 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;edge&#32;=&#32;(<link linkend="_classNodeEdge">NodeEdge</link>*)edge-&gt;getProx();
+190 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+191 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+192 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+193 &#32;&#32;&#32;&#32;}
+194 
+195 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<emphasis role="keyword">true</emphasis>;
+196 }
+197 
+198 <emphasis role="keywordtype">bool</emphasis>&#32;<link linkend="_classGrafo__lista_1a92829014e6be32034cbb1fc2c37745e4">Grafo_lista::possuiPonte</link>()&#32;{
+199 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;nInicial&#32;=&#32;<link linkend="_classGrafo__lista_1a1b28e04f39454e499c2e953f9ded7bcb">getNConexo</link>();
+200 
+201 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(<emphasis role="keywordtype">int</emphasis>&#32;i&#32;=&#32;0;&#32;i&#32;&lt;&#32;getOrdem();&#32;i++)&#32;{
+202 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_classNodeVertex">NodeVertex</link>*&#32;no&#32;=&#32;this-&gt;Vertice-&gt;getNodeById(i);
+203 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!no&#32;||&#32;!no-&gt;getAtivo())&#32;<emphasis role="keywordflow">continue</emphasis>;
+204 
+205 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_classNodeEdge">NodeEdge</link>*&#32;aresta&#32;=&#32;no-&gt;<link linkend="_classNodeVertex_1a77d53e9ca5af405938df4178efaae8c5">getArestas</link>()-&gt;<link linkend="_classLinked__list_1a18591733d99a3ca6aeaf4357abf00f44">getPrimeiro</link>();
+206 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">while</emphasis>&#32;(aresta)&#32;{
+207 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;j&#32;=&#32;aresta-&gt;getValue();
+208 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_classNodeVertex">NodeVertex</link>*&#32;vizinho&#32;=&#32;this-&gt;Vertice-&gt;getNodeById(j);
+209 
+210 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(vizinho&#32;&amp;&amp;&#32;vizinho-&gt;getAtivo()&#32;&amp;&amp;&#32;i&#32;&lt;&#32;j)&#32;{
+211 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_classNodeEdge">NodeEdge</link>*&#32;arestaVizinho&#32;=&#32;vizinho-&gt;<link linkend="_classNodeVertex_1a77d53e9ca5af405938df4178efaae8c5">getArestas</link>()-&gt;<link linkend="_classLinked__list_1a18591733d99a3ca6aeaf4357abf00f44">getPrimeiro</link>();
+212 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">while</emphasis>&#32;(arestaVizinho)&#32;{
+213 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(arestaVizinho-&gt;getValue()&#32;==&#32;i)&#32;{
+214 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+215 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+216 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;arestaVizinho&#32;=&#32;(<link linkend="_classNodeEdge">NodeEdge</link>*)arestaVizinho-&gt;getProx();
+217 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+218 
+219 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">bool</emphasis>&#32;ativoOrigNo&#32;=&#32;aresta-&gt;getAtivo();
+220 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">bool</emphasis>&#32;ativoOrigVizinho&#32;=&#32;arestaVizinho&#32;?&#32;arestaVizinho-&gt;getAtivo()&#32;:&#32;<emphasis role="keyword">false</emphasis>;
+221 
+222 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;aresta-&gt;setAtivo(<emphasis role="keyword">false</emphasis>);
+223 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(arestaVizinho)&#32;arestaVizinho-&gt;setAtivo(<emphasis role="keyword">false</emphasis>);
+224 
+225 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;nFinal&#32;=&#32;<link linkend="_classGrafo__lista_1a1b28e04f39454e499c2e953f9ded7bcb">getNConexo</link>();
+226 
+227 
+228 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;aresta-&gt;setAtivo(ativoOrigNo);
+229 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(arestaVizinho)&#32;arestaVizinho-&gt;setAtivo(ativoOrigVizinho);
+230 
+231 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(nFinal&#32;&gt;&#32;nInicial)&#32;{
+232 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<emphasis role="keyword">true</emphasis>;
+233 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+234 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+235 
+236 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;aresta&#32;=&#32;(<link linkend="_classNodeEdge">NodeEdge</link>*)aresta-&gt;getProx();
+237 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+238 &#32;&#32;&#32;&#32;}
+239 
+240 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<emphasis role="keyword">false</emphasis>;
+241 }
+242 
+243 
+244 <emphasis role="keywordtype">bool</emphasis>&#32;<link linkend="_classGrafo__lista_1aadc2f2ab73280ab8f740fa3f3a58ee06">Grafo_lista::possuiArticulacao</link>()&#32;{
+245 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;nInicial&#32;=&#32;<link linkend="_classGrafo__lista_1a1b28e04f39454e499c2e953f9ded7bcb">getNConexo</link>();
+246 
+247 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(<emphasis role="keywordtype">int</emphasis>&#32;i&#32;=&#32;0;&#32;i&#32;&lt;&#32;getOrdem();&#32;i++)&#32;{
+248 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_classNodeVertex">NodeVertex</link>*&#32;no&#32;=&#32;this-&gt;Vertice-&gt;getNodeById(i);
+249 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!no&#32;||&#32;!no-&gt;getAtivo())&#32;<emphasis role="keywordflow">continue</emphasis>;
+250 
+251 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">bool</emphasis>&#32;ativoOrig&#32;=&#32;no-&gt;getAtivo();
+252 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;no-&gt;setAtivo(<emphasis role="keyword">false</emphasis>);
+253 
+254 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_classNodeEdge">NodeEdge</link>*&#32;aresta&#32;=&#32;no-&gt;<link linkend="_classNodeVertex_1a77d53e9ca5af405938df4178efaae8c5">getArestas</link>()-&gt;<link linkend="_classLinked__list_1a18591733d99a3ca6aeaf4357abf00f44">getPrimeiro</link>();
+255 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">while</emphasis>&#32;(aresta)&#32;{
+256 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;aresta-&gt;setAtivo(<emphasis role="keyword">false</emphasis>);
+257 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;aresta&#32;=&#32;(<link linkend="_classNodeEdge">NodeEdge</link>*)aresta-&gt;getProx();
+258 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+259 
+260 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;nFinal&#32;=&#32;<link linkend="_classGrafo__lista_1a1b28e04f39454e499c2e953f9ded7bcb">getNConexo</link>();
+261 
+262 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;no-&gt;setAtivo(ativoOrig);
+263 
+264 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;aresta&#32;=&#32;no-&gt;<link linkend="_classNodeVertex_1a77d53e9ca5af405938df4178efaae8c5">getArestas</link>()-&gt;<link linkend="_classLinked__list_1a18591733d99a3ca6aeaf4357abf00f44">getPrimeiro</link>();
+265 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">while</emphasis>&#32;(aresta)&#32;{
+266 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;aresta-&gt;setAtivo(<emphasis role="keyword">true</emphasis>);
+267 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;aresta&#32;=&#32;(<link linkend="_classNodeEdge">NodeEdge</link>*)aresta-&gt;getProx();
+268 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+269 
+270 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(nFinal&#32;&gt;&#32;nInicial)&#32;{
+271 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<emphasis role="keyword">true</emphasis>;
+272 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+273 &#32;&#32;&#32;&#32;}
+274 
+275 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<emphasis role="keyword">false</emphasis>;
+276 }
+277 
+278 <emphasis role="keywordtype">void</emphasis>&#32;<link linkend="_classGrafo__lista_1a81196269ae03d761aa139eb38550ada6">Grafo_lista::removeAresta</link>(<emphasis role="keywordtype">int</emphasis>&#32;i,&#32;<emphasis role="keywordtype">int</emphasis>&#32;j)
+279 {
+280 &#32;&#32;&#32;&#32;<link linkend="_classNodeVertex">NodeVertex</link>*&#32;no&#32;=&#32;this-&gt;Vertice-&gt;getNodeById(i);
+281 &#32;&#32;&#32;&#32;<link linkend="_classLinked__list">Linked_list&lt;NodeEdge&gt;</link>*&#32;arestas&#32;=&#32;no-&gt;<link linkend="_classNodeVertex_1a77d53e9ca5af405938df4178efaae8c5">getArestas</link>();
+282 &#32;&#32;&#32;&#32;arestas-&gt;<link linkend="_classLinked__list_1a42b8ab1db5a517935a7001af37fe130f">removeNode</link>(j);
+283 }
+</programlisting></section>

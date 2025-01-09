@@ -2,14 +2,12 @@
 #include <fstream>
 using namespace std;
 
-#ifndef GRAFOABSTRACT_H
-#define GRAFOABSTRACT_H
+#ifndef GRAFOABSTRACT_HPP
+#define GRAFOABSTRACT_HPP
 
 class GrafoAbstract
 {   
     private:
-        const string grafoText ="../grafo.txt"; //"../output/grafo.txt";
-        const string descText = "../descricao.txt"; //"../output/Descricao.txt";
         int ordem;
         bool direcionado, verticePeso, arestaPeso;
 
@@ -389,9 +387,9 @@ class GrafoAbstract
             return true;
         }
 
-    void carregaGrafo() {
-        ifstream inFile(grafoText);
-        if(arquivoVazio(grafoText))
+    void carregaGrafo(string grafo) {
+        ifstream inFile(grafo);
+        if(arquivoVazio(grafo))
         {
             return;
         }
@@ -435,10 +433,10 @@ class GrafoAbstract
         imprimeGrafo();
     }
 
-    void novoGrafo() {
+    void novoGrafo(string descricao, string grafo) {
         srand(time(0));
-        ifstream descFile(descText);
-        if(arquivoVazio(descText))
+        ifstream descFile(descricao);
+        if(arquivoVazio(descricao))
         {
             return;
         }
@@ -450,7 +448,7 @@ class GrafoAbstract
         descFile >> completo >> bipartido >> arvore >> ponte >> articulacao;
 
         descFile.close();
-        ofstream outFile(grafoText, ios::trunc);
+        ofstream outFile(grafo, ios::trunc);
         if(!outFile.is_open())
         {
             cout<<"Erro ao abrir o arquivo."<<endl;
@@ -474,7 +472,7 @@ class GrafoAbstract
             if((grau != ordem-1) || componentesConexas != 1 || ponte || articulacao || ordem <=0)
             {
                 cout<<"Grafo completo não pode ser feito com a descrição dada!"<<endl;
-                limpaArquivo(outFile, grafoText);
+                limpaArquivo(outFile, grafo);
                 return;
             }
             criaCompleto(outFile, ordem, arestaPonderada, direcionado);
@@ -483,7 +481,7 @@ class GrafoAbstract
             if(!criaBipartido(outFile, ordem, arestaPonderada, direcionado, grau, componentesConexas, ponte, articulacao))
             {
                 cout<<"Grafo bipartido não pode ser feito com a descrição dada!"<<endl;
-                limpaArquivo(outFile, grafoText);
+                limpaArquivo(outFile, grafo);
                 return;
             }
         } 
@@ -492,7 +490,7 @@ class GrafoAbstract
             if(componentesConexas != 1 || grau >= ordem || grau <0 || ordem <=0  || (ordem == 1 && ponte) || ((ordem == 1 || ordem == 2) && articulacao) || (ordem >2 && grau == 1))
             {
                     cout<<"Grafo arvore não pode ser feito com a descrição dada!"<<endl;
-                    limpaArquivo(outFile, grafoText);
+                    limpaArquivo(outFile, grafo);
                     return;
             }
             criaArvore(outFile, ordem, arestaPonderada, direcionado, grau);
@@ -511,47 +509,25 @@ class GrafoAbstract
         cout<<endl;
         cout<<"Grau: "<<getGrau()<<endl;
         cout<<"Ordem: "<<getOrdem()<<endl;
-        cout<<"Direcionado: "<<eh_direcionado()<<endl;
+        cout<<"Direcionado: "<<imprmeSimNao(eh_direcionado())<<endl;
         cout<<"Componentes conexas: "<<getNConexo()<<endl;
-        cout<<"Vertices ponderados: "<<verticePonderado()<<endl;
-        cout<<"Arestas ponderadas: "<<arestaPonderada()<<endl;
-        cout<<"Completo: "<<eh_completo()<<endl;
-        cout<<"Bipartido: "<<eh_bipartido()<<endl;
-        cout<<"Arvore: "<<eh_arvore()<<endl;
-        cout<<"Aresta Ponte: "<<possuiPonte()<<endl;
-        cout<<"Vertice Articulação: "<<possuiArticulacao()<<endl;
+        cout<<"Vertices ponderados: "<<imprmeSimNao(verticePonderado())<<endl;
+        cout<<"Arestas ponderadas: "<<imprmeSimNao(arestaPonderada())<<endl;
+        cout<<"Completo: "<<imprmeSimNao(eh_completo())<<endl;
+        cout<<"Bipartido: "<<imprmeSimNao(eh_bipartido())<<endl;
+        cout<<"Arvore: "<<imprmeSimNao(eh_arvore())<<endl;
+        cout<<"Aresta Ponte: "<<imprmeSimNao(possuiPonte())<<endl;
+        cout<<"Vertice Articulação: "<<imprmeSimNao(possuiArticulacao())<<endl;
     }
 
-    // void criaGrafo(int ordem, int grau, bool direcionado, int cc, bool ponte, bool articulacao, bool completo, bool bipartido, bool arvore)
-    // {
-    //     int** matriz = new int*[ordem]();
-    //     int grauAtual = 0;
-    //     int componentesAtual = ordem;
-    //     bool direcionadoAtual = false;
-    //     bool ponteAtual = false;
-    //     bool articulacaoAtual = false;
-    //     for(int i = 0; i<ordem; i+=1)
-    //     {
-    //         matriz[i] = new int[ordem]();
-    //     }
-    //     int linhaAleatoria;
-    //     int colunaAleatoria;
-    //     if(componentesAtual < cc)
-    //     {
-    //        linhaAleatoria = rand() % ordem; 
-    //     }
-
-
-
-    //     for(int i = 0; i<ordem; i+=1)
-    //     {
-    //         for(int j = 0; j< ordem; j+=1)
-    //         {
-    //             cout<<matriz[i][j]<<" ";
-    //         }
-    //         cout<<endl;
-    //     }
-    // }
+    string imprmeSimNao(bool valor)
+    {
+        if(valor)
+        {
+            return "Sim";
+        }
+        return "Não";
+    }
 
 };
 #endif

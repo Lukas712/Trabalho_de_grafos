@@ -1,0 +1,37 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_Grafo__matriz_8h_source" xml:lang="pt">
+<title>Grafo_matriz.h</title>
+<programlisting linenumbering="unnumbered">1 <emphasis role="preprocessor">#ifndef&#32;GRAFO_MATRIZ_H</emphasis>
+2 <emphasis role="preprocessor">#define&#32;GRAFO_MATRIZ_H</emphasis>
+3 
+4 <emphasis role="preprocessor">#include&#32;&quot;<link linkend="_GrafoAbstract_8hpp">GrafoAbstract.hpp</link>&quot;</emphasis>
+5 
+6 <emphasis role="keyword">class&#32;</emphasis><link linkend="_classGrafo__matriz_1a4be5a601e3b8f9c21d1d4c244425039f">Grafo_matriz</link>&#32;:&#32;<emphasis role="keyword">public</emphasis>&#32;<link linkend="_classGrafoAbstract">GrafoAbstract</link>
+7 {
+8 &#32;&#32;&#32;&#32;<emphasis role="keyword">private</emphasis>:
+9 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>**&#32;matriz_adjacencia;
+10 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>*&#32;peso_Vertice;
+11 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;numVertices;
+13 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">void</emphasis>&#32;inicializaMatriz();
+15 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">void</emphasis>&#32;inicializaPesoVertices();
+17 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>*&#32;retornaCelulaMatriz(<emphasis role="keywordtype">int</emphasis>&#32;i,&#32;<emphasis role="keywordtype">int</emphasis>&#32;j);
+19 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">bool</emphasis>&#32;temCiclo(<emphasis role="keywordtype">int</emphasis>&#32;v,&#32;<emphasis role="keywordtype">int</emphasis>&#32;visitado[],&#32;<emphasis role="keywordtype">int</emphasis>&#32;pai);
+20 
+21 &#32;&#32;&#32;&#32;<emphasis role="keyword">public</emphasis>:
+23 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_classGrafo__matriz_1a4be5a601e3b8f9c21d1d4c244425039f">Grafo_matriz</link>();
+25 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_classGrafo__matriz_1aa88d1e440153c4245de0fb7bbdface3f">~Grafo_matriz</link>();
+27 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">void</emphasis>&#32;<link linkend="_classGrafo__matriz_1af5d80405f0b2d077a83c3efb8c13e8ce">insereVertice</link>(<emphasis role="keywordtype">int</emphasis>&#32;val);
+29 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">void</emphasis>&#32;<link linkend="_classGrafo__matriz_1a2002082f187ab033a08226c9d3e53f87">insereAresta</link>(<emphasis role="keywordtype">int</emphasis>&#32;origem,&#32;<emphasis role="keywordtype">int</emphasis>&#32;destino,&#32;<emphasis role="keywordtype">int</emphasis>&#32;val);
+31 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">void</emphasis>&#32;<link linkend="_classGrafo__matriz_1aea624fd4cf4f78b6d97b7c578b22cafd">removeAresta</link>(<emphasis role="keywordtype">int</emphasis>&#32;i,&#32;<emphasis role="keywordtype">int</emphasis>&#32;j);
+33 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;<link linkend="_classGrafo__matriz_1aab50ebc9ff0d0f0d9952ad1b4de61fb5">getNConexo</link>();
+35 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;<link linkend="_classGrafo__matriz_1a80d9a24bf21bb69978c1661c085cd334">getGrau</link>();
+37 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">bool</emphasis>&#32;<link linkend="_classGrafo__matriz_1a88c1d7b608e2b25e8ef1ff579d6f0c77">eh_bipartido</link>();
+39 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">bool</emphasis>&#32;<link linkend="_classGrafo__matriz_1ab84f870e22960c0ffa6a88aef45d8b7e">eh_completo</link>();
+41 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">bool</emphasis>&#32;<link linkend="_classGrafo__matriz_1aeb5c91e372b9282898254b309fe2421e">eh_arvore</link>();
+43 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">bool</emphasis>&#32;<link linkend="_classGrafo__matriz_1ac75bf3f8a69380ee4ddd1cf391c43c14">possuiArticulacao</link>();
+45 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">bool</emphasis>&#32;<link linkend="_classGrafo__matriz_1a5f61a72b03ab63742e1f959ba9a951bd">possuiPonte</link>();
+46 };
+47 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;
+48 
+49 <emphasis role="preprocessor">#endif</emphasis>
+</programlisting></section>

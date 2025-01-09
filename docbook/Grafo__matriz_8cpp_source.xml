@@ -1,0 +1,411 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_Grafo__matriz_8cpp_source" xml:lang="pt">
+<title>Grafo_matriz.cpp</title>
+<programlisting linenumbering="unnumbered">1 <emphasis role="preprocessor">#include&lt;iostream&gt;</emphasis>
+2 <emphasis role="preprocessor">#include&#32;&quot;Grafo_matriz.h&quot;</emphasis>
+3 <emphasis role="preprocessor">#include&#32;&quot;Linked_list.hpp&quot;</emphasis>
+4 <emphasis role="keyword">using&#32;namespace&#32;</emphasis>std;
+5 
+6 <link linkend="_classGrafo__matriz_1a4be5a601e3b8f9c21d1d4c244425039f">Grafo_matriz::Grafo_matriz</link>(){
+7 &#32;&#32;&#32;&#32;matriz_adjacencia&#32;=&#32;<emphasis role="keyword">nullptr</emphasis>;
+8 &#32;&#32;&#32;&#32;peso_Vertice&#32;=&#32;<emphasis role="keyword">nullptr</emphasis>;
+9 &#32;&#32;&#32;&#32;numVertices&#32;=&#32;0;
+10 }
+11 <link linkend="_classGrafo__matriz_1aa88d1e440153c4245de0fb7bbdface3f">Grafo_matriz::~Grafo_matriz</link>(){
+12 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>(matriz_adjacencia&#32;!=&#32;<emphasis role="keyword">nullptr</emphasis>){
+13 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>(eh_direcionado())&#32;{
+14 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>(<emphasis role="keywordtype">int</emphasis>&#32;i&#32;=&#32;0;&#32;i&#32;&lt;&#32;numVertices;&#32;i+=1){
+15 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keyword">delete</emphasis>[]&#32;matriz_adjacencia[i];
+16 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+17 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keyword">delete</emphasis>[]&#32;matriz_adjacencia;
+18 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+19 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>&#32;{
+20 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keyword">delete</emphasis>[]&#32;matriz_adjacencia[0];
+21 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keyword">delete</emphasis>[]&#32;matriz_adjacencia;
+22 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+23 &#32;&#32;&#32;&#32;}
+24 &#32;&#32;&#32;&#32;<emphasis role="keyword">delete</emphasis>[]&#32;peso_Vertice;
+25 }
+26 
+27 
+28 <emphasis role="keywordtype">void</emphasis>&#32;Grafo_matriz::inicializaMatriz()
+29 {
+30 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>(matriz_adjacencia&#32;==&#32;<emphasis role="keyword">nullptr</emphasis>)
+31 &#32;&#32;&#32;&#32;{
+32 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>(eh_direcionado())
+33 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+34 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;matriz_adjacencia&#32;=&#32;<emphasis role="keyword">new</emphasis>&#32;<emphasis role="keywordtype">int</emphasis>*[getOrdem()]();
+35 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>(<emphasis role="keywordtype">int</emphasis>&#32;i&#32;=&#32;0;&#32;i&lt;&#32;getOrdem();&#32;i+=1)
+36 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+37 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;matriz_adjacencia[i]&#32;=&#32;<emphasis role="keyword">new</emphasis>&#32;<emphasis role="keywordtype">int</emphasis>[getOrdem()]();
+38 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+39 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+40 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>
+41 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+42 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;tamanho&#32;=&#32;getOrdem()*(getOrdem()-1)/2;
+43 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;matriz_adjacencia&#32;=&#32;<emphasis role="keyword">new</emphasis>&#32;<emphasis role="keywordtype">int</emphasis>*[1]();
+44 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;matriz_adjacencia[0]&#32;=&#32;<emphasis role="keyword">new</emphasis>&#32;<emphasis role="keywordtype">int</emphasis>[tamanho]();
+45 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+46 &#32;&#32;&#32;&#32;}
+47 }
+48 
+49 <emphasis role="keywordtype">void</emphasis>&#32;Grafo_matriz::inicializaPesoVertices()
+50 {
+51 &#32;&#32;&#32;&#32;peso_Vertice&#32;=&#32;<emphasis role="keyword">new</emphasis>&#32;<emphasis role="keywordtype">int</emphasis>[getOrdem()]();
+52 }
+53 
+54 <emphasis role="keywordtype">void</emphasis>&#32;<link linkend="_classGrafo__matriz_1af5d80405f0b2d077a83c3efb8c13e8ce">Grafo_matriz::insereVertice</link>(<emphasis role="keywordtype">int</emphasis>&#32;val){
+55 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>(peso_Vertice&#32;==&#32;<emphasis role="keyword">nullptr</emphasis>)
+56 &#32;&#32;&#32;&#32;{
+57 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;inicializaPesoVertices();
+58 &#32;&#32;&#32;&#32;}
+59 &#32;&#32;&#32;&#32;peso_Vertice[numVertices++]&#32;=&#32;val;
+60 }
+61 
+62 <emphasis role="keywordtype">void</emphasis>&#32;<link linkend="_classGrafo__matriz_1a2002082f187ab033a08226c9d3e53f87">Grafo_matriz::insereAresta</link>(<emphasis role="keywordtype">int</emphasis>&#32;origem,&#32;<emphasis role="keywordtype">int</emphasis>&#32;destino,&#32;<emphasis role="keywordtype">int</emphasis>&#32;val)&#32;{
+63 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>(matriz_adjacencia&#32;==&#32;<emphasis role="keyword">nullptr</emphasis>)
+64 &#32;&#32;&#32;&#32;{
+65 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;inicializaMatriz();
+66 &#32;&#32;&#32;&#32;}
+67 &#32;&#32;&#32;&#32;origem&#32;-=1;
+68 &#32;&#32;&#32;&#32;destino-=1;
+69 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(origem&lt;&#32;getOrdem()&#32;&amp;&amp;&#32;destino&#32;&lt;&#32;getOrdem())&#32;{
+70 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>(val&#32;!=&#32;0)
+71 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+72 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>(eh_direcionado())
+73 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+74 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;matriz_adjacencia[origem][destino]&#32;=&#32;val;
+75 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+76 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>
+77 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+78 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>(origem&#32;&lt;&#32;destino)
+79 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+80 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;matriz_adjacencia[0][(destino-1)*destino/2&#32;+&#32;origem]&#32;=&#32;val;
+81 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+82 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+83 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+84 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>
+85 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+86 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>(eh_direcionado())
+87 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+88 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;matriz_adjacencia[origem][destino]&#32;=&#32;1;
+89 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+90 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>
+91 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+92 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>(origem&#32;&lt;&#32;destino)
+93 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+94 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;matriz_adjacencia[0][(destino-1)*destino/2&#32;+&#32;origem]&#32;=&#32;1;
+95 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+96 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+97 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+98 &#32;&#32;&#32;&#32;}
+99 }
+100 <emphasis role="keywordtype">int</emphasis>&#32;<link linkend="_classGrafo__matriz_1a80d9a24bf21bb69978c1661c085cd334">Grafo_matriz::getGrau</link>()
+101 {
+102 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;grauMaior&#32;=&#32;0;
+103 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;contadorGrau&#32;=&#32;0;
+104 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(<emphasis role="keywordtype">int</emphasis>&#32;i&#32;=&#32;0;&#32;i&#32;&lt;&#32;getOrdem();&#32;i+=1)&#32;{
+105 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(<emphasis role="keywordtype">int</emphasis>&#32;j&#32;=&#32;0;&#32;j&#32;&lt;&#32;getOrdem();&#32;j+=1)&#32;{
+106 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>(i&#32;!=&#32;j)
+107 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+108 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(*retornaCelulaMatriz(i,j)&#32;!=&#32;0)&#32;{
+109 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;contadorGrau+=1;
+110 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+111 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+112 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+113 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>(contadorGrau&gt;grauMaior)
+114 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+115 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;grauMaior&#32;=&#32;contadorGrau;
+116 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+117 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;contadorGrau&#32;=&#32;0;
+118 &#32;&#32;&#32;&#32;}
+119 
+120 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;grauMaior;
+121 }
+122 
+123 <emphasis role="keywordtype">bool</emphasis>&#32;<link linkend="_classGrafo__matriz_1ab84f870e22960c0ffa6a88aef45d8b7e">Grafo_matriz::eh_completo</link>()
+124 {
+125 &#32;&#32;&#32;&#32;
+126 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>(<emphasis role="keywordtype">int</emphasis>&#32;i&#32;=&#32;0;&#32;i&lt;getOrdem();&#32;i+=1)
+127 &#32;&#32;&#32;&#32;{
+128 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>(<emphasis role="keywordtype">int</emphasis>&#32;j&#32;=&#32;0;&#32;j&lt;getOrdem();&#32;j+=1)
+129 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+130 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>(eh_direcionado())
+131 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+132 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>(i&#32;!=&#32;j)
+133 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+134 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>(matriz_adjacencia[i][j]&#32;!=&#32;matriz_adjacencia[j][i]&#32;&amp;&amp;&#32;matriz_adjacencia[i][j]&#32;&gt;&#32;0)
+135 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+136 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<emphasis role="keyword">false</emphasis>;
+137 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+138 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+139 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+140 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>
+141 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+142 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>(*retornaCelulaMatriz(i,j)&#32;==&#32;0)
+143 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+144 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<emphasis role="keyword">false</emphasis>;
+145 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+146 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+147 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+148 &#32;&#32;&#32;&#32;}
+149 &#32;&#32;&#32;&#32;{
+150 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<emphasis role="keyword">true</emphasis>;
+151 &#32;&#32;&#32;&#32;}
+152 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<emphasis role="keyword">false</emphasis>;
+153 }
+154 
+155 <emphasis role="keywordtype">bool</emphasis>&#32;Grafo_matriz::temCiclo(<emphasis role="keywordtype">int</emphasis>&#32;v,&#32;<emphasis role="keywordtype">int</emphasis>&#32;visitado[],&#32;<emphasis role="keywordtype">int</emphasis>&#32;pai)&#32;{
+156 &#32;&#32;&#32;&#32;visitado[v]&#32;=&#32;1;
+157 
+158 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(<emphasis role="keywordtype">int</emphasis>&#32;u&#32;=&#32;0;&#32;u&#32;&lt;&#32;getOrdem();&#32;u+=1)&#32;{
+159 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">bool</emphasis>&#32;arestaExiste&#32;=&#32;<emphasis role="keyword">false</emphasis>;
+160 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;
+161 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(eh_direcionado())&#32;{
+162 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(*retornaCelulaMatriz(v,&#32;u)&#32;!=&#32;0)&#32;{
+163 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;arestaExiste&#32;=&#32;<emphasis role="keyword">true</emphasis>;
+164 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+165 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}&#32;<emphasis role="keywordflow">else</emphasis>&#32;{
+166 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(v&#32;&lt;&#32;u&#32;&amp;&amp;&#32;*retornaCelulaMatriz(v,&#32;u)&#32;!=&#32;0)&#32;{
+167 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;arestaExiste&#32;=&#32;<emphasis role="keyword">true</emphasis>;
+168 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}&#32;<emphasis role="keywordflow">else</emphasis>&#32;<emphasis role="keywordflow">if</emphasis>&#32;(u&#32;&lt;&#32;v&#32;&amp;&amp;&#32;*retornaCelulaMatriz(u,&#32;v)&#32;!=&#32;0)&#32;{
+169 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;arestaExiste&#32;=&#32;<emphasis role="keyword">true</emphasis>;
+170 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+171 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+172 
+173 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(arestaExiste)&#32;{
+174 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!visitado[u])&#32;{
+175 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(temCiclo(u,&#32;visitado,&#32;v))&#32;{
+176 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<emphasis role="keyword">true</emphasis>;
+177 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+178 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}&#32;<emphasis role="keywordflow">else</emphasis>&#32;<emphasis role="keywordflow">if</emphasis>&#32;(u&#32;!=&#32;pai)&#32;{
+179 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<emphasis role="keyword">true</emphasis>;
+180 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+181 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+182 &#32;&#32;&#32;&#32;}
+183 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<emphasis role="keyword">false</emphasis>;
+184 }
+185 
+186 <emphasis role="keywordtype">bool</emphasis>&#32;<link linkend="_classGrafo__matriz_1aeb5c91e372b9282898254b309fe2421e">Grafo_matriz::eh_arvore</link>()&#32;{
+187 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_classGrafo__matriz_1aab50ebc9ff0d0f0d9952ad1b4de61fb5">getNConexo</link>()&#32;!=&#32;1)&#32;{
+188 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<emphasis role="keyword">false</emphasis>;
+189 &#32;&#32;&#32;&#32;}
+190 
+191 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;numArestas&#32;=&#32;0;
+192 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(<emphasis role="keywordtype">int</emphasis>&#32;i&#32;=&#32;0;&#32;i&#32;&lt;&#32;getOrdem();&#32;i+=1)&#32;{
+193 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(<emphasis role="keywordtype">int</emphasis>&#32;j&#32;=&#32;i&#32;+&#32;1;&#32;j&#32;&lt;&#32;getOrdem();&#32;j++)&#32;{
+194 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(*retornaCelulaMatriz(i,&#32;j)&#32;!=&#32;0)&#32;{
+195 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;numArestas++;
+196 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+197 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+198 &#32;&#32;&#32;&#32;}
+199 
+200 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(numArestas&#32;!=&#32;getOrdem()&#32;-&#32;1)&#32;{
+201 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<emphasis role="keyword">false</emphasis>;
+202 &#32;&#32;&#32;&#32;}
+203 
+204 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;visitado[getOrdem()]&#32;=&#32;{0};
+205 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(temCiclo(0,&#32;visitado,&#32;-1))&#32;{
+206 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<emphasis role="keyword">false</emphasis>;
+207 &#32;&#32;&#32;&#32;}
+208 
+209 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<emphasis role="keyword">true</emphasis>;
+210 }
+211 
+212 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;<link linkend="_classGrafo__matriz_1aab50ebc9ff0d0f0d9952ad1b4de61fb5">Grafo_matriz::getNConexo</link>()
+213 &#32;&#32;&#32;&#32;{
+214 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>*&#32;componentes&#32;=&#32;<emphasis role="keyword">new</emphasis>&#32;<emphasis role="keywordtype">int</emphasis>[getOrdem()]();
+215 
+216 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>(<emphasis role="keywordtype">int</emphasis>&#32;i&#32;=&#32;0;&#32;i&lt;getOrdem();&#32;i+=1)
+217 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+218 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;componentes[i]&#32;=&#32;i+1;
+219 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+220 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>(<emphasis role="keywordtype">int</emphasis>&#32;i&#32;=&#32;0;&#32;i&#32;&lt;&#32;getOrdem();&#32;i+=1)
+221 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+222 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>(<emphasis role="keywordtype">int</emphasis>&#32;j&#32;=&#32;0;&#32;j&#32;&lt;&#32;getOrdem();&#32;j+=1)
+223 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+224 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>(*retornaCelulaMatriz(i,j)&#32;!=&#32;0&#32;&amp;&amp;&#32;i!=j)
+225 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+226 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;menor&#32;=&#32;min(componentes[i],&#32;componentes[j]);
+227 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;maior&#32;=&#32;max(componentes[i],&#32;componentes[j]);
+228 
+229 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;componentes[i]&#32;=&#32;menor;
+230 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;componentes[j]&#32;=&#32;menor;
+231 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;
+232 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(<emphasis role="keywordtype">int</emphasis>&#32;k&#32;=&#32;0;&#32;k&#32;&lt;&#32;getOrdem();&#32;k+=1)&#32;{
+233 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(componentes[k]&#32;==&#32;maior)&#32;{
+234 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;componentes[k]&#32;=&#32;menor;
+235 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+236 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+237 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;
+238 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+239 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+240 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+241 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;contaDiferente&#32;=&#32;1;
+242 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>(<emphasis role="keywordtype">int</emphasis>&#32;i&#32;=&#32;1;&#32;i&lt;getOrdem();&#32;i+=1)
+243 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+244 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>(componentes[i]&#32;!=&#32;componentes[i-1])
+245 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+246 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;contaDiferente+=1;
+247 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+248 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+249 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keyword">delete</emphasis>[]&#32;componentes;
+250 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>(contaDiferente&#32;==&#32;0)
+251 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+252 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;1;
+253 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+254 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>
+255 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;contaDiferente;
+256 &#32;&#32;&#32;&#32;}
+257 
+258 <emphasis role="keywordtype">int</emphasis>*&#32;Grafo_matriz::retornaCelulaMatriz(<emphasis role="keywordtype">int</emphasis>&#32;i,&#32;<emphasis role="keywordtype">int</emphasis>&#32;j)
+259 {
+260 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>(eh_direcionado())
+261 &#32;&#32;&#32;&#32;{
+262 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;&amp;matriz_adjacencia[i][j];
+263 &#32;&#32;&#32;&#32;}
+264 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>
+265 &#32;&#32;&#32;&#32;{
+266 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>(i&lt;j)
+267 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+268 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;&amp;matriz_adjacencia[0][j*(j-1)/2&#32;+&#32;i];
+269 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+270 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>
+271 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+272 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;&amp;matriz_adjacencia[0][i*(i-1)/2&#32;+&#32;j];
+273 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+274 &#32;&#32;&#32;&#32;}
+275 }
+276 
+277 <emphasis role="keywordtype">bool</emphasis>&#32;<link linkend="_classGrafo__matriz_1a88c1d7b608e2b25e8ef1ff579d6f0c77">Grafo_matriz::eh_bipartido</link>()&#32;{
+278 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;cor[getOrdem()];
+279 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(<emphasis role="keywordtype">int</emphasis>&#32;i&#32;=&#32;0;&#32;i&#32;&lt;&#32;getOrdem();&#32;i++)&#32;{
+280 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;cor[i]&#32;=&#32;-1;
+281 &#32;&#32;&#32;&#32;}
+282 
+283 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;pilha[getOrdem()];
+284 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;topo&#32;=&#32;-1;
+285 
+286 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(<emphasis role="keywordtype">int</emphasis>&#32;i&#32;=&#32;0;&#32;i&#32;&lt;&#32;getOrdem();&#32;i++)&#32;{
+287 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(cor[i]&#32;==&#32;-1)&#32;{
+288 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;pilha[++topo]&#32;=&#32;i;
+289 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;cor[i]&#32;=&#32;0;
+290 
+291 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">while</emphasis>&#32;(topo&#32;&gt;=&#32;0)&#32;{
+292 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;u&#32;=&#32;pilha[topo--];
+293 
+294 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(<emphasis role="keywordtype">int</emphasis>&#32;v&#32;=&#32;0;&#32;v&#32;&lt;&#32;getOrdem();&#32;v++)&#32;{
+295 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">bool</emphasis>&#32;arestaExiste&#32;=&#32;<emphasis role="keyword">false</emphasis>;
+296 
+297 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(eh_direcionado())&#32;{
+298 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;arestaExiste&#32;=&#32;*retornaCelulaMatriz(u,&#32;v)&#32;!=&#32;0;
+299 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+300 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>&#32;<emphasis role="keywordflow">if</emphasis>&#32;(u&#32;&lt;&#32;v)&#32;{
+301 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;arestaExiste&#32;=&#32;*retornaCelulaMatriz(u,&#32;v)&#32;!=&#32;0;
+302 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+303 
+304 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(arestaExiste)&#32;{
+305 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(cor[v]&#32;==&#32;-1)&#32;{
+306 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;cor[v]&#32;=&#32;1&#32;-&#32;cor[u];
+307 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;pilha[++topo]&#32;=&#32;v;
+308 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}&#32;<emphasis role="keywordflow">else</emphasis>&#32;<emphasis role="keywordflow">if</emphasis>&#32;(cor[v]&#32;==&#32;cor[u])&#32;{
+309 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<emphasis role="keyword">false</emphasis>;
+310 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+311 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+312 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+313 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+314 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+315 &#32;&#32;&#32;&#32;}
+316 
+317 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<emphasis role="keyword">true</emphasis>;
+318 }
+319 
+320 
+321 <emphasis role="keywordtype">bool</emphasis>&#32;<link linkend="_classGrafo__matriz_1a5f61a72b03ab63742e1f959ba9a951bd">Grafo_matriz::possuiPonte</link>()&#32;{
+322 &#32;&#32;&#32;&#32;
+323 &#32;&#32;&#32;&#32;
+324 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;nInicial&#32;=&#32;<link linkend="_classGrafo__matriz_1aab50ebc9ff0d0f0d9952ad1b4de61fb5">getNConexo</link>();
+325 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(<emphasis role="keywordtype">int</emphasis>&#32;u&#32;=&#32;0;&#32;u&#32;&lt;&#32;getOrdem();&#32;u++)&#32;{
+326 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(<emphasis role="keywordtype">int</emphasis>&#32;v&#32;=&#32;u+1;&#32;v&#32;&lt;&#32;getOrdem();&#32;v++)&#32;{
+327 
+328 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(*retornaCelulaMatriz(u,&#32;v)&#32;!=&#32;0)&#32;{
+329 
+330 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;valorOriginal&#32;=&#32;*retornaCelulaMatriz(u,&#32;v);
+331 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;*retornaCelulaMatriz(u,&#32;v)&#32;=&#32;0;
+332 
+333 
+334 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;nFinal&#32;=&#32;<link linkend="_classGrafo__matriz_1aab50ebc9ff0d0f0d9952ad1b4de61fb5">getNConexo</link>();
+335 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;
+336 
+337 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;
+338 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(nFinal&#32;&gt;&#32;nInicial)&#32;{
+339 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;*retornaCelulaMatriz(u,&#32;v)&#32;=&#32;valorOriginal;
+340 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;
+341 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<emphasis role="keyword">true</emphasis>;
+342 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+343 
+344 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;*retornaCelulaMatriz(u,&#32;v)&#32;=&#32;valorOriginal;
+345 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+346 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+347 &#32;&#32;&#32;&#32;}
+348 &#32;&#32;&#32;&#32;
+349 
+350 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<emphasis role="keyword">false</emphasis>;
+351 }
+352 
+353 <emphasis role="keywordtype">bool</emphasis>&#32;<link linkend="_classGrafo__matriz_1ac75bf3f8a69380ee4ddd1cf391c43c14">Grafo_matriz::possuiArticulacao</link>()&#32;{
+354 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;nInicial&#32;=&#32;<link linkend="_classGrafo__matriz_1aab50ebc9ff0d0f0d9952ad1b4de61fb5">getNConexo</link>();
+355 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>**&#32;backup_matriz&#32;=&#32;<emphasis role="keyword">new</emphasis>&#32;<emphasis role="keywordtype">int</emphasis>*[getOrdem()]();
+356 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(<emphasis role="keywordtype">int</emphasis>&#32;i&#32;=&#32;0;&#32;i&#32;&lt;&#32;getOrdem();&#32;i++)&#32;{
+357 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;backup_matriz[i]&#32;=&#32;<emphasis role="keyword">new</emphasis>&#32;<emphasis role="keywordtype">int</emphasis>[getOrdem()]();
+358 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(<emphasis role="keywordtype">int</emphasis>&#32;j&#32;=&#32;0;&#32;j&#32;&lt;&#32;getOrdem();&#32;j++)&#32;{
+359 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;backup_matriz[i][j]&#32;=&#32;*retornaCelulaMatriz(i,&#32;j);
+360 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+361 &#32;&#32;&#32;&#32;}
+362 
+363 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(<emphasis role="keywordtype">int</emphasis>&#32;v&#32;=&#32;0;&#32;v&#32;&lt;&#32;getOrdem();&#32;v++)&#32;{
+364 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>**&#32;temp_matriz&#32;=&#32;<emphasis role="keyword">new</emphasis>&#32;<emphasis role="keywordtype">int</emphasis>*[getOrdem()]();
+365 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(<emphasis role="keywordtype">int</emphasis>&#32;i&#32;=&#32;0;&#32;i&#32;&lt;&#32;getOrdem();&#32;i++)&#32;{
+366 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;temp_matriz[i]&#32;=&#32;<emphasis role="keyword">new</emphasis>&#32;<emphasis role="keywordtype">int</emphasis>[getOrdem()]();
+367 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(<emphasis role="keywordtype">int</emphasis>&#32;j&#32;=&#32;0;&#32;j&#32;&lt;&#32;getOrdem();&#32;j++)&#32;{
+368 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;temp_matriz[i][j]&#32;=&#32;backup_matriz[i][j];
+369 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+370 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+371 
+372 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(<emphasis role="keywordtype">int</emphasis>&#32;i&#32;=&#32;0;&#32;i&#32;&lt;&#32;getOrdem();&#32;i++)&#32;{
+373 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;temp_matriz[v][i]&#32;=&#32;0;
+374 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;temp_matriz[i][v]&#32;=&#32;0;
+375 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+376 
+377 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>**&#32;old_matriz&#32;=&#32;matriz_adjacencia;
+378 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;matriz_adjacencia&#32;=&#32;temp_matriz;
+379 
+380 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;nFinal&#32;=&#32;<link linkend="_classGrafo__matriz_1aab50ebc9ff0d0f0d9952ad1b4de61fb5">getNConexo</link>();
+381 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;
+382 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(<emphasis role="keywordtype">int</emphasis>&#32;i&#32;=&#32;0;&#32;i&#32;&lt;&#32;getOrdem();&#32;i++)&#32;{
+383 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keyword">delete</emphasis>[]&#32;temp_matriz[i];
+384 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+385 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keyword">delete</emphasis>[]&#32;temp_matriz;
+386 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;matriz_adjacencia&#32;=&#32;old_matriz;
+387 
+388 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(nFinal&#32;&gt;&#32;nInicial)&#32;{
+389 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(<emphasis role="keywordtype">int</emphasis>&#32;i&#32;=&#32;0;&#32;i&#32;&lt;&#32;getOrdem();&#32;i++)&#32;{
+390 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keyword">delete</emphasis>[]&#32;backup_matriz[i];
+391 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+392 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keyword">delete</emphasis>[]&#32;backup_matriz;
+393 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<emphasis role="keyword">true</emphasis>;
+394 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+395 &#32;&#32;&#32;&#32;}
+396 
+397 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(<emphasis role="keywordtype">int</emphasis>&#32;i&#32;=&#32;0;&#32;i&#32;&lt;&#32;getOrdem();&#32;i++)&#32;{
+398 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keyword">delete</emphasis>[]&#32;backup_matriz[i];
+399 &#32;&#32;&#32;&#32;}
+400 &#32;&#32;&#32;&#32;<emphasis role="keyword">delete</emphasis>[]&#32;backup_matriz;
+401 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<emphasis role="keyword">false</emphasis>;
+402 }
+403 
+404 <emphasis role="keywordtype">void</emphasis>&#32;<link linkend="_classGrafo__matriz_1aea624fd4cf4f78b6d97b7c578b22cafd">Grafo_matriz::removeAresta</link>(<emphasis role="keywordtype">int</emphasis>&#32;i,&#32;<emphasis role="keywordtype">int</emphasis>&#32;j)
+405 {
+406 &#32;&#32;&#32;&#32;*retornaCelulaMatriz(i,&#32;j)&#32;=&#32;0;
+407 }
+</programlisting></section>

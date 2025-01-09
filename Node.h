@@ -10,7 +10,9 @@ private:
     bool noAtivo;
     
 public:
+    /**Construtor da classe Node */
     Node() : id(-1){Node* prox = NULL; noAtivo = true;};
+    /**Destrutor da classe Node */
     ~Node(){};
     Node* getProx(){return prox;};
     void setProx(Node* prox){this->prox = prox;};
