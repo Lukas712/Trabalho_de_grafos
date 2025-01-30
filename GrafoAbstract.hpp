@@ -107,6 +107,7 @@ class GrafoAbstract
             {
                 for(int j = 0; j<getOrdem(); j+=1)
                 {
+                    
                     if(i != j)
                     {
                         if(getAresta(i,j) != nullptr)
@@ -146,51 +147,10 @@ class GrafoAbstract
             }
             return true;
         };
-
-    void criaCompleto(ofstream& outFile, int ordem, bool arestaPonderada, bool direcionado) {
     
-            int vet[ordem*(ordem-1)/2] = {0};
-            if(!direcionado)
-            {
-                for(int i = 0; i<ordem*(ordem-1)/2; i+=1)
-                {
-                    vet[i] = (rand() % 100 + 1);
-                }
-            }
-            for (int i = 0; i < ordem; i+=1) {
-                for (int j = 0; j < ordem; j+=1) {
-                    if (i != j) {
-                        
-                        outFile << i+1 << " " << j+1 << " ";
-                        if(arestaPonderada)
-                        {
-                            if(direcionado)
-                            {   
-                                outFile<<(rand() % 100 + 1);
-                            }
-                            else
-                            {
-                                if(i<j)
-                                {
-                                    outFile<<vet[((j-1)*j)/2+i];
-                                }
-                                else if (i>j)
-                                {
-                                    outFile<<vet[((i-1)*i)/2+j];
-                                }
-                            }
-                        }
-                        outFile << endl;
-                    }
-                }
-            }
-        }
-
-    void carregaGrafo(/*string grafo*/) {
+    void carregaGrafo(string grafo) {
         
-        novoGrafo("/home/lukas-freitas/VsCode/Trabalho_de_grafos/descricao.txt", "/home/lukas-freitas/VsCode/Trabalho_de_grafos/grafo.txt");
-        string grafo = "/home/lukas-freitas/VsCode/Trabalho_de_grafos/grafo.txt";
-
+        
         ifstream inFile(grafo);
 
         if(arquivoVazio(grafo))
@@ -236,59 +196,7 @@ class GrafoAbstract
         inFile.close();
         imprimeGrafo();
     }
-
-    void novoGrafo(string descricao, string grafo) {
-        srand(time(0));
-        ifstream descFile(descricao);
-        if(arquivoVazio(descricao))
-        {
-            return;
-        }
-        
-        bool direcionado,verticePonderado, arestaPonderada, completo;
-        int grau = 0, ordem, componentesConexas;
-
-        descFile >> grau >> ordem >> direcionado >> componentesConexas >> verticePonderado >> arestaPonderada;
-        descFile >> completo;
-
-        descFile.close();
-        ofstream outFile(grafo, ios::trunc);
-        if(!outFile.is_open())
-        {
-            cout<<"Erro ao abrir o arquivo."<<endl;
-            return;
-        }
-
-        outFile << ordem << " " << direcionado << " " << verticePonderado << " " << arestaPonderada << endl;
-        
-        if(verticePonderado)
-        {
-            for (int i = 0; i < ordem; ++i) {
-                int peso = (rand() % 100 + 1);
-                if (verticePonderado) {
-                    outFile << peso << " ";
-                }
-            }
-            outFile << endl;
-        }
-        
-        if (completo) {
-            if((grau != ordem-1) || componentesConexas != 1 || ordem <=0)
-            {
-                cout<<"Grafo completo não pode ser feito com a descrição dada!"<<endl;
-                limpaArquivo(outFile, grafo);
-                return;
-            }
-            criaCompleto(outFile, ordem, arestaPonderada, direcionado);
-        }
-        outFile.close();
-    }
-
-    void limpaArquivo(ofstream& outFile, string nomeArquivo) {
-        outFile.close();
-        outFile.open(nomeArquivo, ios::trunc);
-        outFile.close();
-    }
+    
     void imprimeGrafo()
     {
         cout<<"grafo.txt"<<endl;

@@ -28,13 +28,10 @@ void Grafo_lista::insereAresta(int origem, int destino, int val)
 NodeEdge* Grafo_lista::getAresta(int origem, int destino)
 {
     NodeEdge* no = this->Vertice->getNodeById(origem)->getArestas()->getPrimeiro();
-    while(no->getValue() != destino && no->getProx() != nullptr)
+    
+    while(no!= nullptr && no->getValue() != destino)
     {
         no = (NodeEdge*)no->getProx();
-    }
-    if(no->getValue() != destino)
-    {
-        return nullptr;
     }
     return no;
 }

@@ -8,17 +8,24 @@ Grafo_matriz::Grafo_matriz(){
     vertices = nullptr;
     numVertices = 0;
 }
-Grafo_matriz::~Grafo_matriz(){
+Grafo_matriz::~Grafo_matriz() {
     if (matriz_adjacencia != nullptr) {
         if (eh_direcionado()) {
             for (int i = 0; i < numVertices; i++) {
                 if (matriz_adjacencia[i] != nullptr) { 
-                    delete[] matriz_adjacencia[i]; 
+                    for (int j = 0; j < numVertices; j++) {
+                        delete matriz_adjacencia[i][j];
+                    }
+                    delete[] matriz_adjacencia[i];
                 }
             }
         } else {
-            if (matriz_adjacencia[0] != nullptr) { 
-                delete[] matriz_adjacencia[0]; 
+            int tamanho = numVertices * (numVertices - 1) / 2;
+            if (matriz_adjacencia[0] != nullptr) {
+                for (int i = 0; i < tamanho; i++) {
+                    delete matriz_adjacencia[0][i];
+                }
+                delete[] matriz_adjacencia[0];
             }
         }
         delete[] matriz_adjacencia;
@@ -30,25 +37,33 @@ Grafo_matriz::~Grafo_matriz(){
 }
 
 
+
 void Grafo_matriz::inicializaMatriz()
 {
-    if(matriz_adjacencia == nullptr)
-    {
-        if(eh_direcionado())
-        {
-            matriz_adjacencia = new NodeEdge*[getOrdem()]();
-            for(int i = 0; i< getOrdem(); i+=1)
+    if (matriz_adjacencia == nullptr) {
+        if (eh_direcionado()) {
+            matriz_adjacencia = new NodeEdge**[getOrdem()]();
+            for (int i = 0; i < getOrdem(); i++) {
+                matriz_adjacencia[i] = new NodeEdge*[getOrdem()];
+            }
+            for(int i = 0; i < getOrdem(); i++)
             {
-                matriz_adjacencia[i] = new NodeEdge[getOrdem()]();
+                for(int j = 0; j < getOrdem(); j++)
+                {
+                    matriz_adjacencia[i][j] = nullptr;
+                }
+            }
+        } else {
+            int tamanho = getOrdem() * (getOrdem() - 1) / 2;
+            matriz_adjacencia = new NodeEdge**[1]();
+            matriz_adjacencia[0] = new NodeEdge*[tamanho]();
+            for(int i = 0; i < tamanho; i++)
+            {
+                matriz_adjacencia[0][i] = nullptr;
             }
         }
-        else
-        {
-            int tamanho = getOrdem()*(getOrdem()-1)/2;
-            matriz_adjacencia = new NodeEdge*[1]();
-            matriz_adjacencia[0] = new NodeEdge[tamanho]();
-        }
-    }
+}
+
 }
 void Grafo_matriz::inicializaPesoVertices() {
     if (vertices != nullptr) { 
@@ -75,38 +90,13 @@ void Grafo_matriz::insereAresta(int origem, int destino, int val) {
     origem -=1;
     destino-=1;
     if (origem< getOrdem() && destino < getOrdem()) {
-        if(val != 0)
-        {
-            if(eh_direcionado())
-            {
-                retornaCelulaMatriz(origem, destino)->setValue(val);
-            }
-            else
-            {
-                if(origem < destino)
-                {
-                    retornaCelulaMatriz(origem, destino)->setValue(val);
-                }
-            }
-        }
-        else
-        {
-            if(eh_direcionado())
-            {
-               retornaCelulaMatriz(origem, destino)->setValue(val);
-            }
-            else
-            {
-                if(origem < destino)
-                {
-                   retornaCelulaMatriz(origem, destino)->setValue(val);
-                }
-            }
-        }
+        NodeEdge** aresta = retornaCelulaMatriz(origem, destino);
+        *aresta = new NodeEdge();
+        (*aresta)->setValue(val);
     }
 }
 
-NodeEdge* Grafo_matriz::retornaCelulaMatriz(int i, int j)
+NodeEdge** Grafo_matriz::retornaCelulaMatriz(int i, int j)
 {
     if(eh_direcionado())
     {
@@ -136,9 +126,9 @@ NodeVertex* Grafo_matriz::getVertice(int id)
 
 NodeEdge* Grafo_matriz::getAresta(int origem, int destino)
 {
-    if(origem > getOrdem() || destino > getOrdem())
+    if(origem > getOrdem() || destino > getOrdem() || origem < 0 || destino < 0)
     {
         return nullptr;
     }
-    return retornaCelulaMatriz(origem, destino);
+    return *retornaCelulaMatriz(origem, destino);
 }

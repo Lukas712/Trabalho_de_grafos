@@ -8,7 +8,7 @@
 class Grafo_matriz : public GrafoAbstract
 {
     private:
-        NodeEdge** matriz_adjacencia;
+        NodeEdge*** matriz_adjacencia;
         NodeVertex* vertices;
         int numVertices;
         /**Inicializa a matriz como matriz de adjacência ou representação linear */
@@ -16,7 +16,7 @@ class Grafo_matriz : public GrafoAbstract
         /**Incializa o peso dos vértices */
         void inicializaPesoVertices();
         /**Retorna o elemento [i][j] da matriz convertendo os índices em caso de matriz por representação linear*/
-        NodeEdge* retornaCelulaMatriz(int i, int j);
+        NodeEdge** retornaCelulaMatriz(int i, int j);
         /**Verifica e retorna a existência de ciclos no grafo */
 
     public:
