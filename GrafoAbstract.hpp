@@ -13,18 +13,19 @@ class GrafoAbstract
         int ordem;
         bool direcionado, verticePeso, arestaPeso;
 
-        bool arquivoVazio(string nomeArquivo) {
-            ifstream outFile(nomeArquivo, ios::in);
-            if (!outFile.is_open()) {
-                cout << "Erro ao abrir o arquivo." << endl;
-                return true;
-            }
+        
 
-            outFile.seekg(0, ios::end);
-            bool vazio = (outFile.tellg() == 0);
-            outFile.close();
-            return vazio;
-        }
+    public:    
+        virtual NodeVertex* getVertice(int id) = 0;
+        virtual NodeEdge* getAresta(int origem, int destino) = 0;
+        virtual void insereVertice(int val) = 0;
+        virtual void insereAresta(int origem, int destino, int val) = 0;
+        virtual void removeVertice(int id) = 0;
+        
+        bool eh_direcionado() {return this->direcionado;};
+        bool verticePonderado() {return this->verticePeso;};
+        bool arestaPonderada() {return this->arestaPeso;};
+        int getOrdem(){return this->ordem;};
 
         void setOrdem(int val) {
             this->ordem = val;
@@ -41,18 +42,6 @@ class GrafoAbstract
         void setArestaPonderada(bool val) {
             this->arestaPeso = val;
         }
-
-    public:    
-        virtual NodeVertex* getVertice(int id) = 0;
-        virtual NodeEdge* getAresta(int origem, int destino) = 0;
-        virtual void insereVertice(int val) = 0;
-        virtual void insereAresta(int origem, int destino, int val) = 0;
-        virtual void removeVertice(int id) = 0;
-        
-        bool eh_direcionado() {return this->direcionado;};
-        bool verticePonderado() {return this->verticePeso;};
-        bool arestaPonderada() {return this->arestaPeso;};
-        int getOrdem(){return this->ordem;};
         
         int getNConexo() {
             int* componentes = new int[getOrdem()]();
@@ -153,11 +142,6 @@ class GrafoAbstract
         
         ifstream inFile(grafo);
 
-        if(arquivoVazio(grafo))
-        {
-            return;
-        }
-
         int numVertices, direcionado, verticePonderado, arestaPonderada;
         inFile >> numVertices >> direcionado >> verticePonderado >> arestaPonderada;
 
@@ -194,7 +178,7 @@ class GrafoAbstract
         }
         
         inFile.close();
-        imprimeGrafo();
+        
     }
     
     void imprimeGrafo()

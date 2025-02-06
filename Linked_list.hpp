@@ -15,7 +15,7 @@ protected:
         while(primeiro != NULL)
         {
             NodeType* p = primeiro;
-            primeiro = static_cast<NodeType*>(primeiro->getProx());
+            primeiro = (NodeType*)(primeiro->getProx());
             delete p;
         }
     };
@@ -88,6 +88,63 @@ public:
             p = (NodeType*)p->getProx();
         }
         cout<<endl;
+    }
+
+    void removeNode(NodeType* no)
+    {
+        NodeType* aux;
+        if(primeiro != nullptr && primeiro == no)
+        {
+            aux = primeiro;
+            primeiro = (NodeType*)primeiro->getProx();
+            
+            if(primeiro == nullptr)
+            {
+                ultimo = nullptr;
+            }
+            delete aux;
+            
+            atualizaId(primeiro);
+            n-=1;
+            return;
+        }
+        NodeType* p = primeiro;
+        while(p != nullptr && (NodeType*)p->getProx() != no)
+        {
+            p = (NodeType*)p->getProx();
+        }
+
+        if(p == nullptr)
+        {
+            cout<<"Remoção inválida!"<<endl;
+            return;
+        }
+
+        aux = nullptr;
+        if((NodeType*)p->getProx() == ultimo)
+        {
+            aux = ultimo;
+            delete aux;
+            p->setProx(nullptr);
+            ultimo = p;
+        }
+        else
+        {
+            aux = (NodeType*)p->getProx();
+            p->setProx((NodeType*)aux->getProx());
+            delete aux;
+        }
+        this->n-=1;
+        atualizaId(p);
+    }
+
+    void atualizaId(NodeType* no)
+    {
+        while(no!= nullptr)
+        {
+            no->setId(no->getId()-1);
+            no = (NodeType*)no->getProx();
+        }
     }
 };
 

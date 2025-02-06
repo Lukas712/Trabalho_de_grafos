@@ -18,11 +18,17 @@ int main(int argc, char* argv[])
             {
                 Grafo_lista grafoL;
                 grafoL.carregaGrafo(argv[3]);
+                // grafoL.removeAresta(2,1);
+                // grafoL.removeAresta(2,3);
+                // grafoL.removeAresta(1,2);
+                grafoL.removeVertice(2);
+                grafoL.imprimeGrafo();
             }
             else
             {
                     Grafo_matriz grafoM;
                     grafoM.carregaGrafo(argv[3]);
+                    grafoM.imprimeGrafo();
             }
         }
         else

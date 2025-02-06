@@ -89,7 +89,7 @@ void Grafo_matriz::insereAresta(int origem, int destino, int val) {
     }
     origem -=1;
     destino-=1;
-    if (origem< getOrdem() && destino < getOrdem()) {
+    if (origem>=0 && origem< getOrdem() && destino >= 0 && destino < getOrdem()) {
         NodeEdge** aresta = retornaCelulaMatriz(origem, destino);
         *aresta = new NodeEdge();
         (*aresta)->setValue(val);

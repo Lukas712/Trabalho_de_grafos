@@ -4,6 +4,7 @@
     #include <iostream>
     #include "Linked_list.hpp"
     #include "NodeVertex.h"
+    #include "NodeEdge.h"
     class Linked_Vertex : public Linked_list<NodeVertex>
     {
         private:
@@ -33,5 +34,42 @@
                 arestas->insereFinal(destino-1);
                 arestas->getUltimo()->setPeso(val);
             };
+
+            void removeAresta(int i, int j)
+            {
+                NodeVertex* no = getNodeById(i-1);
+                Linked_list<NodeEdge>* arestas = no->getArestas();
+                NodeEdge* noAresta = (NodeEdge*)arestas->getPrimeiro();
+                while(noAresta != nullptr && noAresta->getValue() != j-1)
+                {
+                    noAresta = (NodeEdge*)noAresta->getProx();
+                }
+                arestas->removeNode(noAresta);
+                NodeEdge* noAlteraId = (NodeEdge*)arestas->getPrimeiro();
+            }
+
+            void removeVertice(int id)
+            {
+                NodeVertex* no = getNodeById(id);
+                removeNode(no);
+                NodeVertex* noAux = getPrimeiro();
+                for(int i = 0; i< getTam(); i+=1)
+                {
+                    // cout<<getAresta(i,id+1)->getValue()<<endl;
+                    if(noAux != nullptr)
+                    {
+                        NodeEdge* aresta = noAux->getArestas()->getPrimeiro();
+                        while(aresta != nullptr)
+                        {
+                            if(aresta->getValue() == id)
+                            {
+                                noAux->getArestas()->removeNode(aresta);
+                            }
+                            aresta = (NodeEdge*)aresta->getProx();
+                        }
+                    }
+                    noAux = (NodeVertex*)noAux->getProx();
+                }
+            };
     };
-    #endif
+#endif

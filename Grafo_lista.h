@@ -18,8 +18,8 @@ class Grafo_lista : public GrafoAbstract
         void insereAresta(int origem, int destino, int val);
         /**Remove uma aresta ao passar o vértice de origem e qual o vértice que deve ser removido */
         void removeAresta(int i, int j);
-        /**Calcula e retorna o número de componentes conexas do grafo */
-        void removeVertice(int id){};
+        /**Calcula e retorna o númerhis->Vertice->ro de componentes conexas do grafo */
+        void removeVertice(int id);
         NodeVertex* getVertice(int id);
         NodeEdge* getAresta(int origem, int destino);
 
