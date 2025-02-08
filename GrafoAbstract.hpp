@@ -10,7 +10,7 @@ using namespace std;
 class GrafoAbstract
 {   
     private:
-        int ordem;
+        int ordem = 0;
         bool direcionado, verticePeso, arestaPeso;
 
         
@@ -43,14 +43,14 @@ class GrafoAbstract
             this->arestaPeso = val;
         }
         
-        int getNConexo() {
+    int getNConexo() {
             int* componentes = new int[getOrdem()]();
 
             for (int i = 0; i < getOrdem(); i+=1) {
                 componentes[i] = i + 1;
             }
 
-           
+
             for (int i = 0; i < getOrdem(); i+=1) {
                 for (int j = 0; j < getOrdem(); j+=1) {
                     if (i != j && getAresta(i, j) != nullptr) {
@@ -69,7 +69,7 @@ class GrafoAbstract
                 }
             }
 
-            
+
             int contaDiferente = 1;
             for (int i = 1; i < getOrdem(); i+=1) {
                 if (componentes[i] != componentes[i - 1]) {
@@ -88,7 +88,6 @@ class GrafoAbstract
             return contaDiferente;
            }
         }
-
         int getGrau(){
             int maior = 0;
             int contador = 0;
@@ -145,7 +144,6 @@ class GrafoAbstract
         int numVertices, direcionado, verticePonderado, arestaPonderada;
         inFile >> numVertices >> direcionado >> verticePonderado >> arestaPonderada;
 
-        this->setOrdem(numVertices);
         this->setDirecionado(direcionado);
         this->setVerticePonderado(verticePonderado);
         this->setArestaPonderada(arestaPonderada);
@@ -161,7 +159,7 @@ class GrafoAbstract
         else
         {
             for (int i = 0; i < numVertices; i+=1) {
-                insereVertice(0);
+                insereVertice(1);
             }
         }
 
@@ -173,7 +171,7 @@ class GrafoAbstract
                 insereAresta(origem, destino, peso);
             }
             else {
-                insereAresta(origem, destino, 0);
+                insereAresta(origem, destino, 1);
             }
         }
         

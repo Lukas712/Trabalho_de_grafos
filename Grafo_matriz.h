@@ -31,7 +31,7 @@ class Grafo_matriz : public GrafoAbstract
         /**Remove uma aresta ao passar o vértice de origem e qual o vértice que deve ser removido */
         void removeAresta(int i, int j);
 
-        void removeVertice(int id){};
+        void removeVertice(int id);
         /**Calcula e retorna o número de componentes conexas do grafo */
         NodeVertex* getVertice(int id);
         NodeEdge* getAresta(int origem, int destino);

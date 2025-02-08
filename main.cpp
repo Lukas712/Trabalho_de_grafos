@@ -19,15 +19,21 @@ int main(int argc, char* argv[])
                 Grafo_lista grafoL;
                 grafoL.carregaGrafo(argv[3]);
                 // grafoL.removeAresta(2,1);
+                // grafoL.insereAresta(2,1, 0);
                 // grafoL.removeAresta(2,3);
                 // grafoL.removeAresta(1,2);
-                grafoL.removeVertice(2);
+                // grafoL.removeVertice(3);
+                // grafoL.insereVertice(5);
                 grafoL.imprimeGrafo();
             }
             else
             {
                     Grafo_matriz grafoM;
                     grafoM.carregaGrafo(argv[3]);
+                    // grafoM.insereAresta(2,1,0);
+                    // grafoM.insereVertice(5);
+                    // grafoM.removeAresta(3,3);
+                    // grafoM.removeVertice(4);
                     grafoM.imprimeGrafo();
             }
         }

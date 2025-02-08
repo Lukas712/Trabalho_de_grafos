@@ -79,20 +79,28 @@ void Grafo_matriz::insereVertice(int val) {
     }
     vertices[numVertices].setValue(val); 
     numVertices++;
+    setOrdem(getOrdem()+1);
 }
 
 
 void Grafo_matriz::insereAresta(int origem, int destino, int val) {
+    origem -=1;
+    destino-=1;
     if(matriz_adjacencia == nullptr)
     {
         inicializaMatriz();
     }
-    origem -=1;
-    destino-=1;
-    if (origem>=0 && origem< getOrdem() && destino >= 0 && destino < getOrdem()) {
-        NodeEdge** aresta = retornaCelulaMatriz(origem, destino);
-        *aresta = new NodeEdge();
-        (*aresta)->setValue(val);
+    if(getAresta(origem, destino) == nullptr)
+    {
+        if (origem>=0 && origem< getOrdem() && destino >= 0 && destino < getOrdem()) {
+            NodeEdge** aresta = retornaCelulaMatriz(origem, destino);
+            *aresta = new NodeEdge();
+            (*aresta)->setValue(val);
+        }
+    }
+    else
+    {
+        cout<<"Aresta entre: "<<origem+1<<" e "<<destino+1<<" já existe"<<endl;
     }
 }
 
@@ -131,4 +139,38 @@ NodeEdge* Grafo_matriz::getAresta(int origem, int destino)
         return nullptr;
     }
     return *retornaCelulaMatriz(origem, destino);
+}
+
+void Grafo_matriz::removeAresta(int i, int j)
+{
+    NodeEdge** arestaPtr = retornaCelulaMatriz(i-1, j-1);
+    
+    if (*arestaPtr != nullptr) {
+        delete *arestaPtr;
+        *arestaPtr = nullptr;
+    }
+    else
+    {
+        cout<<"A aresta: ("<< i <<","<<j <<") não existe!"<<endl;
+    }
+}
+
+void Grafo_matriz::removeVertice(int id)
+{
+    if(id >= 1 && id <= getOrdem())
+    {
+        for(int i = 0; i< id; i+=1)
+        {
+            NodeEdge** arestaPtr = retornaCelulaMatriz(id, i);
+            if (*arestaPtr != nullptr) {
+                delete *arestaPtr;
+                *arestaPtr = nullptr;
+            }
+        }
+        this->setOrdem(this->getOrdem()-1);
+    }
+    else
+    {
+        cout<<"Não é possível remover o vértice"<<endl;
+    }
 }

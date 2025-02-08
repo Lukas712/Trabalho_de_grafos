@@ -35,7 +35,7 @@
                 arestas->getUltimo()->setPeso(val);
             };
 
-            void removeAresta(int i, int j)
+             void removeAresta(int i, int j)
             {
                 NodeVertex* no = getNodeById(i-1);
                 Linked_list<NodeEdge>* arestas = no->getArestas();
@@ -44,32 +44,62 @@
                 {
                     noAresta = (NodeEdge*)noAresta->getProx();
                 }
+                atualizaAresta(arestas, j+1);
                 arestas->removeNode(noAresta);
-                NodeEdge* noAlteraId = (NodeEdge*)arestas->getPrimeiro();
             }
 
-            void removeVertice(int id)
-            {
-                NodeVertex* no = getNodeById(id);
-                removeNode(no);
-                NodeVertex* noAux = getPrimeiro();
-                for(int i = 0; i< getTam(); i+=1)
-                {
-                    // cout<<getAresta(i,id+1)->getValue()<<endl;
-                    if(noAux != nullptr)
-                    {
-                        NodeEdge* aresta = noAux->getArestas()->getPrimeiro();
-                        while(aresta != nullptr)
-                        {
-                            if(aresta->getValue() == id)
-                            {
-                                noAux->getArestas()->removeNode(aresta);
-                            }
-                            aresta = (NodeEdge*)aresta->getProx();
-                        }
-                    }
-                    noAux = (NodeVertex*)noAux->getProx();
+        void removeVertice(int id) {
+        NodeVertex* no = getNodeById(id);
+        if (no == nullptr){
+            return;
+        }
+
+        NodeVertex* current = getPrimeiro();
+        while (current != nullptr) {
+            Linked_list<NodeEdge>* arestas = current->getArestas();
+            NodeEdge* edge = arestas->getPrimeiro();
+            while (edge != nullptr) {
+                if (edge->getValue() == id) {
+                    NodeEdge* auxEdge = edge;
+                    edge = (NodeEdge*)edge->getProx();
+                    arestas->removeNode(auxEdge);
                 }
-            };
+                else if(edge->getValue() > id)
+                {
+                    edge->setValue(edge->getValue()-1);
+                    edge->setId(edge->getId()-1);
+                    edge = (NodeEdge*)edge->getProx();
+                }
+                else
+                {
+                    edge = (NodeEdge*)edge->getProx();
+                }
+            }
+            current = (NodeVertex*)current->getProx();
+        }
+
+        removeNode(no);
+        
+        NodeVertex* p = getPrimeiro();
+        int newId = 0;
+        while (p != nullptr) {
+            p->setId(newId++);
+            p = (NodeVertex*)p->getProx();
+        }
+    }
+
+    void atualizaAresta(Linked_list<NodeEdge>* arestas, int val)
+    {
+        NodeEdge* atualizaId = (NodeEdge*)arestas->getPrimeiro();
+        while(atualizaId != nullptr)
+        {
+            if(atualizaId->getValue() > val)
+            {
+                atualizaId->setValue(atualizaId->getValue()-1);
+                atualizaId->setId(atualizaId->getId()-1);
+            }
+            atualizaId = (NodeEdge*)atualizaId->getProx();
+        }
+    }
     };
 #endif

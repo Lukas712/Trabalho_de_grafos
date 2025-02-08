@@ -17,27 +17,41 @@ Grafo_lista::~Grafo_lista(){
 void Grafo_lista::insereVertice(int val)
 {
     this->Vertice->insereFinal(val);
+    setOrdem(getOrdem()+1);
 }
 
 
 void Grafo_lista::insereAresta(int origem, int destino, int val)
 {
-    this->Vertice->insereAresta(origem, destino, val);
+    if(getAresta(origem-1,destino-1) == nullptr)
+    {
+        this->Vertice->insereAresta(origem, destino, val);
+    }
+    else
+    {
+        cout<<"Aresta entre: "<<origem<<" e "<<destino<<" já existe"<<endl;
+    }
 }
 
 NodeEdge* Grafo_lista::getAresta(int origem, int destino)
 {
-    if(origem >=0 && origem <getOrdem() && destino>=0 && destino < getOrdem())
+    NodeEdge* no = this->Vertice->getNodeById(origem)->getArestas()->getPrimeiro();
+    
+    while(no!= nullptr && no->getValue() != destino)
     {
-        NodeEdge* no = this->Vertice->getNodeById(origem)->getArestas()->getPrimeiro();
-        
-        while(no!= nullptr && no->getValue() != destino)
+        if(origem >=0 && origem <getOrdem() && destino>=0 && destino < getOrdem())
         {
             no = (NodeEdge*)no->getProx();
+            NodeEdge* no = this->Vertice->getNodeById(origem)->getArestas()->getPrimeiro();
+            
+            while(no!= nullptr && no->getValue() != destino)
+            {
+                no = (NodeEdge*)no->getProx();
+            }
+            return no;
         }
-        return no;
     }
-    return nullptr;
+    return no;
 }
 
 NodeVertex* Grafo_lista::getVertice(int id)
@@ -47,38 +61,30 @@ NodeVertex* Grafo_lista::getVertice(int id)
 
 void Grafo_lista::removeAresta(int i, int j)
 {
-    this->Vertice->removeAresta(i, j);
+    if(i >= 1 && i <=this->getOrdem() && j>=1 && j <=this->getOrdem())
+    {
+        this->Vertice->removeAresta(i, j);
+    }
+    else
+    {
+        cout<<"Não é possível remover o nó"<<endl;
+    }
 }
 
 void Grafo_lista::removeVertice(int id)
 {
-    id-=1;
-    if(id >= 0 && id < getOrdem())
+    if(id >= 1 && id <= getOrdem())
     {
-        this->Vertice->removeVertice(id);
-        setOrdem(getOrdem()-1);
-        // for(int i =0; i< getOrdem(); i+=1)
-        // {
-        //     NodeVertex* no = this->Vertice->getNodeById(i);
-        //     if(no!= nullptr)
-        //     {
-        //         cout<<no->getValue()<<endl;
-        //     }
-        // }
+        id-=1;
+        if(id >= 0 && id < getOrdem())
+        {
+            this->Vertice->removeVertice(id);
+            setOrdem(getOrdem()-1);
+        }
     }
-    // for(int i = 0; i< getOrdem(); i+=1)
-    //     {
-    //         for(int j = 0; j<getOrdem(); j+=1)
-    //         {
-    //             if(i!= j)
-    //             {
-    //                 if(getAresta(i,j) != nullptr)
-    //                 {
-    //                     cout<<getAresta(i,j)->getValue()<<endl;
-    //                     // removeAresta(i,id+1);
-    //                 }
-    //             }
-    //         }
-    //     }
-     
+    else
+    {
+        cout<<"Não é possível remover o vértice"<<endl;
+    }
 }
+

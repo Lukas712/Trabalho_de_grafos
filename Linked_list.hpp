@@ -103,8 +103,6 @@ public:
                 ultimo = nullptr;
             }
             delete aux;
-            
-            atualizaId(primeiro);
             n-=1;
             return;
         }
@@ -135,16 +133,6 @@ public:
             delete aux;
         }
         this->n-=1;
-        atualizaId(p);
-    }
-
-    void atualizaId(NodeType* no)
-    {
-        while(no!= nullptr)
-        {
-            no->setId(no->getId()-1);
-            no = (NodeType*)no->getProx();
-        }
     }
 };
 
