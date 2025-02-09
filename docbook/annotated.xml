@@ -1,4 +1,0 @@
-<?xml version='1.0' encoding='UTF-8' standalone='no'?>
-<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_annotated" xml:lang="pt">
-<title>Lista de componentes</title>
-Lista de classes, estruturas, uniões e interfaces com uma breve descrição:<link linkend="_classGrafo__lista">Grafo_lista</link><link linkend="_classGrafo__matriz">Grafo_matriz</link><link linkend="_classGrafoAbstract">GrafoAbstract</link><link linkend="_classLinked__list">Linked_list&lt; NodeType &gt;</link><link linkend="_classLinked__Vertex">Linked_Vertex</link><link linkend="_classNode">Node</link><link linkend="_classNodeEdge">NodeEdge</link><link linkend="_classNodeVertex">NodeVertex</link></section>

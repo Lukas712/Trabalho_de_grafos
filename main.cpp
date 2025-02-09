@@ -1,11 +1,8 @@
 #include<iostream>
 #include<fstream>
 #include<string.h>
-#include"Grafo_lista.h"
-#include"Grafo_matriz.h"
-#include "Grafo_lista.cpp"
-#include "Grafo_matriz.cpp"
-#include "Linked_Vertex.h"
+#include"include/Grafo_lista.h"
+#include"include/Grafo_matriz.h"
 using namespace std;
     
     
@@ -25,7 +22,7 @@ int main(int argc, char* argv[])
                 // grafoL.removeAresta(1,2);
                 // grafoL.removeVertice(3);
                 // grafoL.insereVertice(5);
-                for(int i = 0; i<2000; i+=1)
+                for(int i = 0; i<200; i+=1)
                 {
                     grafoL.insereVertice(i);
                 }
@@ -40,10 +37,10 @@ int main(int argc, char* argv[])
                     Grafo_matriz grafoM;
                     grafoM.carregaGrafo(argv[3]);
                     // grafoM.insereAresta(2,1,0);
-                    // for(int i = 0; i<2000; i+=1)
-                    // {
-                    //     grafoM.insereVertice(i);
-                    // }
+                    for(int i = 0; i<200; i+=1)
+                    {
+                        grafoM.insereVertice(i);
+                    }
                     // grafoM.removeVertice(1);
                     // grafoM.removeAresta(2,1);
                     // grafoM.removeAresta(2,1);
