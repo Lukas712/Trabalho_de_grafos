@@ -7,79 +7,88 @@ Grafo_matriz::Grafo_matriz(){
     matriz_adjacencia = nullptr;
     vertices = nullptr;
     numVertices = 0;
+    capacidade = 10;
 }
 Grafo_matriz::~Grafo_matriz() {
     if (matriz_adjacencia != nullptr) {
         if (eh_direcionado()) {
-            for (int i = 0; i < numVertices; i++) {
-                if (matriz_adjacencia[i] != nullptr) { 
-                    for (int j = 0; j < numVertices; j++) {
-                        delete matriz_adjacencia[i][j];
-                    }
-                    delete[] matriz_adjacencia[i];
+            for (int i = 0; i < capacidade; i+=1) {
+                for (int j = 0; j < capacidade; j+=1) {
+                    delete matriz_adjacencia[i][j];
                 }
+                delete[] matriz_adjacencia[i];
             }
-        } else {
-            int tamanho = numVertices * (numVertices - 1) / 2;
-            if (matriz_adjacencia[0] != nullptr) {
-                for (int i = 0; i < tamanho; i++) {
-                    delete matriz_adjacencia[0][i];
-                }
-                delete[] matriz_adjacencia[0];
-            }
+        } 
+        else
+        {
+            delete[] matriz_adjacencia[0];
         }
         delete[] matriz_adjacencia;
     }
+    delete[] vertices;
+}
 
-    if (vertices != nullptr) {
-        delete[] vertices;
+void Grafo_matriz::inicializaPesoVertices() {
+    delete[] vertices;
+    vertices = new NodeVertex[capacidade]();
+}
+void Grafo_matriz::inicializaMatriz() {
+    if (eh_direcionado()) {
+        matriz_adjacencia = new NodeEdge**[capacidade];
+        for (int i = 0; i < capacidade; i+=1) {
+            matriz_adjacencia[i] = new NodeEdge*[capacidade]();
+        }
+    } else {
+        int tamanho = capacidade * (capacidade - 1) / 2;
+        matriz_adjacencia = new NodeEdge**[1];
+        matriz_adjacencia[0] = new NodeEdge*[tamanho]();
     }
 }
 
+void Grafo_matriz::resize(int novaCapacidade) {
+    NodeVertex* newVertices = new NodeVertex[novaCapacidade](); 
+    for (int i = 0; i < numVertices; i+=1) {
+        newVertices[i].setValue(vertices[i].getValue());
+    }
+    delete[] vertices;
+    vertices = newVertices;
 
-
-void Grafo_matriz::inicializaMatriz()
-{
-    if (matriz_adjacencia == nullptr) {
-        if (eh_direcionado()) {
-            matriz_adjacencia = new NodeEdge**[getOrdem()]();
-            for (int i = 0; i < getOrdem(); i++) {
-                matriz_adjacencia[i] = new NodeEdge*[getOrdem()];
-            }
-            for(int i = 0; i < getOrdem(); i++)
-            {
-                for(int j = 0; j < getOrdem(); j++)
-                {
+    NodeEdge*** novaMatriz = nullptr;
+    if (eh_direcionado()) {
+        novaMatriz = new NodeEdge**[novaCapacidade];
+        for (int i = 0; i < novaCapacidade; i+=1) {
+            novaMatriz[i] = new NodeEdge*[novaCapacidade]();
+            for (int j = 0; j < capacidade; j+=1) {
+                if (i < capacidade && j < capacidade) {
+                    novaMatriz[i][j] = matriz_adjacencia[i][j];
                     matriz_adjacencia[i][j] = nullptr;
                 }
             }
-        } else {
-            int tamanho = getOrdem() * (getOrdem() - 1) / 2;
-            matriz_adjacencia = new NodeEdge**[1]();
-            matriz_adjacencia[0] = new NodeEdge*[tamanho]();
-            for(int i = 0; i < tamanho; i++)
-            {
-                matriz_adjacencia[0][i] = nullptr;
-            }
         }
-}
-
-}
-void Grafo_matriz::inicializaPesoVertices() {
-    if (vertices != nullptr) { 
-        delete[] vertices; 
+        for (int i = 0; i < capacidade; i+=1) {
+            delete[] matriz_adjacencia[i];
+        }
+    } else {
+        int novoTamanho = novaCapacidade * (novaCapacidade - 1) / 2;
+        novaMatriz = new NodeEdge**[1];
+        novaMatriz[0] = new NodeEdge*[novoTamanho]();
     }
-    vertices = new NodeVertex[getOrdem()]();
-}
 
+    delete[] matriz_adjacencia;
+    matriz_adjacencia = novaMatriz;
+    capacidade = novaCapacidade;
+}
 
 void Grafo_matriz::insereVertice(int val) {
+    if (numVertices >= capacidade) {
+        resize(capacidade * 2);
+    }
     if (vertices == nullptr) {
         inicializaPesoVertices();
     }
-    vertices[numVertices].setValue(val); 
-    numVertices++;
-    setOrdem(getOrdem()+1);
+    vertices[numVertices].setValue(val);
+    numVertices+=1;
+    setOrdem(numVertices);
 }
 
 
@@ -92,10 +101,14 @@ void Grafo_matriz::insereAresta(int origem, int destino, int val) {
     }
     if(getAresta(origem, destino) == nullptr)
     {
-        if (origem>=0 && origem< getOrdem() && destino >= 0 && destino < getOrdem()) {
+        if (origem>=0 && origem< getOrdem() && destino >= 0 && destino < getOrdem() && origem != destino) {
             NodeEdge** aresta = retornaCelulaMatriz(origem, destino);
             *aresta = new NodeEdge();
             (*aresta)->setValue(val);
+        }
+        else
+        {
+            cout<<"Não é possível inserir a aresta ("<<origem+1<<","<<destino+1<<")"<<endl;
         }
     }
     else
@@ -155,22 +168,104 @@ void Grafo_matriz::removeAresta(int i, int j)
     }
 }
 
-void Grafo_matriz::removeVertice(int id)
-{
-    if(id >= 1 && id <= getOrdem())
-    {
-        for(int i = 0; i< id; i+=1)
-        {
-            NodeEdge** arestaPtr = retornaCelulaMatriz(id, i);
-            if (*arestaPtr != nullptr) {
-                delete *arestaPtr;
-                *arestaPtr = nullptr;
+void Grafo_matriz::removeVertice(int id) {
+    if (id < 1 || id > numVertices) {
+        cout << "ID inválido!" << endl;
+        return;
+    }
+    int k = id - 1;
+
+    for (int i = 0; i < numVertices; i+=1) {
+        NodeEdge** arestaPtr = retornaCelulaMatriz(k, i);
+        if (*arestaPtr != nullptr) {
+            delete *arestaPtr;
+            *arestaPtr = nullptr;
+        }
+        if (eh_direcionado()) {
+            NodeEdge** arestaReversa = retornaCelulaMatriz(i, k);
+            if (*arestaReversa != nullptr) {
+                delete *arestaReversa;
+                *arestaReversa = nullptr;
             }
         }
-        this->setOrdem(this->getOrdem()-1);
     }
-    else
-    {
-        cout<<"Não é possível remover o vértice"<<endl;
+
+    NodeVertex* newVertices = new NodeVertex[capacidade](); 
+    for (int i = 0; i < numVertices-1; i+=1) {
+        newVertices[i].setValue(vertices[i].getValue());
+    }
+    delete[] vertices;
+    vertices = newVertices;
+
+    numVertices-=1;
+    setOrdem(numVertices);
+
+    if (eh_direcionado()) {
+        NodeEdge*** novaMatriz = new NodeEdge**[capacidade];
+        for (int i = 0; i < capacidade; i+=1) {
+            novaMatriz[i] = new NodeEdge*[capacidade]();
+        }
+
+        for (int i = 0; i < numVertices; i+=1) {
+            for (int j = 0; j < numVertices; j+=1) {
+                int oldI;
+                int oldJ;
+                if(i<k) {
+                    oldI = i;
+                }
+                else
+                {
+                    oldI = i+1;
+                }
+                if(j<k)
+                {
+                    oldJ = j;
+                }
+                else
+                {
+                    oldJ = j+1;
+                }
+                novaMatriz[i][j] = matriz_adjacencia[oldI][oldJ];
+                matriz_adjacencia[oldI][oldJ] = nullptr;
+            }
+        }
+
+        for (int i = 0; i < capacidade; i+=1) {
+            delete[] matriz_adjacencia[i];
+        }
+        delete[] matriz_adjacencia;
+        matriz_adjacencia = novaMatriz;
+    } else {
+        int novoTamanho = capacidade * (capacidade - 1) / 2;
+        NodeEdge** novaMatriz = new NodeEdge*[novoTamanho]();
+
+        for (int i = 0; i < numVertices; i+=1) {
+            for (int j = i + 1; j < numVertices; j+=1) {
+                int oldI;
+                int oldJ;
+                if(i<k) {
+                    oldI = i;
+                }
+                else
+                {
+                    oldI = i+1;
+                }
+                if(j<k)
+                {
+                    oldJ = j;
+                }
+                else
+                {
+                    oldJ = j+1;
+                }
+                NodeEdge** oldEdge = retornaCelulaMatriz(oldI, oldJ);
+                int newIndex = j * (j - 1) / 2 + i;
+                novaMatriz[newIndex] = *oldEdge;
+                *oldEdge = nullptr;
+            }
+        }
+
+        delete[] matriz_adjacencia[0];
+        matriz_adjacencia[0] = novaMatriz;
     }
 }

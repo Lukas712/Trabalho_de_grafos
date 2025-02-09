@@ -18,12 +18,21 @@ int main(int argc, char* argv[])
             {
                 Grafo_lista grafoL;
                 grafoL.carregaGrafo(argv[3]);
-                // grafoL.removeAresta(2,1);
-                // grafoL.insereAresta(2,1, 0);
+                // cout<<grafoL.getAresta(1,0)->getPeso()<<endl;
+                // grafoL.insereAresta(3,1,5);
+                // grafoL.insereAresta(3,2,1);
                 // grafoL.removeAresta(2,3);
                 // grafoL.removeAresta(1,2);
                 // grafoL.removeVertice(3);
                 // grafoL.insereVertice(5);
+                for(int i = 0; i<2000; i+=1)
+                {
+                    grafoL.insereVertice(i);
+                }
+                // grafoL.removeAresta(2,1);
+                // grafoL.insereAresta(1,3,0);
+                // grafoL.insereAresta(2,1, 2);
+                // cout<<(grafoL.getAresta(1,0)->getPeso())<<endl;
                 grafoL.imprimeGrafo();
             }
             else
@@ -31,9 +40,15 @@ int main(int argc, char* argv[])
                     Grafo_matriz grafoM;
                     grafoM.carregaGrafo(argv[3]);
                     // grafoM.insereAresta(2,1,0);
-                    // grafoM.insereVertice(5);
-                    // grafoM.removeAresta(3,3);
-                    // grafoM.removeVertice(4);
+                    // for(int i = 0; i<2000; i+=1)
+                    // {
+                    //     grafoM.insereVertice(i);
+                    // }
+                    // grafoM.removeVertice(1);
+                    // grafoM.removeAresta(2,1);
+                    // grafoM.removeAresta(2,1);
+                    // grafoM.insereAresta(1,3,0);
+                    // grafoM.insereAresta(2,1, 2);
                     grafoM.imprimeGrafo();
             }
         }

@@ -12,9 +12,7 @@ class GrafoAbstract
     private:
         int ordem = 0;
         bool direcionado, verticePeso, arestaPeso;
-
-        
-
+    
     public:    
         virtual NodeVertex* getVertice(int id) = 0;
         virtual NodeEdge* getAresta(int origem, int destino) = 0;

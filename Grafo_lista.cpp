@@ -1,8 +1,5 @@
 #include <iostream>
-#include <fstream>
 #include "Grafo_lista.h"
-#include <ctime>
-#include <cstdlib>
 using namespace std;
 
 Grafo_lista::Grafo_lista(){
@@ -36,19 +33,11 @@ void Grafo_lista::insereAresta(int origem, int destino, int val)
 NodeEdge* Grafo_lista::getAresta(int origem, int destino)
 {
     NodeEdge* no = this->Vertice->getNodeById(origem)->getArestas()->getPrimeiro();
-    
-    while(no!= nullptr && no->getValue() != destino)
-    {
-        if(origem >=0 && origem <getOrdem() && destino>=0 && destino < getOrdem())
+    if(origem >=0 && origem <getOrdem() && destino>=0 && destino < getOrdem())
+    {        
+        while(no!= nullptr && no->getValue() != destino)
         {
             no = (NodeEdge*)no->getProx();
-            NodeEdge* no = this->Vertice->getNodeById(origem)->getArestas()->getPrimeiro();
-            
-            while(no!= nullptr && no->getValue() != destino)
-            {
-                no = (NodeEdge*)no->getProx();
-            }
-            return no;
         }
     }
     return no;

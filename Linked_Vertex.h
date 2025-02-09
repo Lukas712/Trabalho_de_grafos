@@ -44,7 +44,6 @@
                 {
                     noAresta = (NodeEdge*)noAresta->getProx();
                 }
-                atualizaAresta(arestas, j+1);
                 arestas->removeNode(noAresta);
             }
 
@@ -85,20 +84,6 @@
         while (p != nullptr) {
             p->setId(newId++);
             p = (NodeVertex*)p->getProx();
-        }
-    }
-
-    void atualizaAresta(Linked_list<NodeEdge>* arestas, int val)
-    {
-        NodeEdge* atualizaId = (NodeEdge*)arestas->getPrimeiro();
-        while(atualizaId != nullptr)
-        {
-            if(atualizaId->getValue() > val)
-            {
-                atualizaId->setValue(atualizaId->getValue()-1);
-                atualizaId->setId(atualizaId->getId()-1);
-            }
-            atualizaId = (NodeEdge*)atualizaId->getProx();
         }
     }
     };
