@@ -17,12 +17,16 @@ Grafo_matriz::~Grafo_matriz() {
                 }
                 delete[] matriz_adjacencia[i];
             }
-        } 
-        else
-        {
-            delete[] matriz_adjacencia[0];
+        } else {
+            if (matriz_adjacencia[0] != nullptr) {
+                int tamanho = capacidade * (capacidade - 1) / 2;
+                for (int i = 0; i < tamanho; i+=1) {
+                    delete matriz_adjacencia[0][i];
+                }
+                delete[] matriz_adjacencia[0];
+            }
         }
-        delete[] matriz_adjacencia;
+        delete[] matriz_adjacencia; // Libera o array principal
     }
     delete[] vertices;
 }
@@ -48,29 +52,29 @@ void Grafo_matriz::resize(int novaCapacidade) {
     NodeVertex* newVertices = new NodeVertex[novaCapacidade](); 
     for (int i = 0; i < numVertices; i+=1) {
         newVertices[i].setValue(vertices[i].getValue());
+        newVertices[i].setGrau(vertices[i].getGrau());
     }
     delete[] vertices;
     vertices = newVertices;
 
     NodeEdge*** novaMatriz = nullptr;
-    if (eh_direcionado()) {
-        novaMatriz = new NodeEdge**[novaCapacidade];
-        for (int i = 0; i < novaCapacidade; i+=1) {
-            novaMatriz[i] = new NodeEdge*[novaCapacidade]();
-            for (int j = 0; j < capacidade; j+=1) {
-                if (i < capacidade && j < capacidade) {
-                    novaMatriz[i][j] = matriz_adjacencia[i][j];
-                    matriz_adjacencia[i][j] = nullptr;
+    if (matriz_adjacencia != nullptr) {
+        if (eh_direcionado()) {
+            for (int i = 0; i < capacidade; i+=1) {
+                for (int j = 0; j < capacidade; j+=1) {
+                    delete matriz_adjacencia[i][j];
                 }
+                delete[] matriz_adjacencia[i];
+            }
+        } else {
+            if (matriz_adjacencia[0] != nullptr) {
+                int tamanhoAntigo = capacidade * (capacidade - 1) / 2;
+                for (int i = 0; i < tamanhoAntigo; i+=1) {
+                    delete matriz_adjacencia[0][i];
+                }
+                delete[] matriz_adjacencia[0];
             }
         }
-        for (int i = 0; i < capacidade; i+=1) {
-            delete[] matriz_adjacencia[i];
-        }
-    } else {
-        int novoTamanho = novaCapacidade * (novaCapacidade - 1) / 2;
-        novaMatriz = new NodeEdge**[1];
-        novaMatriz[0] = new NodeEdge*[novoTamanho]();
     }
 
     delete[] matriz_adjacencia;
@@ -78,7 +82,7 @@ void Grafo_matriz::resize(int novaCapacidade) {
     capacidade = novaCapacidade;
 }
 
-void Grafo_matriz::insereVertice(int val) {
+void Grafo_matriz::insereVertice(float val) {
     if (numVertices >= capacidade) {
         resize(capacidade * 2);
     }
@@ -91,7 +95,7 @@ void Grafo_matriz::insereVertice(int val) {
 }
 
 
-void Grafo_matriz::insereAresta(int origem, int destino, int val) {
+void Grafo_matriz::insereAresta(int origem, int destino, float val) {
     origem -=1;
     destino-=1;
     if(matriz_adjacencia == nullptr)
@@ -103,7 +107,9 @@ void Grafo_matriz::insereAresta(int origem, int destino, int val) {
         if (origem>=0 && origem< getOrdem() && destino >= 0 && destino < getOrdem() && origem != destino) {
             NodeEdge** aresta = retornaCelulaMatriz(origem, destino);
             *aresta = new NodeEdge();
-            (*aresta)->setValue(val);
+            (*aresta)->setPeso(val);
+            (*aresta)->setValue(destino+1);
+            vertices[origem].setGrau(vertices[origem].getGrau()+1);
         }
         else
         {
@@ -192,6 +198,7 @@ void Grafo_matriz::removeVertice(int id) {
     NodeVertex* newVertices = new NodeVertex[capacidade](); 
     for (int i = 0; i < numVertices-1; i+=1) {
         newVertices[i].setValue(vertices[i].getValue());
+        newVertices[i].setGrau(vertices[i].getGrau());
     }
     delete[] vertices;
     vertices = newVertices;

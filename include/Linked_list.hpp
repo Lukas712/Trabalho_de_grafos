@@ -26,7 +26,7 @@ public:
     /**Destrutor da Lista encadeada */
     ~Linked_list();
     /**Insere nó no final da lista com peso passado como parâmetro*/
-    void insereFinal(int val);
+    void insereFinal(float val);
     /**Imprime a Lista encadeada */
     void imprimeLista();
     void removeNode(NodeType* no);

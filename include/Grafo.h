@@ -14,8 +14,8 @@ class Grafo
     public:    
     virtual NodeVertex* getVertice(int id) = 0;
     virtual NodeEdge* getAresta(int origem, int destino) = 0;
-    virtual void insereVertice(int val) = 0;
-    virtual void insereAresta(int origem, int destino, int val) = 0;
+    virtual void insereVertice(float val) = 0;
+    virtual void insereAresta(int origem, int destino, float val) = 0;
     virtual void removeVertice(int id) = 0;
         
     bool eh_direcionado();
@@ -31,6 +31,7 @@ class Grafo
     bool eh_completo();
     void carregaGrafo(string grafo);
     void imprimeGrafo();
+    void maiorMenorDistancia(int ponto1, int ponto2);
 };
 
 #include "../src/Grafo.cpp"

@@ -6,15 +6,15 @@ class NodeEdge : public Node
 {
     
     private:
-    int peso;
+    float peso;
 
     public:
     NodeEdge();
     ~NodeEdge();
     /**Retorna o peso da aresta */ 
-    int getPeso();
+    float getPeso();
     /**Define o peso da aresta */
-    void setPeso(int val);
+    void setPeso(float val);
 
 };
 

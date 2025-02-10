@@ -4,10 +4,9 @@
 class Node
 {
 private:
-    int value;
+    float value;
     Node* prox;
     int id;
-    bool noAtivo;
     
 public:
     /**Construtor da classe Node */
@@ -17,15 +16,11 @@ public:
     Node* getProx();
     void setProx(Node* prox);
     
-    void setValue(int value);
-    int getValue();
+    void setValue(float value);
+    float getValue();
     
-
     void setId(int val);
     int getId();
-    
-    void setAtivo(bool value);
-    bool getAtivo();
 };
 
 #include "../src/Node.cpp"

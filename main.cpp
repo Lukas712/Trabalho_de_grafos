@@ -22,7 +22,7 @@ int main(int argc, char* argv[])
                 // grafoL.removeAresta(1,2);
                 // grafoL.removeVertice(3);
                 // grafoL.insereVertice(5);
-                for(int i = 0; i<200; i+=1)
+                for(int i = 0; i<500; i+=1)
                 {
                     grafoL.insereVertice(i);
                 }
@@ -31,13 +31,14 @@ int main(int argc, char* argv[])
                 // grafoL.insereAresta(2,1, 2);
                 // cout<<(grafoL.getAresta(1,0)->getPeso())<<endl;
                 grafoL.imprimeGrafo();
+                // grafoL.maiorMenorDistancia(1,3);
             }
             else
             {
                     Grafo_matriz grafoM;
                     grafoM.carregaGrafo(argv[3]);
                     // grafoM.insereAresta(2,1,0);
-                    for(int i = 0; i<200; i+=1)
+                    for(int i = 0; i<500; i+=1)
                     {
                         grafoM.insereVertice(i);
                     }
@@ -47,6 +48,7 @@ int main(int argc, char* argv[])
                     // grafoM.insereAresta(1,3,0);
                     // grafoM.insereAresta(2,1, 2);
                     grafoM.imprimeGrafo();
+                    // grafoM.maiorMenorDistancia(1,3);
             }
         }
         else

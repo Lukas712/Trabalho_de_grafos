@@ -12,18 +12,20 @@ Grafo_lista::~Grafo_lista(){
 }
 
 
-void Grafo_lista::insereVertice(int val)
+void Grafo_lista::insereVertice(float val)
 {
     this->Vertice->insereFinal(val);
     setOrdem(getOrdem()+1);
 }
 
 
-void Grafo_lista::insereAresta(int origem, int destino, int val)
+void Grafo_lista::insereAresta(int origem, int destino, float val)
 {
     if(getAresta(origem-1,destino-1) == nullptr)
     {
         this->Vertice->insereAresta(origem, destino, val);
+        NodeVertex* no = this->Vertice->getNodeById(origem-1);
+        no->setGrau(no->getArestas()->getTam());
     }
     else
     {

@@ -16,9 +16,9 @@ class Grafo_lista : public Grafo
         /**Destrutor da classe Grafo lista */
         ~Grafo_lista();
         /**Insere vértice com peso "val" */
-        void insereVertice(int val);
+        void insereVertice(float val);
         /**Insere aresta ao indicar o vértice de origem, o vértice de destino e o peso da aresta */
-        void insereAresta(int origem, int destino, int val);
+        void insereAresta(int origem, int destino, float val);
         /**Remove uma aresta ao passar o vértice de origem e qual o vértice que deve ser removido */
         void removeAresta(int i, int j);
         /**Calcula e retorna o númerhis->Vertice->ro de componentes conexas do grafo */

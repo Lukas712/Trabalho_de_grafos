@@ -1,15 +1,17 @@
 #include "../include/NodeEdge.h"
 
-NodeEdge::NodeEdge() : Node(){};
+NodeEdge::NodeEdge() : Node(){
+    this->peso = 1;
+};
 
 NodeEdge::~NodeEdge(){};
 
-int NodeEdge::getPeso()
+float NodeEdge::getPeso()
 {
     return this->peso;
 }
 
-void NodeEdge::setPeso(int val)
+void NodeEdge::setPeso(float val)
 {
     this->peso = val;
 }

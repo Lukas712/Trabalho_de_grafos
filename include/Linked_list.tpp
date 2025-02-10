@@ -48,7 +48,7 @@ Linked_list<NodeType>::~Linked_list(){
 }
     
 template<typename NodeType>
-void Linked_list<NodeType>::insereFinal(int val){
+void Linked_list<NodeType>::insereFinal(float val){
     NodeType* p = new NodeType();
     p->setValue(val);
     p->setProx(nullptr);
