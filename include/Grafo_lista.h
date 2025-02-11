@@ -11,20 +11,44 @@ class Grafo_lista : public Grafo
     private:
         Linked_Vertex* Vertice;
     public:
-        /**Construtor da classe Grafo lista */
+        /**
+         * @brief Construtor da classe Grafo lista
+         * */
         Grafo_lista();
-        /**Destrutor da classe Grafo lista */
+        /**
+         * @brief Destrutor da classe Grafo lista 
+         * */
         ~Grafo_lista();
-        /**Insere vértice com peso "val" */
-        void insereVertice(float val);
-        /**Insere aresta ao indicar o vértice de origem, o vértice de destino e o peso da aresta */
-        void insereAresta(int origem, int destino, float val);
-        /**Remove uma aresta ao passar o vértice de origem e qual o vértice que deve ser removido */
-        void removeAresta(int i, int j);
-        /**Calcula e retorna o númerhis->Vertice->ro de componentes conexas do grafo */
-        void removeVertice(int id);
-        NodeVertex* getVertice(int id);
-        NodeEdge* getAresta(int origem, int destino);
+        
+        /**
+         * @inheritDoc
+         */
+        void insereVertice(float val) override;
+        
+        /**
+         * @inheritDoc
+         */
+        void insereAresta(int origem, int destino, float val) override;
+        
+        /**
+         * @inheritDoc
+         */
+        void removeAresta(int i, int j) override;
+        
+        /**
+         * @inheritDoc
+         */
+        void removeVertice(int id) override;
+        
+        /**
+         * @inheritDoc
+         */
+        NodeVertex* getVertice(int id) override;
+        
+        /**
+         * @inheritDoc
+         */
+        NodeEdge* getAresta(int origem, int destino) override;
 };
 
 #include "../src/Grafo_lista.cpp"

@@ -12,31 +12,72 @@ class Grafo_matriz : public Grafo
         NodeVertex* vertices;
         int numVertices;
         int capacidade;
-        /**Inicializa a matriz como matriz de adjacência ou representação linear */
+        
+        /**
+         * @brief Inicializa a matriz com tamanho inicial 10 como matriz de adjacência ou representação por matriz triangular caso seja não direcionada
+         */
         void inicializaMatriz();
-        /**Incializa o peso dos vértices */
+
+        /**
+         * @brief Inicializa os vértices com tamanho inicial 10 
+        */
         void inicializaPesoVertices();
-        /**Retorna o elemento [i][j] da matriz convertendo os índices em caso de matriz por representação linear*/
+        
+        /**
+         * @brief Retorna o elemento correto na matriz, independente do tipo de representação
+         * @param i Índice da linha da matriz (começa em zero)
+         * @param j Índice da coluna da matriz (começa em zero)
+         * @return Elemento da posição [i][j] da matriz
+        */
         NodeEdge** retornaCelulaMatriz(int i, int j);
         
+        /**
+         * @brief Realoca a matriz e os vértices com tamanho dobrado
+         * @param novaCapacidade Define a nova capacidade que a matriz vai ter
+         */
         void resize(int novaCapacidade);
 
     public:
-        /**Construtor da classe Grafo matriz */
+        
+        /**
+         * @brief Construtor da classe matriz
+         */
         Grafo_matriz();
-        /**Destrutor da classe Grafo matriz */
+        
+        /**
+         * @brief Destrutor da classe matriz
+         */
         ~Grafo_matriz();
-        /**Insere vértice com peso "val" */
-        void insereVertice(float val);
-        /**Insere aresta ao indicar o vértice de origem, o vértice de destino e o peso da aresta */
-        void insereAresta(int origem, int destino, float val);
-        /**Remove uma aresta ao passar o vértice de origem e qual o vértice que deve ser removido */
-        void removeAresta(int i, int j);
-
-        void removeVertice(int id);
-        /**Calcula e retorna o número de componentes conexas do grafo */
-        NodeVertex* getVertice(int id);
-        NodeEdge* getAresta(int origem, int destino);
+        
+        /**
+         * @inheritDoc
+         */
+        void insereVertice(float val) override;
+        
+        /**
+         * @inheritDoc
+         */
+        void insereAresta(int origem, int destino, float val) override;
+        
+        /**
+         * @inheritDoc
+         */
+        void removeAresta(int origem, int destino) override;
+        
+        /**
+         * @inheritDoc
+         */
+        void removeVertice(int id) override;
+        
+        /**
+         * @inheritDoc
+         */
+        NodeVertex* getVertice(int id) override;
+        
+        /**
+         * @inheritDoc
+         */
+        NodeEdge* getAresta(int origem, int destino) override;
 };
         
 #include "../src/Grafo_matriz.cpp"

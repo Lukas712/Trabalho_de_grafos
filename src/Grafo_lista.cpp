@@ -28,6 +28,12 @@ void Grafo_lista::insereAresta(int origem, int destino, float val)
             this->Vertice->insereAresta(origem, destino, val);
             NodeVertex* no = this->Vertice->getNodeById(origem-1);
             no->setGrau(no->getGrau()+1);
+            if(!eh_direcionado())
+            {
+                this->Vertice->insereAresta(destino, origem, val);
+                NodeVertex* noVolta = this->Vertice->getNodeById(destino-1);
+                noVolta->setGrau(noVolta->getGrau()+1);
+            }
         }
         else
         {
@@ -71,6 +77,12 @@ void Grafo_lista::removeAresta(int i, int j)
             this->Vertice->removeAresta(i, j);
             NodeVertex* no = this->Vertice->getNodeById(i-1);
             no->setGrau(no->getGrau()-1);
+            if(!eh_direcionado())
+            {
+                this->Vertice->removeAresta(j, i);
+                NodeVertex* noVolta = this->Vertice->getNodeById(j);
+                noVolta->setGrau(noVolta->getGrau()-1);
+            }
         }
         else
         {
@@ -100,4 +112,3 @@ void Grafo_lista::removeVertice(int id)
         cout<<"Não é possível remover o vértice"<<endl;
     }
 }
-

@@ -9,11 +9,26 @@ class NodeEdge : public Node
     float peso;
 
     public:
+    /**
+     * @inheritDoc
+     */
     NodeEdge();
+
+    /**
+     * @inheritDoc
+     */
     ~NodeEdge();
-    /**Retorna o peso da aresta */ 
+
+    /**
+     * @brief Retorna o peso da aresta
+     * @return Peso
+     */
     float getPeso();
-    /**Define o peso da aresta */
+
+    /**
+     * @brief Define o peso da aresta
+     * @param val Peso da aresta
+     */
     void setPeso(float val);
 
 };

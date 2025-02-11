@@ -12,7 +12,7 @@ Linked_Vertex::~Linked_Vertex()
     ultimo = nullptr;
 }
 
-void Linked_Vertex::insereAresta(int origem, int destino, int val)
+void Linked_Vertex::insereAresta(int origem, int destino, float val)
 {
     NodeVertex* noOrigem = getNodeById(origem-1);
     Linked_list<NodeEdge>* arestas = noOrigem->getArestas();
@@ -30,6 +30,9 @@ void Linked_Vertex::removeAresta(int i, int j)
         noAresta = (NodeEdge*)noAresta->getProx();
     }
     arestas->removeNode(noAresta);
+
+    cout<<"Removendo a aresta ("<< i<<","<<j<<")"<<endl;
+    
 }
 
 void Linked_Vertex::removeVertice(int id) {
@@ -64,6 +67,7 @@ void Linked_Vertex::removeVertice(int id) {
     }
 
     removeNode(no);
+    cout<<"Removendo o vértice: "<<id+1<<endl;
     
     NodeVertex* p = getPrimeiro();
     int newId = 0;

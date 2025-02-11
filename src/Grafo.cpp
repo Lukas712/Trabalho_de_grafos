@@ -47,7 +47,7 @@
         return maior;
     };
             
-    bool Grafo::eh_completo() {
+    bool Grafo::eh_completo(){
         for(int i = 0; i<getOrdem(); i+=1)
         {
             NodeVertex* no = getVertice(i);
@@ -57,7 +57,7 @@
             }
         }
         return true;
-    };
+    }
         
     void Grafo::carregaGrafo(string grafo) {
         string caminhoGrafo = "entradas/" + grafo;
@@ -96,7 +96,8 @@
                 }
                 else
                 {
-                    insereAresta(destino, origem, peso);
+                    insereAresta(origem, destino, peso);
+                    // insereAresta(destino,origem, peso);
                 }
             }
             else {
@@ -123,6 +124,7 @@
         cout<<"Vertices ponderados: "<<imprmeSimNao(verticePonderado())<<endl;
         cout<<"Arestas ponderadas: "<<imprmeSimNao(arestaPonderada())<<endl;
         cout<<"Completo: "<<imprmeSimNao(eh_completo())<<endl;
+        cout<<"Maior menor distância: "<<retornaMaiorMenorDistancia()<<endl;
     }
 
     string Grafo::imprmeSimNao(bool valor)
@@ -134,42 +136,32 @@
         return "Não";
     }
 
-    void Grafo::maiorMenorDistancia(int ponto1, int ponto2) {
-    ponto1 -= 1;
-    ponto2 -= 1;
+    float Grafo::maiorMenorDistancia(int ponto1, int ponto2) {
+    NodeVertex* noPontoUm = getVertice(ponto1);
+    NodeVertex* noPontoDois = getVertice(ponto2);
 
-    if (getVertice(ponto1) == nullptr || getVertice(ponto2) == nullptr) {
+    if (noPontoUm == nullptr || noPontoDois == nullptr) {
         cout << "Erro: Vértices não encontrados." << endl;
-        return;
+        return -1;
+    }
+    if(noPontoUm->getGrau() == 0 || noPontoDois->getGrau() == 0)
+    {
+        return -1;
     }
 
     const float INF = 1e9;
     int n = getOrdem();
     float* distancias = new float[n]();
     bool* visitados = new bool[n]();
-    int ajusteNegativo = 0;
 
     if (arestaPonderada()) {
-        ajusteNegativo = 0;
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
                 NodeEdge* aresta = getAresta(i, j);
-                if (aresta != nullptr && aresta->getPeso() < ajusteNegativo) {
-                    ajusteNegativo = aresta->getPeso();
-                }
-            }
-        }
-        
-        if (ajusteNegativo < 0) {
-            ajusteNegativo = abs(ajusteNegativo) + 1;
-            for (int i = 0; i < n; i++) {
-                for (int j = 0; j < n; j++) {
-                    if (i != j) {
-                        NodeEdge* aresta = getAresta(i, j);
-                        if (aresta != nullptr) {
-                            aresta->setPeso(aresta->getPeso() + ajusteNegativo);
-                        }
-                    }
+                if (aresta != nullptr && aresta->getPeso() < 0) {
+                    delete[] distancias;
+                    delete[] visitados;
+                    return 0;
                 }
             }
         }
@@ -220,24 +212,54 @@
         }
     }
 
-    if (ajusteNegativo != 0) {
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
-                NodeEdge* aresta = getAresta(i, j);
-                if (aresta != nullptr) {
-                    aresta->setPeso(aresta->getPeso() - ajusteNegativo);
+    float valor = distancias[ponto2];
+    delete[] distancias;
+    delete[] visitados;
+
+    if (valor == INF) {
+        return -1;
+    } else {
+        return valor;
+    }
+
+}
+
+string Grafo::retornaMaiorMenorDistancia()
+{
+    float maior = maiorMenorDistancia(0,1);
+    int indexX = 0;
+    int indexY = 1;
+    for(int i = 0; i<getOrdem(); i+=1)
+    {
+        for(int j = 0; j<getOrdem(); j+=1)
+        {
+            if(i != j)
+            {
+                float valor = maiorMenorDistancia(i,j);
+                if(valor == 0)
+                {
+                    maior = 0;
+                    break;
+                }
+                if(valor > maior && valor != -1)
+                {
+                    indexX = i;
+                    indexY = j;
+                    maior = valor; 
                 }
             }
         }
     }
-
-    // Exibe o resultado
-    if (distancias[ponto2] == INF) {
-        cout << "Não existe caminho entre " << ponto1 + 1 << " e " << ponto2 + 1 << endl;
-    } else {
-        cout << "A menor distância é " << distancias[ponto2] << endl;
+    if(maior == 0)
+    {
+        return "\nNão é permitido o uso de pesos negativos nas arestas";
     }
-
-    delete[] distancias;
-    delete[] visitados;
+    else if(maior == -1)
+    {
+        return "\nNão existe nenhum caminho de nenhum vértice para nenhum vértice";
+    }
+    else
+    {
+        return to_string(indexX+1) + "-" + to_string(indexY+1) + ") " + to_string(maior);
+    }
 }

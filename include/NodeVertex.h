@@ -9,16 +9,36 @@ class NodeVertex : public Node
 {
     
     private:
-    /**Armazena dentro de cada nó uma lista de arestas com um nó próprio para arestas */
     Linked_list<NodeEdge>* Arestas;
     int grau;
 
     public:
+    /**
+     * @inheritDoc
+     */
     NodeVertex();
+    
+    /**
+     * @inheritDoc
+     */
     ~NodeVertex();
-    /**Retorna o vetor de arestas do vértice */
+    
+    /**
+     * @brief Retorna a lista de arestas do vértice
+     * @return Lista encadeada de arestas
+     */
     Linked_list<NodeEdge>* getArestas();
+
+    /**
+     * @brief Retorna o tamanho da lista de arestas do vértice (seu grau)
+     * @return Grau do vértice
+     */
     int getGrau();
+
+    /**
+     * @brief Define o grau do vértice
+     * @param val Novo grau do vértice
+     */
     void setGrau(int val);
 };
 
