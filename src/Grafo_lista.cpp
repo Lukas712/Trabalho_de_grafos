@@ -21,29 +21,40 @@ void Grafo_lista::insereVertice(float val)
 
 void Grafo_lista::insereAresta(int origem, int destino, float val)
 {
-    if(getAresta(origem-1,destino-1) == nullptr)
+    if(origem >=1 && origem <= getOrdem() && destino >=1 && destino <= getOrdem())
     {
-        this->Vertice->insereAresta(origem, destino, val);
-        NodeVertex* no = this->Vertice->getNodeById(origem-1);
-        no->setGrau(no->getArestas()->getTam());
+        if(getAresta(origem-1,destino-1) == nullptr)
+        {
+            this->Vertice->insereAresta(origem, destino, val);
+            NodeVertex* no = this->Vertice->getNodeById(origem-1);
+            no->setGrau(no->getGrau()+1);
+        }
+        else
+        {
+            cout<<"Aresta entre: "<<origem<<" e "<<destino<<" já existe"<<endl;
+        }
     }
     else
     {
-        cout<<"Aresta entre: "<<origem<<" e "<<destino<<" já existe"<<endl;
+        cout<<"Aresta inválida!"<<endl;
     }
 }
 
 NodeEdge* Grafo_lista::getAresta(int origem, int destino)
 {
-    NodeEdge* no = this->Vertice->getNodeById(origem)->getArestas()->getPrimeiro();
     if(origem >=0 && origem <getOrdem() && destino>=0 && destino < getOrdem())
     {        
-        while(no!= nullptr && no->getValue() != destino)
+        NodeEdge* no = this->Vertice->getNodeById(origem)->getArestas()->getPrimeiro();
+        if(no != nullptr)
         {
-            no = (NodeEdge*)no->getProx();
+            while(no!= nullptr && no->getValue() != destino)
+            {
+                no = (NodeEdge*)no->getProx();
+            }
+            return no;
         }
     }
-    return no;
+    return nullptr;
 }
 
 NodeVertex* Grafo_lista::getVertice(int id)
@@ -53,9 +64,18 @@ NodeVertex* Grafo_lista::getVertice(int id)
 
 void Grafo_lista::removeAresta(int i, int j)
 {
-    if(i >= 1 && i <=this->getOrdem() && j>=1 && j <=this->getOrdem())
+    if(i >= 1 && i <=getOrdem() && j>=1 && j <=getOrdem())
     {
-        this->Vertice->removeAresta(i, j);
+        if(getAresta(i-1,j-1) != nullptr)
+        {
+            this->Vertice->removeAresta(i, j);
+            NodeVertex* no = this->Vertice->getNodeById(i-1);
+            no->setGrau(no->getGrau()-1);
+        }
+        else
+        {
+            cout<<"Nó inexistente!"<<endl;
+        }
     }
     else
     {
@@ -72,6 +92,7 @@ void Grafo_lista::removeVertice(int id)
         {
             this->Vertice->removeVertice(id);
             setOrdem(getOrdem()-1);
+            
         }
     }
     else

@@ -145,11 +145,10 @@
 
     const float INF = 1e9;
     int n = getOrdem();
-    float* distancias = new float[n](); // Inicializa com zeros
-    bool* visitados = new bool[n]();    // Inicializa com false
+    float* distancias = new float[n]();
+    bool* visitados = new bool[n]();
     int ajusteNegativo = 0;
 
-    // Verificação de pesos negativos nas arestas
     if (arestaPonderada()) {
         ajusteNegativo = 0;
         for (int i = 0; i < n; i++) {
@@ -176,19 +175,16 @@
         }
     }
 
-    // Inicialização das distâncias e visitados
     for (int i = 0; i < n; i++) {
         distancias[i] = INF;
         visitados[i] = false;
     }
     distancias[ponto1] = 0;
 
-    // Algoritmo de Dijkstra adaptado
     for (int count = 0; count < n; count++) {
         int u = -1;
         float min_dist = INF;
         
-        // Encontra o vértice não visitado com a menor distância
         for (int i = 0; i < n; i++) {
             if (!visitados[i] && distancias[i] < min_dist) {
                 min_dist = distancias[i];
@@ -199,7 +195,6 @@
         if (u == -1) break;
         visitados[u] = true;
 
-        // Percorre todas as arestas adjacentes a u
         for (int v = 0; v < n; v++) {
             if (u == v) continue;
             NodeEdge* aresta = getAresta(u, v);
@@ -211,7 +206,6 @@
             }
         }
 
-        // Para grafos não direcionados
         if (!eh_direcionado()) {
             for (int v = 0; v < n; v++) {
                 if (u == v) continue;
@@ -226,7 +220,6 @@
         }
     }
 
-    // Restaura os pesos originais se necessário
     if (ajusteNegativo != 0) {
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {

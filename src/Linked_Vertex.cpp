@@ -12,26 +12,6 @@ Linked_Vertex::~Linked_Vertex()
     ultimo = nullptr;
 }
 
-bool Linked_Vertex::getArestaPonderada()
-{
-    return this->arestaPonderada;
-}
-
-void Linked_Vertex::setArestaPonderada(bool val)
-{
-    this->arestaPonderada = val;
-}
-
-bool Linked_Vertex::getVerticePonderado()
-{
-    return this->verticePonderado;
-}
-
-void Linked_Vertex::setVerticePonderado(bool val)
-{
-    this->verticePonderado = val;
-}
-
 void Linked_Vertex::insereAresta(int origem, int destino, int val)
 {
     NodeVertex* noOrigem = getNodeById(origem-1);
@@ -67,6 +47,7 @@ void Linked_Vertex::removeVertice(int id) {
                 NodeEdge* auxEdge = edge;
                 edge = (NodeEdge*)edge->getProx();
                 arestas->removeNode(auxEdge);
+                current->setGrau(current->getGrau()-1);
             }
             else if(edge->getValue() > id)
             {
