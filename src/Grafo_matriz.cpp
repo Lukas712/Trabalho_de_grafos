@@ -25,7 +25,7 @@ Grafo_matriz::~Grafo_matriz() {
                 delete[] matriz_adjacencia[0];
             }
         }
-        delete[] matriz_adjacencia; // Libera o array principal
+        delete[] matriz_adjacencia;
     }
     delete[] vertices;
 }

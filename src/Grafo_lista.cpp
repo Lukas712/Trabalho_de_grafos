@@ -86,7 +86,7 @@ void Grafo_lista::removeAresta(int i, int j)
         }
         else
         {
-            cout<<"Nó inexistente!"<<endl;
+            cout<<"Aresta inexistente!"<<endl;
         }
     }
     else
