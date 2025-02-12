@@ -247,21 +247,24 @@ void Grafo_matriz::removeVertice(int id) {
     }
     delete[] vertices;
     vertices = newVertices;
-
     
-        for (int i = k; i < getOrdem() - 1; i+=1) {
-            for (int j = 0; j < capacidade; j+=1) {
-                (*retornaCelulaMatriz(i,j)) = (*retornaCelulaMatriz(i+1,j));
-                (*retornaCelulaMatriz(i+1,j)) = nullptr;
+    for (int i = k; i < getOrdem()-1; i+=1) {
+        for (int j = 0; j < getOrdem()-1; j+=1) {
+            if((*retornaCelulaMatriz(i+1,j+1)) != nullptr && i != j) {
+                (*retornaCelulaMatriz(i,j)) = (*retornaCelulaMatriz(i+1,j+1));
+            } else {
+                (*retornaCelulaMatriz(i,j)) = nullptr;
             }
         }
+    }
 
-        for (int j = k; j < getOrdem() - 1; j+=1) {
-            for (int i = 0; i < capacidade; i+=1) {
-                (*retornaCelulaMatriz(i,j)) = (*retornaCelulaMatriz(i,j+1));
-                (*retornaCelulaMatriz(i,j+1)) = nullptr;
-            }
-        }
+    for (int i = 0; i < getOrdem() - 1; i+=1) {
+        *retornaCelulaMatriz(i, getOrdem() - 1) = nullptr;
+        *retornaCelulaMatriz(getOrdem() - 1, i) = nullptr;
+    }
+
+        
+        
     cout<<"Removendo o vértice: "<< id<<endl;
     setOrdem(getOrdem()-1);
 
