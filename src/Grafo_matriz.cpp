@@ -5,7 +5,6 @@ using namespace std;
 Grafo_matriz::Grafo_matriz(){
     matriz_adjacencia = nullptr;
     vertices = nullptr;
-    numVertices = 0;
     capacidade = 10;
 }
 Grafo_matriz::~Grafo_matriz() {
@@ -50,7 +49,7 @@ void Grafo_matriz::inicializaMatriz() {
 
 void Grafo_matriz::resize(int novaCapacidade) {
 NodeVertex* newVertices = new NodeVertex[novaCapacidade](); 
-for (int i = 0; i < numVertices; i+=1) {
+for (int i = 0; i < getOrdem(); i+=1) {
     newVertices[i].setValue(vertices[i].getValue());
     newVertices[i].setGrau(vertices[i].getGrau());
 }
@@ -94,15 +93,14 @@ capacidade = novaCapacidade;
 
 
 void Grafo_matriz::insereVertice(float val) {
-    if (numVertices >= capacidade) {
+    if (getOrdem() >= capacidade) {
         resize(capacidade * 2);
     }
     if (vertices == nullptr) {
         inicializaPesoVertices();
     }
-    vertices[numVertices].setValue(val);
-    numVertices+=1;
-    setOrdem(numVertices);
+    vertices[getOrdem()].setValue(val);
+    setOrdem(getOrdem()+1);
 }
 
 
@@ -203,24 +201,25 @@ void Grafo_matriz::removeAresta(int i, int j)
 }
 
 void Grafo_matriz::removeVertice(int id) {
-    if (id < 1 || id > numVertices) {
+    if (id < 1 || id > getOrdem()) {
         cout << "ID inválido!" << endl;
         return;
     }
     int k = id - 1;
 
-    for (int i = 0; i < getOrdem(); i++) {
-    if (eh_direcionado()) {
-        NodeEdge** arestaEntrada = retornaCelulaMatriz(i, k);
-        if (*arestaEntrada != nullptr) {
-            vertices[i].setGrau(vertices[i].getGrau() - 1);
+    for (int i = 0; i < getOrdem(); i+=1) {
+        if (eh_direcionado()) {
+            NodeEdge** arestaEntrada = retornaCelulaMatriz(i, k);
+            if (*arestaEntrada != nullptr) {
+                vertices[i].setGrau(vertices[i].getGrau() - 1);
+            }
+        } 
+        else {
+            NodeEdge** aresta = retornaCelulaMatriz(k, i);
+                if (*aresta != nullptr) {
+                    vertices[i].setGrau(vertices[i].getGrau() - 1);
+                }
         }
-    } else {
-        NodeEdge** aresta = retornaCelulaMatriz(k, i);
-        if (*aresta != nullptr) {
-            vertices[i].setGrau(vertices[i].getGrau() - 1);
-        }
-    }
 }
 
 
@@ -239,7 +238,7 @@ void Grafo_matriz::removeVertice(int id) {
         }
     
     NodeVertex* newVertices = new NodeVertex[capacidade]();
-    for (int i = 0, j = 0; i < numVertices; i+=1) {
+    for (int i = 0, j = 0; i < getOrdem(); i+=1) {
         if (i != k) {
             newVertices[j].setValue(vertices[i].getValue());
             newVertices[j].setGrau(vertices[i].getGrau());
@@ -250,24 +249,21 @@ void Grafo_matriz::removeVertice(int id) {
     vertices = newVertices;
 
     
-        for (int i = k; i < numVertices - 1; i+=1) {
+        for (int i = k; i < getOrdem() - 1; i+=1) {
             for (int j = 0; j < capacidade; j+=1) {
                 (*retornaCelulaMatriz(i,j)) = (*retornaCelulaMatriz(i+1,j));
                 (*retornaCelulaMatriz(i+1,j)) = nullptr;
-
             }
         }
 
-        for (int j = k; j < numVertices - 1; j+=1) {
+        for (int j = k; j < getOrdem() - 1; j+=1) {
             for (int i = 0; i < capacidade; i+=1) {
                 (*retornaCelulaMatriz(i,j)) = (*retornaCelulaMatriz(i,j+1));
                 (*retornaCelulaMatriz(i,j+1)) = nullptr;
             }
-        
         }
     cout<<"Removendo o vértice: "<< id<<endl;
-    numVertices-=1;
-    setOrdem(numVertices);
+    setOrdem(getOrdem()-1);
 
 }
 

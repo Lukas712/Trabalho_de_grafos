@@ -80,7 +80,7 @@ void Grafo_lista::removeAresta(int i, int j)
             if(!eh_direcionado())
             {
                 this->Vertice->removeAresta(j, i);
-                NodeVertex* noVolta = this->Vertice->getNodeById(j);
+                NodeVertex* noVolta = this->Vertice->getNodeById(j-1);
                 noVolta->setGrau(noVolta->getGrau()-1);
             }
         }
@@ -97,6 +97,8 @@ void Grafo_lista::removeAresta(int i, int j)
 
 void Grafo_lista::removeVertice(int id)
 {
+    
+
     if(id >= 1 && id <= getOrdem())
     {
         id-=1;
@@ -104,7 +106,6 @@ void Grafo_lista::removeVertice(int id)
         {
             this->Vertice->removeVertice(id);
             setOrdem(getOrdem()-1);
-            
         }
     }
     else

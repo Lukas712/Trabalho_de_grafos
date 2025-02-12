@@ -1,6 +1,7 @@
     #include "../include/Grafo.h"
     #include <fstream>
     #include <iostream>
+    #include <iomanip>
     using namespace std;
 
     bool Grafo::eh_direcionado() {
@@ -63,7 +64,8 @@
         string caminhoGrafo = "entradas/" + grafo;
         ifstream inFile(caminhoGrafo);
 
-        int numVertices, direcionado, verticePonderado, arestaPonderada;
+        int numVertices, direcionado, arestaPonderada;
+        float verticePonderado;
         inFile >> numVertices >> direcionado >> verticePonderado >> arestaPonderada;
 
         this->setDirecionado(direcionado);
@@ -72,7 +74,7 @@
 
         if (verticePonderado) {
             for (int i = 0; i < numVertices; i+=1) {
-                int peso;
+                float peso;
                 inFile >> peso;
                 insereVertice(peso);
 
@@ -88,7 +90,7 @@
         int origem, destino;
         while (inFile >> origem >> destino) {
             if (arestaPonderada) {
-                int peso;
+                float peso;
                 inFile >> peso;
                 if(eh_direcionado())
                 {
@@ -96,8 +98,7 @@
                 }
                 else
                 {
-                    insereAresta(origem, destino, peso);
-                    // insereAresta(destino,origem, peso);
+                    insereAresta(destino, origem, peso);
                 }
             }
             else {
@@ -144,40 +145,29 @@
         cout << "Erro: Vértices não encontrados." << endl;
         return -1;
     }
-    if(noPontoUm->getGrau() == 0 || noPontoDois->getGrau() == 0)
+    if(noPontoUm->getGrau() == 0 && noPontoDois->getGrau() == 0)
     {
         return -1;
     }
 
+    //Variável grande que eu usei para simular o infinito
     const float INF = 1e9;
-    int n = getOrdem();
-    float* distancias = new float[n]();
-    bool* visitados = new bool[n]();
+    float* distancias = new float[getOrdem()]();
+    bool* visitados = new bool[getOrdem()]();
 
-    if (arestaPonderada()) {
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
-                NodeEdge* aresta = getAresta(i, j);
-                if (aresta != nullptr && aresta->getPeso() < 0) {
-                    delete[] distancias;
-                    delete[] visitados;
-                    return 0;
-                }
-            }
-        }
-    }
 
-    for (int i = 0; i < n; i++) {
+    for (int i = 0; i < getOrdem(); i+=1) {
         distancias[i] = INF;
         visitados[i] = false;
     }
+
     distancias[ponto1] = 0;
 
-    for (int count = 0; count < n; count++) {
+    for (int count = 0; count < getOrdem(); count+=1) {
         int u = -1;
         float min_dist = INF;
         
-        for (int i = 0; i < n; i++) {
+        for (int i = 0; i < getOrdem(); i+=1) {
             if (!visitados[i] && distancias[i] < min_dist) {
                 min_dist = distancias[i];
                 u = i;
@@ -187,26 +177,13 @@
         if (u == -1) break;
         visitados[u] = true;
 
-        for (int v = 0; v < n; v++) {
+        for (int v = 0; v < getOrdem(); v+=1) {
             if (u == v) continue;
             NodeEdge* aresta = getAresta(u, v);
             if (aresta != nullptr) {
                 float peso = aresta->getPeso();
                 if (distancias[u] + peso < distancias[v]) {
                     distancias[v] = distancias[u] + peso;
-                }
-            }
-        }
-
-        if (!eh_direcionado()) {
-            for (int v = 0; v < n; v++) {
-                if (u == v) continue;
-                NodeEdge* aresta = getAresta(v, u);
-                if (aresta != nullptr) {
-                    float peso = aresta->getPeso();
-                    if (distancias[u] + peso < distancias[v]) {
-                        distancias[v] = distancias[u] + peso;
-                    }
                 }
             }
         }
@@ -226,9 +203,22 @@
 
 string Grafo::retornaMaiorMenorDistancia()
 {
-    float maior = maiorMenorDistancia(0,1);
-    int indexX = 0;
-    int indexY = 1;
+    if (arestaPonderada()) {
+        for (int i = 0; i < getOrdem(); i+=1) {
+            for (int j = 0; j < getOrdem(); j+=1) {
+                NodeEdge* aresta = getAresta(i, j);
+                if (aresta != nullptr)
+                {
+                    if(aresta->getPeso() < 0){
+                        return "\nNão é permitido o uso de pesos negativos nas arestas";
+                    }
+                }
+            }
+        }
+    }
+    float maior = -1;
+    int indexX = -1;
+    int indexY = -1;
     for(int i = 0; i<getOrdem(); i+=1)
     {
         for(int j = 0; j<getOrdem(); j+=1)
@@ -236,12 +226,7 @@ string Grafo::retornaMaiorMenorDistancia()
             if(i != j)
             {
                 float valor = maiorMenorDistancia(i,j);
-                if(valor == 0)
-                {
-                    maior = 0;
-                    break;
-                }
-                if(valor > maior && valor != -1)
+                if(valor > maior)
                 {
                     indexX = i;
                     indexY = j;
@@ -250,16 +235,12 @@ string Grafo::retornaMaiorMenorDistancia()
             }
         }
     }
-    if(maior == 0)
-    {
-        return "\nNão é permitido o uso de pesos negativos nas arestas";
-    }
-    else if(maior == -1)
+    if(maior == -1)
     {
         return "\nNão existe nenhum caminho de nenhum vértice para nenhum vértice";
     }
     else
     {
-        return to_string(indexX+1) + "-" + to_string(indexY+1) + ") " + to_string(maior);
+        return "(" + to_string(indexX+1) + "-" + to_string(indexY+1) + ") " + to_string(maior);
     }
 }

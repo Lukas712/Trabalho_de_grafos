@@ -30,7 +30,6 @@ void Linked_Vertex::removeAresta(int i, int j)
         noAresta = (NodeEdge*)noAresta->getProx();
     }
     arestas->removeNode(noAresta);
-
     cout<<"Removendo a aresta ("<< i<<","<<j<<")"<<endl;
     
 }

@@ -10,7 +10,6 @@ class Grafo_matriz : public Grafo
     private:
         NodeEdge*** matriz_adjacencia;
         NodeVertex* vertices;
-        int numVertices;
         int capacidade;
         
         /**

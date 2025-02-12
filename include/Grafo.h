@@ -138,7 +138,7 @@ class Grafo
     void imprimeGrafo();
     
     /**
-     * @brief Calcula a menor distância entre dois pontos utilizando o algorítmo de Dijkstra
+     * @brief Calcula a menor distância entre dois pontos utilizando o algoritmo de Dijkstra
      * @param ponto1 Nó de origem
      * @param ponto2 Nó de destino
      * @return Menor distância entre dois pontos
