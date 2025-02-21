@@ -96,13 +96,18 @@ git clone https://github.com/seu-usuario/trabalho-de-grafos.git
 cd trabalho-de-grafos
 
 # Compile os arquivos
-g++ -o main src/*.cpp
+g++ -g -o {nome do programa} main.cpp
 ```
 ###Uso
 Após a instalação, você pode executar o programa utilizando o comando abaixo:
 ```sh
-./main
+./{nome do programa} -d -l grafo.txt
 ```
+ou
+```sh
+./{nome do programa} -d - grafo.txt
+```
+
 
 ##Membros da Equipe
 - Lukas Freitas de Carvalho - Matrícula: 202376033
