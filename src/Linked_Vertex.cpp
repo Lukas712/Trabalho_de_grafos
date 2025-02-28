@@ -9,7 +9,6 @@ Linked_Vertex::Linked_Vertex() : Linked_list(){};
 Linked_Vertex::~Linked_Vertex()
 {
     this->limpaNodes();
-    ultimo = nullptr;
 }
 
 void Linked_Vertex::insereAresta(int origem, int destino, float val)

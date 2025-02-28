@@ -61,12 +61,20 @@
     }
         
     void Grafo::carregaGrafo(string grafo) {
-        string caminhoGrafo = "entradas/" + grafo;
-        ifstream inFile(caminhoGrafo);
+        ifstream inFile("entradas/" + grafo);
+        if(!inFile.is_open())
+        {
+            // cout<<"Erro ao abrir o arquivo"<<endl;
+            throw runtime_error("Erro! Arquivo não existe!");
+            // exit(1);
+
+        }
 
         int numVertices, direcionado, arestaPonderada;
         float verticePonderado;
-        inFile >> numVertices >> direcionado >> verticePonderado >> arestaPonderada;
+        if(!(inFile >> numVertices >> direcionado >> verticePonderado >> arestaPonderada)){
+            throw runtime_error("Erro! Cabeçalho não inicializado");
+        }
 
         this->setDirecionado(direcionado);
         this->setVerticePonderado(verticePonderado);
@@ -75,7 +83,9 @@
         if (verticePonderado) {
             for (int i = 0; i < numVertices; i+=1) {
                 float peso;
-                inFile >> peso;
+                if(!(inFile >> peso)){
+                    throw runtime_error("Erro! Pesos de vértices não inicializados!");
+                }
                 insereVertice(peso);
 
             }
@@ -91,7 +101,9 @@
         while (inFile >> origem >> destino) {
             if (arestaPonderada) {
                 float peso;
-                inFile >> peso;
+                if(!(inFile >> peso)){
+                    throw runtime_error("Erro! Peso da aresta (" + to_string(origem) + "," + to_string(destino) +") não inicializado");
+                }
                 if(eh_direcionado())
                 {
                     insereAresta(origem, destino, peso);

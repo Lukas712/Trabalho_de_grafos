@@ -24,6 +24,8 @@ class Grafo
         string retornaMaiorMenorDistancia();
     
     public:
+
+    virtual ~Grafo() = default;
     /**
      * @brief Retorna o nó caso exista do id desejado
      * @param id ID do nó deslocado uma unidade

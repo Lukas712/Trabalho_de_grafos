@@ -44,7 +44,6 @@ Linked_list<NodeType>::Linked_list(){
 template<typename NodeType>
 Linked_list<NodeType>::~Linked_list(){
     limpaNodes();
-    ultimo = NULL;
 }
     
 template<typename NodeType>
@@ -125,10 +124,12 @@ void Linked_list<NodeType>::removeNode(NodeType* no)
 
 template<typename NodeType>
 void Linked_list<NodeType>::limpaNodes(){
-    while(primeiro != NULL)
-    {
-        NodeType* p = primeiro;
-        primeiro = (NodeType*)(primeiro->getProx());
-        delete p;
+    NodeType* atual = primeiro;
+    while (atual != nullptr) {
+        NodeType* proximo = (NodeType*)atual->getProx();
+        delete atual;
+        atual = proximo;
     }
+    primeiro = nullptr;
+    ultimo = nullptr;
 }

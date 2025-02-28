@@ -1,9 +1,6 @@
 #include "../include/Node.h"
 
-Node::Node() : id(-1)
-{
-    Node* prox = nullptr;
-}
+Node::Node() :  prox(nullptr),id(-1){}
 
 Node::~Node(){}
 

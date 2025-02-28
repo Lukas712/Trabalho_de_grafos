@@ -13,24 +13,38 @@ int main(int argc, char* argv[])
 {
     if(argc == 4)
     {
-        srand(time(0));
         if(strcmp(argv[1],"-d") == 0)
         {
             if(strcmp(argv[2], "-l") == 0)
             {
-                Grafo_lista grafoL;
-                grafoL.carregaGrafo(argv[3]);
-                grafoL.removeVertice(1);
-                grafoL.removeAresta(2,1);
-                grafoL.imprimeGrafo();
+                try{
+                        Grafo_lista grafoL;
+                        grafoL.carregaGrafo(argv[3]);
+                        grafoL.removeVertice(1);
+                        grafoL.removeAresta(2,1);
+                        grafoL.imprimeGrafo();
+
+                }
+                catch(const exception& e)
+                {
+                    cout<<e.what()<<endl;
+                    return 1;
+                }
             }
             else
             {
+                try{
                     Grafo_matriz grafoM;
                     grafoM.carregaGrafo(argv[3]);
                     grafoM.removeVertice(1);
                     grafoM.removeAresta(2,1);
                     grafoM.imprimeGrafo();
+                }
+                catch(const exception& e)
+                {
+                    cout<<e.what()<<endl;
+                    return 1;
+                }
             }
         }
         else
