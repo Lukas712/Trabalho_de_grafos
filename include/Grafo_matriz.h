@@ -79,6 +79,5 @@ class Grafo_matriz : public Grafo
         NodeEdge* getAresta(int origem, int destino) override;
 };
         
-#include "../src/Grafo_matriz.cpp"
 
 #endif

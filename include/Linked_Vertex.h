@@ -2,6 +2,7 @@
     #define LINKED_VERTEX_H
 
     #include "Linked_list.hpp"
+    #include "NodeVertex.h"
 
     class Linked_Vertex : public Linked_list<NodeVertex>
     {
@@ -38,6 +39,5 @@
         void removeVertice(int id);
     };
 
-#include "../src/Linked_Vertex.cpp"
 
 #endif

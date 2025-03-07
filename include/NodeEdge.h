@@ -7,6 +7,7 @@ class NodeEdge : public Node
     
     private:
     float peso;
+    int cor;
 
     public:
     /**
@@ -31,8 +32,19 @@ class NodeEdge : public Node
      */
     void setPeso(float val);
 
+    /**
+     * @brief Retorna a cor do nó
+     * @return Cor
+     */
+    int  getCor();
+    /**
+     * @brief Define a cor do nó
+     * @param val Cor
+     * @return void
+     */
+    void setCor(int val);
+
 };
 
-#include "../src/NodeEdge.cpp"
 
 #endif

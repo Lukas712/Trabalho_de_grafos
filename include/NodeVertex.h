@@ -42,6 +42,5 @@ class NodeVertex : public Node
     void setGrau(int val);
 };
 
-#include "../src/NodeVertex.cpp"
 
 #endif

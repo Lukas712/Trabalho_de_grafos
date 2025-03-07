@@ -51,6 +51,5 @@ class Grafo_lista : public Grafo
         NodeEdge* getAresta(int origem, int destino) override;
 };
 
-#include "../src/Grafo_lista.cpp"
 
 #endif

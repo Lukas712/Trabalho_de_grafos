@@ -1,6 +1,7 @@
 #ifndef LINKED_LIST_HPP
 #define LINKED_LIST_HPP
 
+
 /**
 * @brief Classe template para criação do grafo por lista encadeada
 * 

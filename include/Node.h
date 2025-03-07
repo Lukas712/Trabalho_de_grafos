@@ -56,6 +56,5 @@ public:
     int getId();
 };
 
-#include "../src/Node.cpp"
 
 #endif

@@ -48,47 +48,52 @@ void Grafo_matriz::inicializaMatriz() {
 }
 
 void Grafo_matriz::resize(int novaCapacidade) {
-NodeVertex* newVertices = new NodeVertex[novaCapacidade](); 
-for (int i = 0; i < getOrdem(); i+=1) {
-    newVertices[i].setValue(vertices[i].getValue());
-    newVertices[i].setGrau(vertices[i].getGrau());
-}
-delete[] vertices;
-vertices = newVertices;
-
-NodeEdge*** novaMatriz = nullptr;
-if (eh_direcionado()) {
-
-    novaMatriz = new NodeEdge**[novaCapacidade];
-    for (int i = 0; i < novaCapacidade; i+=1) {
-        novaMatriz[i] = new NodeEdge*[novaCapacidade]();
+    NodeVertex* newVertices = new NodeVertex[novaCapacidade]();
+    for (int i = 0; i < getOrdem(); i+=1) {
+        newVertices[i].setValue(vertices[i].getValue());
+        newVertices[i].setGrau(vertices[i].getGrau());
     }
+    delete[] vertices;
+    vertices = newVertices;
 
-    for (int i = 0; i < capacidade; i+=1) {
-        for (int j = 0; j < capacidade; j+=1) {
-            novaMatriz[i][j] = matriz_adjacencia[i][j]; 
+    NodeEdge*** novaMatriz = nullptr;
+    if (eh_direcionado()) {
+        novaMatriz = new NodeEdge**[novaCapacidade];
+        for (int i = 0; i < novaCapacidade; i+=1) {
+            novaMatriz[i] = new NodeEdge*[novaCapacidade]();
+        }
+
+        // Copia apenas se a matriz existir
+        if (matriz_adjacencia != nullptr) {
+            for (int i = 0; i < capacidade; i+=1) {
+                for (int j = 0; j < capacidade; j+=1) {
+                    novaMatriz[i][j] = matriz_adjacencia[i][j];
+                }
+            }
+            // Libera a matriz antiga
+            for (int i = 0; i < capacidade; i+=1) {
+                delete[] matriz_adjacencia[i];
+            }
+            delete[] matriz_adjacencia;
+        }
+    } else {
+        int novoTamanho = novaCapacidade * (novaCapacidade - 1) / 2;
+        int tamanhoAntigo = capacidade * (capacidade - 1) / 2;
+        novaMatriz = new NodeEdge**[1];
+        novaMatriz[0] = new NodeEdge*[novoTamanho]();
+
+        // Copia apenas se a matriz existir
+        if (matriz_adjacencia != nullptr) {
+            for (int i = 0; i < tamanhoAntigo; i+=1) {
+                novaMatriz[0][i] = matriz_adjacencia[0][i];
+            }
+            delete[] matriz_adjacencia[0];
+            delete[] matriz_adjacencia;
         }
     }
 
-    for (int i = 0; i < capacidade; i+=1) {
-        delete[] matriz_adjacencia[i];
-    }
-} else {
-    int novoTamanho = novaCapacidade * (novaCapacidade - 1) / 2;
-    int tamanhoAntigo = capacidade * (capacidade - 1) / 2;
-    novaMatriz = new NodeEdge**[1];
-    novaMatriz[0] = new NodeEdge*[novoTamanho]();
-
-    for (int i = 0; i < tamanhoAntigo; i+=1) {
-        novaMatriz[0][i] = matriz_adjacencia[0][i];
-    }
-
-    delete[] matriz_adjacencia[0];
-}
-
-delete[] matriz_adjacencia;
-matriz_adjacencia = novaMatriz;
-capacidade = novaCapacidade;
+    matriz_adjacencia = novaMatriz;
+    capacidade = novaCapacidade;
 }
 
 

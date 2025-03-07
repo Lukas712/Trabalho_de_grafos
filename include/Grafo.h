@@ -137,7 +137,7 @@ class Grafo
     /**
      * @brief Imprime o grafo de acordo com a descrição do trabalho
      */
-    void imprimeGrafo();
+    void imprimeGrafo(string grafo);
     
     /**
      * @brief Calcula a menor distância entre dois pontos utilizando o algoritmo de Dijkstra
@@ -146,9 +146,27 @@ class Grafo
      * @return Menor distância entre dois pontos
      */
     float maiorMenorDistancia(int ponto1, int ponto2);
-    
+
+    /**
+     * @brief Algoritmo guloso que retorna a menor quantidade de cores para colorir todas as arestas do grafo de forma que não tenha duas arestas adjacentes com a mesma cor
+     * @return Inteiro representando a menor quantidade de cores
+     */
+    int coloracaoArestaGuloso();
+
+    /**
+     * @brief Algoritmo randomizado que retorna a menor quantidade de cores para colorir todos os vértices do grafo de forma que não tenha dois vértices adjacentes com a mesma cor
+     * @return Inteiro representando a menor quantidade de cores
+     */
+    int coloracaoArestaRandomizado();
+
+    /**
+     * @brief Algoritmo randomizado reativo que retorna a menor quantidade de cores para colorir todas as arestas do grafo de forma que não tenha duass arestas adjacentes com a mesma cor
+     * @return Inteiro representando a menor quantidade de cores
+     */
+    int coloracaoArestaReativo();
+
+    void descoloreGrafo();
 };
 
-#include "../src/Grafo.cpp"
 
 #endif
