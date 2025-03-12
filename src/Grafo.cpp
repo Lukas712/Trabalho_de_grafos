@@ -266,302 +266,247 @@ void Grafo::descoloreGrafo() {
     }
 }
 
-int Grafo::coloracaoArestaGuloso() {
-    int maxCor = 0;
-
-
-    for (int i = this->getOrdem() - 1; i >= 0; i-=1) {
-        for (int j = this->getOrdem() - 1; j > i; j-=1) {
-            NodeEdge* aresta = this->getAresta(i, j);
-            if (aresta == nullptr || aresta->getCor() != -1) {
+int Grafo::coloracaoArestaGuloso(){
+    int nCores = 0;
+    int ordem = this->getOrdem();
+    for(int  i = 0; i< ordem; i+=1)
+    {
+        for(int j = 0; j<ordem; j+=1)
+        {
+            NodeEdge* aresta = this->getAresta(i,j);
+            if(aresta == nullptr || aresta->getCor() != -1)
+            {
                 continue;
             }
+            bool coresUsadas[ordem-1] = {false};
+            for(int k = 0; k<ordem; k+=1)
+            {
+                NodeEdge* adjacenteDeI = this->getAresta(i,k);
 
-            bool* coresUsadas = new bool[this->getOrdem() + 1]();
+                NodeEdge* adjacenteDeJ = this->getAresta(j,k);
 
-            for (int k = 0; k < this->getOrdem(); k+=1) {
-                NodeEdge* adj1 = this->getAresta(i, k);
-                NodeEdge* adj2 = this->getAresta(k, i);
-                if (adj1 != nullptr && adj1 != aresta && adj1->getCor() != -1) {
-                    coresUsadas[adj1->getCor()] = true;
+                if(adjacenteDeI != nullptr && adjacenteDeI != aresta && adjacenteDeI->getCor() != -1)
+                {
+                    coresUsadas[adjacenteDeI->getCor()-1] = true;
                 }
-                if (adj2 != nullptr && adj2 != aresta && adj2->getCor() != -1) {
-                    coresUsadas[adj2->getCor()] = true;
-                }
-            }
-
-            for (int k = 0; k < this->getOrdem(); k+=1) {
-                NodeEdge* adj1 = this->getAresta(j, k);
-                NodeEdge* adj2 = this->getAresta(k, j);
-                if (adj1 != nullptr && adj1 != aresta && adj1->getCor() != -1) {
-                    coresUsadas[adj1->getCor()] = true;
-                }
-                if (adj2 != nullptr && adj2 != aresta && adj2->getCor() != -1) {
-                    coresUsadas[adj2->getCor()] = true;
+                if(adjacenteDeJ != nullptr && adjacenteDeJ != aresta && adjacenteDeJ->getCor() != -1)
+                {
+                    coresUsadas[adjacenteDeJ->getCor()-1] = true;
                 }
             }
-
-            // Encontra a menor cor disponível
             int corDisponivel = 1;
-            while (corDisponivel <= this->getOrdem() && coresUsadas[corDisponivel]) {
+            while(corDisponivel<= ordem && coresUsadas[corDisponivel-1])
+            {
                 corDisponivel+=1;
             }
 
             aresta->setCor(corDisponivel);
-            if (!this->eh_direcionado()) {
-                NodeEdge* arestaInversa = this->getAresta(j, i);
-                if (arestaInversa != nullptr) {
-                    arestaInversa->setCor(corDisponivel);
+            if(this->eh_direcionado())
+            {
+                NodeEdge* arestaEspelho = this->getAresta(j,i);
+                if(arestaEspelho != nullptr)
+                {
+                    arestaEspelho->setCor(corDisponivel);
                 }
             }
-            if (corDisponivel > maxCor) {
-                maxCor = corDisponivel;
+            if(corDisponivel > nCores)
+            {
+                nCores = corDisponivel;
             }
-            delete [] coresUsadas;
         }
     }
     descoloreGrafo();
-    return maxCor;
+    return nCores;
 }
 
 int Grafo::coloracaoArestaRandomizado() {
-    int maxCor = 0;
+    int nCores = 0;
     int ordem = this->getOrdem();
+    int nArestas = 0;
+    srand(time(nullptr));
 
-    // Coletar arestas não coloridas (i, j) onde i < j
-    int numArestas = 0;
-    for (int i = 0; i < ordem; i++) {
-        for (int j = i + 1; j < ordem; j++) {
-            NodeEdge* aresta = this->getAresta(i, j);
-            if (aresta != nullptr && aresta->getCor() == -1) {
-                numArestas++;
+    for(int i = 0; i < ordem; i+=1) {
+        for(int j = i + 1; j < ordem; j+=1) {
+            NodeEdge* aresta = getAresta(i, j);
+            if(aresta != nullptr && aresta->getCor() == -1) {
+                nArestas+=1;
             }
         }
     }
-    
-    srand(nullptr);
-    NodeEdge** arestas = new NodeEdge*[numArestas];
-    for(int i = numArestas-1; i> 0; i-=1)
-    {
-        int j = rand() % (i+1);
-        arestas[i] = this->getAresta(i,j);
-    }
 
-    // Embaralhar as arestas usando Fisher-Yates
-    for (int i = numArestas - 1; i > 0; i--) {
-        int j = rand() % (i + 1);
-        Par temp = arestas[i];
-        arestas[i] = arestas[j];
-        arestas[j] = temp;
-    }
+    while(nArestas > 0) {
+        int i, j;
+        NodeEdge* aresta = nullptr;
+        do {
+            i = rand() % ordem;
+            j = rand() % ordem;
+            if(i > j) swap(i, j);
+            aresta = getAresta(i, j);
+        } while(i == j || aresta == nullptr || aresta->getCor() != -1);
 
-    // Colorir cada aresta na ordem embaralhada
-    for (int k = 0; k < numArestas; k++) {
-        int i = arestas[k].i;
-        int j = arestas[k].j;
-        NodeEdge* aresta = this->getAresta(i, j);
+        bool* coresUsadas = new bool[nCores + 1]();
 
-        bool* coresUsadas = new bool[ordem + 1]();
+        for(int k = 0; k < ordem; k+=1) {
+            NodeEdge* adjI = getAresta(i, k);
+            NodeEdge* adjJ = getAresta(j, k);
 
-        // Verificar cores usadas pelos vizinhos de i
-        for (int v = 0; v < ordem; v++) {
-            NodeEdge* adj = this->getAresta(i, v);
-            if (adj && adj != aresta && adj->getCor() != -1) {
-                coresUsadas[adj->getCor()] = true;
+            if(adjI != nullptr && adjI != aresta && adjI->getCor() != -1) {
+                int cor = adjI->getCor();
+                if(cor <= nCores) coresUsadas[cor] = true;
             }
-            adj = this->getAresta(v, i);
-            if (adj && adj != aresta && adj->getCor() != -1) {
-                coresUsadas[adj->getCor()] = true;
+            if(adjJ != nullptr && adjJ != aresta && adjJ->getCor() != -1) {
+                int cor = adjJ->getCor();
+                if(cor <= nCores) coresUsadas[cor] = true;
             }
         }
-
-        // Verificar cores usadas pelos vizinhos de j
-        for (int v = 0; v < ordem; v++) {
-            NodeEdge* adj = this->getAresta(j, v);
-            if (adj && adj != aresta && adj->getCor() != -1) {
-                coresUsadas[adj->getCor()] = true;
-            }
-            adj = this->getAresta(v, j);
-            if (adj && adj != aresta && adj->getCor() != -1) {
-                coresUsadas[adj->getCor()] = true;
-            }
+        int disponiveis = 0;
+        for(int c = 0; c <= nCores; c+=1) {
+            if(!coresUsadas[c]) disponiveis+=1;
         }
-
-        int corDisponivel = 1;
-            while (corDisponivel <= this->getOrdem() && coresUsadas[corDisponivel]) {
-                corDisponivel+=1;
-            }
-
-            aresta->setCor(corDisponivel);
-            if (!this->eh_direcionado()) {
-                NodeEdge* arestaInversa = this->getAresta(j, i);
-                if (arestaInversa != nullptr) {
-                    arestaInversa->setCor(corDisponivel);
+        int corEscolhida;
+        if(disponiveis == 0) {
+            nCores+=1;
+            corEscolhida = nCores;
+        } else {
+            int escolha = rand() % disponiveis;
+            int contador = 0;
+            for(int c = 0; c <= nCores; c+=1) {
+                if(!coresUsadas[c]) {
+                    if(contador == escolha) {
+                        corEscolhida = c;
+                        break;
+                    }
+                    contador+=1;
                 }
             }
-            if (corDisponivel > maxCor) {
-                maxCor = corDisponivel;
-            }
-            delete [] coresUsadas;
-    }
+        }
 
-    delete[] arestas;
+        delete[] coresUsadas;
+
+        aresta->setCor(corEscolhida);
+        if(this->eh_direcionado()) {
+            NodeEdge* espelho = getAresta(j, i);
+            if(espelho != nullptr) espelho->setCor(corEscolhida);
+        }
+
+        nArestas-=1;
+    }
     descoloreGrafo();
-    return maxCor;
+    return nCores + 1;
 }
 
 
 int Grafo::coloracaoArestaReativo() {
-    int maxCor = 0;for (int u = this->getOrdem() - 1; u >= 0; u -= 1) {
-    for (int v = this->getOrdem() - 1; v > u; v -= 1) {
-        NodeEdge* aresta = this->getAresta(u, v);
-        if (aresta == nullptr || aresta->getCor() != -1) {
-            continue;
-        }
-
-        bool* coresUsadas = new bool[this->getOrdem() + 1]();
-
-        // Verifica cores usadas pelos vértices u e v
-        for (int k = 0; k < this->getOrdem(); k += 1) {
-            NodeEdge* adj1 = this->getAresta(u, k);
-            NodeEdge* adj2 = this->getAresta(k, u);
-            if (adj1 != nullptr && adj1 != aresta && adj1->getCor() != -1) {
-                coresUsadas[adj1->getCor()] = true;
-            }
-            if (adj2 != nullptr && adj2 != aresta && adj2->getCor() != -1) {
-                coresUsadas[adj2->getCor()] = true;
-            }
-        }
-
-        for (int k = 0; k < this->getOrdem(); k += 1) {
-            NodeEdge* adj1 = this->getAresta(v, k);
-            NodeEdge* adj2 = this->getAresta(k, v);
-            if (adj1 != nullptr && adj1 != aresta && adj1->getCor() != -1) {
-                coresUsadas[adj1->getCor()] = true;
-            }
-            if (adj2 != nullptr && adj2 != aresta && adj2->getCor() != -1) {
-                coresUsadas[adj2->getCor()] = true;
-            }
-        }
+    int nCores = 0;
     int ordem = this->getOrdem();
-    bool direcionado = this->eh_direcionado();
+    int nArestas = 0;
 
-    // Contar o número total de arestas
-    int count = 0;
-    if (direcionado) {
-        for (int i = 0; i < ordem; i++) {
-            for (int j = 0; j < ordem; j++) {
-                if (i != j && this->getAresta(i, j) != nullptr) {
-                    count++;
-                }
-            }
-        }
-    } else {
-        for (int i = 0; i < ordem; i++) {
-            for (int j = i + 1; j < ordem; j++) {
-                if (this->getAresta(i, j) != nullptr) {
-                    count++;
-                }
+    for(int i = 0; i < ordem; i+=1) {
+        for(int j = i + 1; j < ordem; j+=1) {
+            NodeEdge* aresta = getAresta(i, j);
+            if(aresta != nullptr && aresta->getCor() == -1) {
+                nArestas+=1;
             }
         }
     }
-    // Arrays para armazenar as arestas
-    int* uArray = new int[count];
-    int* vArray = new int[count];
-    NodeEdge** arestaArray = new NodeEdge*[count];
-    int index = 0;
-    if (direcionado) {
-        for (int i = 0; i < ordem; i++) {
-            for (int j = 0; j < ordem; j++) {
-                NodeEdge* aresta = this->getAresta(i, j);
-                if (aresta != nullptr) {
-                    uArray[index] = i;
-                    vArray[index] = j;
-                    arestaArray[index] = aresta;
-                    index++;
+
+    float pontosGulosos = 1.0;
+    float pontosRandomizados = 1.0;
+    float recompensaUm = 1.1;
+    float recompensaDois = 0.9;
+    float minScore = 0.1;
+
+    srand(time(nullptr));
+
+    while(nArestas > 0) {
+        int oldNCores = nCores;
+
+        int i, j;
+        NodeEdge* aresta = nullptr;
+        do {
+            i = rand() % ordem;
+            j = rand() % ordem;
+            if(i > j) swap(i, j);
+            aresta = getAresta(i, j);
+        } while(i == j || aresta == nullptr || aresta->getCor() != -1);
+
+        bool coresUsadas[nCores] = {false};
+        for(int k = 0; k < ordem; k+=1) {
+            NodeEdge* adjI = this->getAresta(i, k);
+            NodeEdge* adjJ = this->getAresta(j, k);
+
+            if(adjI != nullptr && adjI != aresta && adjI->getCor() != -1) {
+                coresUsadas[adjI->getCor() - 1] = true;
+            }
+            if(adjJ != nullptr && adjJ != aresta && adjJ->getCor() != -1) {
+                coresUsadas[adjJ->getCor() - 1] = true;
+            }
+        }
+
+        float pontuacaoGeral = pontosGulosos + pontosRandomizados;
+        float probGuloso = pontosGulosos / pontuacaoGeral;
+        bool usaGuloso = (float)rand() / RAND_MAX < probGuloso;
+
+        int corEscolhida;
+
+        if(usaGuloso) {
+            corEscolhida = 1;
+            while(corEscolhida <= nCores && coresUsadas[corEscolhida - 1]) {
+                corEscolhida+=1;
+            }
+            if(corEscolhida > nCores) {
+                nCores+=1;
+                corEscolhida = nCores;
+            }
+        } else {
+            int disponiveis = 0;
+            for(int c = 0; c < nCores; c+=1) {
+                if(!coresUsadas[c]) disponiveis+=1;
+            }
+
+            if(disponiveis == 0) {
+                nCores+=1;
+                corEscolhida = nCores;
+            } else {
+                int escolha = rand() % disponiveis;
+                int contador = 0;
+                for(int c = 0; c < nCores; c+=1) {
+                    if(!coresUsadas[c]) {
+                        if(contador == escolha) {
+                            corEscolhida = c + 1;
+                            break;
+                        }
+                        contador+=1;
+                    }
                 }
             }
         }
-    } else {
-        for (int i = 0; i < ordem; i++) {
-            for (int j = i + 1; j < ordem; j++) {
-                NodeEdge* aresta = this->getAresta(i, j);
-                if (aresta != nullptr) {
-                    uArray[index] = i;
-                    vArray[index] = j;
-                    arestaArray[index] = aresta;
-                    index++;
-                }
+
+        bool novaCor = (corEscolhida > oldNCores);
+        if(usaGuloso) {
+            if(novaCor) {
+                pontosGulosos = max(pontosGulosos * recompensaDois, minScore);
+            } else {
+                pontosGulosos *= recompensaUm;
+            }
+        } else {
+            if(novaCor) {
+                pontosRandomizados = max(pontosRandomizados * recompensaDois, minScore);
+            } else {
+                pontosRandomizados *= recompensaUm;
             }
         }
+
+
+        aresta->setCor(corEscolhida);
+        if(this->eh_direcionado()) {
+            NodeEdge* espelho = getAresta(j, i);
+            if(espelho != nullptr) espelho->setCor(corEscolhida);
+        }
+
+        nArestas-=1;
     }
-    // Resetar as cores de todas as arestas
-    for (int i = 0; i < count; i++) {
-        arestaArray[i]->setCor(-1);
-    }
-    // Colorir cada aresta
-    for (int i = 0; i < count; i++) {
-        int u = uArray[i];
-        int v = vArray[i];
-        NodeEdge* aresta = arestaArray[i];
-        bool* coresUsadas = new bool[ordem + 1](); // Inicializado com false
-        // Verifica as cores das arestas adjacentes ao vértice u
-        for (int k = 0; k < ordem; k++) {
-            NodeEdge* adj = this->getAresta(u, k);
-            if (adj != nullptr && (direcionado || k != v) && adj != aresta && adj->getCor() != -1) {
-                coresUsadas[adj->getCor()] = true;
-            }
-            if (!direcionado) {
-                adj = this->getAresta(k, u);
-                if (adj != nullptr && k != v && adj->getCor() != -1) {
-                    coresUsadas[adj->getCor()] = true;
-                }
-            }
-        }
-        // Verifica as cores das arestas adjacentes ao vértice v
-        for (int k = 0; k < ordem; k++) {
-            NodeEdge* adj = this->getAresta(v, k);
-            if (adj != nullptr && (direcionado || k != u) && adj != aresta && adj->getCor() != -1) {
-                coresUsadas[adj->getCor()] = true;
-            }
-            if (!direcionado) {
-                adj = this->getAresta(k, v);
-                if (adj != nullptr && k != u && adj->getCor() != -1) {
-                    coresUsadas[adj->getCor()] = true;
-                }
-            }
-        }
-        // Encontra a menor cor disponível
-        int corDisponivel = 1;
-        while (corDisponivel <= ordem && coresUsadas[corDisponivel]) {
-            corDisponivel++;
-        }
-        // Atribui a cor à aresta e à sua aresta espelhada, se não direcionado
-        aresta->setCor(corDisponivel);
-        if (!direcionado) {
-            NodeEdge* arestaInversa = this->getAresta(v, u);
-            if (arestaInversa != nullptr) {
-                arestaInversa->setCor(corDisponivel);
-            }
-        }
-        maxCor = std::max(maxCor, corDisponivel);
-        delete[] coresUsadas;
-    }
-    delete[] uArray;
-    delete[] vArray;
-    delete[] arestaArray;
-    for(int i = 0; i<this->getOrdem(); i+=1)
-    {
-        for(int j = 0; j<this->getOrdem(); j+=1)
-        {
-            NodeEdge* aresta = this->getAresta(i,j);
-            if(aresta != nullptr)
-            {
-                aresta->setCor(-1);
-            }
-        }
-    }
-}
-}
-return maxCor;
+
+    descoloreGrafo();
+    return nCores;
 }
