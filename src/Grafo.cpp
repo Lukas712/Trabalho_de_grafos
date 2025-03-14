@@ -269,11 +269,26 @@ void Grafo::descoloreGrafo() {
 int Grafo::coloracaoArestaGuloso(){
     int nCores = 0;
     int ordem = this->getOrdem();
+    NodeEdge*** mArestas = new NodeEdge**[ordem];
+    for(int i = 0; i<ordem; i+=1)
+    {
+        mArestas[i] = new NodeEdge*[ordem]();
+    }
+    for(int i = 0; i<ordem; i+=1)
+    {
+        for(int j = 0; j<ordem; j+=1)
+        {
+            if(j>i) continue;
+            NodeEdge* arestaTemp = this->getAresta(i,j);
+            mArestas[i][j] = arestaTemp;
+            mArestas[j][i] = arestaTemp;
+        }
+    }
     for(int  i = 0; i< ordem; i+=1)
     {
         for(int j = 0; j<ordem; j+=1)
         {
-            NodeEdge* aresta = this->getAresta(i,j);
+            NodeEdge* aresta = mArestas[i][j];
             if(aresta == nullptr || aresta->getCor() != -1)
             {
                 continue;
@@ -281,9 +296,9 @@ int Grafo::coloracaoArestaGuloso(){
             bool coresUsadas[ordem-1] = {false};
             for(int k = 0; k<ordem; k+=1)
             {
-                NodeEdge* adjacenteDeI = this->getAresta(i,k);
+                NodeEdge* adjacenteDeI = mArestas[i][k];
 
-                NodeEdge* adjacenteDeJ = this->getAresta(j,k);
+                NodeEdge* adjacenteDeJ = mArestas[j][k];
 
                 if(adjacenteDeI != nullptr && adjacenteDeI != aresta && adjacenteDeI->getCor() != -1)
                 {
@@ -301,9 +316,9 @@ int Grafo::coloracaoArestaGuloso(){
             }
 
             aresta->setCor(corDisponivel);
-            if(this->eh_direcionado())
+            if(!this->eh_direcionado())
             {
-                NodeEdge* arestaEspelho = this->getAresta(j,i);
+                NodeEdge* arestaEspelho = mArestas[j][i];
                 if(arestaEspelho != nullptr)
                 {
                     arestaEspelho->setCor(corDisponivel);
@@ -315,6 +330,16 @@ int Grafo::coloracaoArestaGuloso(){
             }
         }
     }
+    for(int i = 0; i<ordem; i+=1)
+    {
+        for(int j = 0; j<ordem; j+=1)
+        {
+            mArestas[i][j] = nullptr;
+            delete mArestas[i][j];
+        }
+        delete[] mArestas[i];
+    }
+    delete[] mArestas;
     descoloreGrafo();
     return nCores;
 }
@@ -324,13 +349,23 @@ int Grafo::coloracaoArestaRandomizado() {
     int ordem = this->getOrdem();
     int nArestas = 0;
     srand(time(nullptr));
-
-    for(int i = 0; i < ordem; i+=1) {
-        for(int j = i + 1; j < ordem; j+=1) {
-            NodeEdge* aresta = getAresta(i, j);
-            if(aresta != nullptr && aresta->getCor() == -1) {
+    NodeEdge*** mArestas = new NodeEdge**[ordem];
+    for(int i = 0; i<ordem; i+=1)
+    {
+        mArestas[i] = new NodeEdge*[ordem]();
+    }
+    for(int i = 0; i<ordem; i+=1)
+    {
+        for(int j = 0; j<ordem; j+=1)
+        {
+            if(j>i) continue;
+            NodeEdge* arestaTemp = this->getAresta(i,j);
+            if(arestaTemp != nullptr)
+            {
                 nArestas+=1;
             }
+            mArestas[i][j] = arestaTemp;
+            mArestas[j][i] = arestaTemp;
         }
     }
 
@@ -340,57 +375,68 @@ int Grafo::coloracaoArestaRandomizado() {
         do {
             i = rand() % ordem;
             j = rand() % ordem;
-            if(i > j) swap(i, j);
-            aresta = getAresta(i, j);
+            aresta = mArestas[i][j];
         } while(i == j || aresta == nullptr || aresta->getCor() != -1);
 
         bool* coresUsadas = new bool[nCores + 1]();
 
-        for(int k = 0; k < ordem; k+=1) {
-            NodeEdge* adjI = getAresta(i, k);
-            NodeEdge* adjJ = getAresta(j, k);
+        for (int k = 0; k < ordem; k+=1) {
+            NodeEdge* adjI = mArestas[i][k];
+            NodeEdge* adjJ = mArestas[j][k];
 
-            if(adjI != nullptr && adjI != aresta && adjI->getCor() != -1) {
+            if (adjI != nullptr && adjI->getCor() != -1) {
                 int cor = adjI->getCor();
-                if(cor <= nCores) coresUsadas[cor] = true;
+                if (cor <= nCores) coresUsadas[cor] = true;
             }
-            if(adjJ != nullptr && adjJ != aresta && adjJ->getCor() != -1) {
+            if (adjJ != nullptr && adjJ != aresta && adjJ->getCor() != -1) {
                 int cor = adjJ->getCor();
-                if(cor <= nCores) coresUsadas[cor] = true;
+                if (cor <= nCores) coresUsadas[cor] = true;
             }
         }
-        int disponiveis = 0;
-        for(int c = 0; c <= nCores; c+=1) {
-            if(!coresUsadas[c]) disponiveis+=1;
+
+        int* coresDisponiveis = new int[nCores + 1];
+        int totalDisponiveis = 0;
+
+        for (int k = 0; k <= nCores; k+=1) {
+            if (!coresUsadas[k]) {
+                coresDisponiveis[totalDisponiveis] = k;
+                totalDisponiveis+=1;
+            }
         }
+
         int corEscolhida;
-        if(disponiveis == 0) {
+        if (totalDisponiveis == 0) {
             nCores+=1;
             corEscolhida = nCores;
         } else {
-            int escolha = rand() % disponiveis;
-            int contador = 0;
-            for(int c = 0; c <= nCores; c+=1) {
-                if(!coresUsadas[c]) {
-                    if(contador == escolha) {
-                        corEscolhida = c;
-                        break;
-                    }
-                    contador+=1;
-                }
-            }
+            int escolha = rand() % totalDisponiveis;
+            corEscolhida = coresDisponiveis[escolha];
         }
 
         delete[] coresUsadas;
+        delete[] coresDisponiveis;
 
         aresta->setCor(corEscolhida);
-        if(this->eh_direcionado()) {
-            NodeEdge* espelho = getAresta(j, i);
-            if(espelho != nullptr) espelho->setCor(corEscolhida);
+        if(!this->eh_direcionado()) {
+            NodeEdge* espelho = mArestas[j][i];
+            if(espelho != nullptr)
+            {
+                espelho->setCor(corEscolhida);
+            }
         }
 
         nArestas-=1;
     }
+    for(int i = 0; i<ordem; i+=1)
+    {
+        for(int j = 0; j<ordem; j+=1)
+        {
+            mArestas[i][j] = nullptr;
+            delete mArestas[i][j];
+        }
+        delete[] mArestas[i];
+    }
+    delete[] mArestas;
     descoloreGrafo();
     return nCores + 1;
 }
@@ -401,12 +447,23 @@ int Grafo::coloracaoArestaReativo() {
     int ordem = this->getOrdem();
     int nArestas = 0;
 
-    for(int i = 0; i < ordem; i+=1) {
-        for(int j = i + 1; j < ordem; j+=1) {
-            NodeEdge* aresta = getAresta(i, j);
-            if(aresta != nullptr && aresta->getCor() == -1) {
+    NodeEdge*** mArestas = new NodeEdge**[ordem];
+    for(int i = 0; i<ordem; i+=1)
+    {
+        mArestas[i] = new NodeEdge*[ordem]();
+    }
+    for(int i = 0; i<ordem; i+=1)
+    {
+        for(int j = 0; j<ordem; j+=1)
+        {
+            if(j>i) continue;
+            NodeEdge* arestaTemp = this->getAresta(i,j);
+            if(arestaTemp != nullptr)
+            {
                 nArestas+=1;
             }
+            mArestas[i][j] = arestaTemp;
+            mArestas[j][i] = arestaTemp;
         }
     }
 
@@ -427,13 +484,13 @@ int Grafo::coloracaoArestaReativo() {
             i = rand() % ordem;
             j = rand() % ordem;
             if(i > j) swap(i, j);
-            aresta = getAresta(i, j);
+            aresta = mArestas[i][j];
         } while(i == j || aresta == nullptr || aresta->getCor() != -1);
 
         bool coresUsadas[nCores] = {false};
         for(int k = 0; k < ordem; k+=1) {
-            NodeEdge* adjI = this->getAresta(i, k);
-            NodeEdge* adjJ = this->getAresta(j, k);
+            NodeEdge* adjI = mArestas[i][k];
+            NodeEdge* adjJ = mArestas[j][k];
 
             if(adjI != nullptr && adjI != aresta && adjI->getCor() != -1) {
                 coresUsadas[adjI->getCor() - 1] = true;
@@ -499,14 +556,23 @@ int Grafo::coloracaoArestaReativo() {
 
 
         aresta->setCor(corEscolhida);
-        if(this->eh_direcionado()) {
-            NodeEdge* espelho = getAresta(j, i);
+        if(!this->eh_direcionado()) {
+            NodeEdge* espelho = mArestas[j][i];
             if(espelho != nullptr) espelho->setCor(corEscolhida);
         }
 
         nArestas-=1;
     }
-
+    for(int i = 0; i<ordem; i+=1)
+    {
+        for(int j = 0; j<ordem; j+=1)
+        {
+            mArestas[i][j] = nullptr;
+            delete mArestas[i][j];
+        }
+        delete[] mArestas[i];
+    }
+    delete[] mArestas;
     descoloreGrafo();
     return nCores;
 }

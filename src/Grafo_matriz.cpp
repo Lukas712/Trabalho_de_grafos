@@ -63,14 +63,12 @@ void Grafo_matriz::resize(int novaCapacidade) {
             novaMatriz[i] = new NodeEdge*[novaCapacidade]();
         }
 
-        // Copia apenas se a matriz existir
         if (matriz_adjacencia != nullptr) {
             for (int i = 0; i < capacidade; i+=1) {
                 for (int j = 0; j < capacidade; j+=1) {
                     novaMatriz[i][j] = matriz_adjacencia[i][j];
                 }
             }
-            // Libera a matriz antiga
             for (int i = 0; i < capacidade; i+=1) {
                 delete[] matriz_adjacencia[i];
             }
@@ -82,7 +80,6 @@ void Grafo_matriz::resize(int novaCapacidade) {
         novaMatriz = new NodeEdge**[1];
         novaMatriz[0] = new NodeEdge*[novoTamanho]();
 
-        // Copia apenas se a matriz existir
         if (matriz_adjacencia != nullptr) {
             for (int i = 0; i < tamanhoAntigo; i+=1) {
                 novaMatriz[0][i] = matriz_adjacencia[0][i];

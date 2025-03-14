@@ -160,11 +160,15 @@ class Grafo
     int coloracaoArestaRandomizado();
 
     /**
-     * @brief Algoritmo randomizado reativo que retorna a menor quantidade de cores para colorir todas as arestas do grafo de forma que não tenha duass arestas adjacentes com a mesma cor
+     * @brief Algoritmo randomizado reativo que retorna a menor quantidade de cores para colorir todas as arestas do grafo de forma que não tenha duas arestas adjacentes com a mesma cor
      * @return Inteiro representando a menor quantidade de cores
      */
     int coloracaoArestaReativo();
 
+    /**
+     * @brief Descolore todas as arestas, redefinindo seus valores para -1
+     *
+     */
     void descoloreGrafo();
 };
 

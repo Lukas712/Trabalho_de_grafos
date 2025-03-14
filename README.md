@@ -1,5 +1,8 @@
 # Trabalho de Grafos
 
+##Membros da Equipe
+- Lukas Freitas de Carvalho - Matrícula: 202376033
+
 ## Descrição
 Este repositório contém a implementação de um trabalho de Teoria dos Grafos. O projeto inclui a criação e manipulação de grafos utilizando listas encadeadas e matrizes de adjacência, com funcionalidades avançadas como cálculo de distâncias utilizando o algoritmo de Dijkstra.
 
@@ -26,6 +29,10 @@ Este repositório contém a implementação de um trabalho de Teoria dos Grafos.
 - `carregaGrafo(string grafo)`: Carrega o grafo na estrutura.
 - `imprimeGrafo()`: Imprime o grafo de acordo com a descrição do trabalho.
 - `maiorMenorDistancia(int ponto1, int ponto2)`: Calcula a menor distância entre dois pontos utilizando o algoritmo de Dijkstra.
+- `retornaMenorDistancia()`: Calcula dentre todas as menores distâncias no grafo, a maior delas.
+- `coloracaoArestaGuloso()`: Retorna a menor quantidade de cores nas arestas utilizando um algoritmo guloso.
+- `coloracaoArestaRandomizado()`: Retorna a menor quantidade de cores nas arestas utilizando um algoritmo randomizado.
+- `coloracaoArestaReativo()`: Retorna a menor quantidade de cores nas arestas utilizando um algoritmo reativo.
 
 ### Grafo_lista
 
@@ -90,24 +97,28 @@ Para clonar e executar este projeto, você precisará do Git e de um compilador 
 
 ```sh
 # Clone o repositório
-git clone https://github.com/seu-usuario/trabalho-de-grafos.git
+git clone https://github.com/Lukas712/Trabalho_de_grafos.git
 
 # Entre no diretório do projeto
-cd trabalho-de-grafos
+cd Trabalho_de_grafos
 
 # Compile os arquivos
-g++ -g -o {nome do programa} main.cpp
+g++ -o {nome do programa} main.cpp src/*.cpp -I/.include/ -g -Wall -Werror
 ```
 ###Uso
-Após a instalação, você pode executar o programa utilizando o comando abaixo:
+Após a instalação, você pode executar o programa utilizando os comandos abaixo:
 ```sh
-./{nome do programa} -d -l grafo.txt
+./{nome do programa} -d -l {nome do arquivo contendo o grafo}.txt
 ```
 ou
 ```sh
-./{nome do programa} -d - grafo.txt
+./{nome do programa} -d -m {nome do arquivo contendo o grafo}.txt
 ```
-
-
-##Membros da Equipe
-- Lukas Freitas de Carvalho - Matrícula: 202376033
+ou
+```sh
+./{nome do programa} -p -l {nome do arquivo contendo o grafo}.txt
+```
+ou
+```sh
+./{nome do programa} -p -m {nome do arquivo contendo o grafo}.txt
+```
